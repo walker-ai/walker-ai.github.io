@@ -1450,51 +1450,6 @@ $$</p>
       </tags>
   </entry>
   <entry>
-    <title>The record of arduousness</title>
-    <url>/others/12b890f/</url>
-    <content><![CDATA[<h1 id="cai-keng-ji-lu">踩坑记录</h1>
-<blockquote>
-<p>顺序与重要性无关</p>
-</blockquote>
-<h2 id="git-qu-fen-da-xiao-xie-wen-ti" id="git区分大小写问题">git区分大小写问题</h2>
-<p>默认情况下，git commit不区分大小写，这也就是导致了我这个音乐界面为什么本地能够显示，push上去就显示不了的原因之一，以后在创建仓库的时候记得一定要设置为区分大小写，否则到最后遇到什么问题你可能死都不知道怎么死的。</p>
-<h2 id="xin-biao-qian-ye-chuang-jian-de-wen-ti" id="新标签页创建的问题">新标签页创建的问题</h2>
-<p>从某网友上copy下来的关于aplayer的js和css代码其实是使用了jsdeliver的cdn，如果要用的话最好下到本地使用，路径规则与Tags，Categories下的img一致。另外，这里我卡了很长时间，大概三四个小时，我以为是css和js文件解析的问题，于是一直在找相关的解决方案，但最后我发现甚至连music这个界面在github page上都是显示404，于是我排除了所有的aplayer文件和meting文件，发现仍然404，这说明我这个music界面压根就是无效的，当场晕倒…原来整个解决问题的方向就是错的，但令我困惑的是这个界面的创建实在是没有什么坑点，最后回想可能是我当初这个music文件夹是手动创建的…正确的姿势是在博客根目录下执行 <code>hexo new page &quot;music&quot;</code>，然后在 <code>/music</code> 目录下编辑 <code>index.md</code>。</p>
-<h2 id="bo-fang-qi-de-wen-ti" id="播放器的问题">播放器的问题</h2>
-<p>网易云（netease）对blog的内嵌音乐支持的是比较好的，其官方提供了生成链接，如果你想为自己的blog添加背景音乐，甚至循环播放列表，那么你可以使用自己的网易云账号，在你的账号中创建blog歌单，然后添加你喜欢的歌曲进去，最后用官方提供的生成链接，取出ID加到meting插件的js中，至于什么是meting插件和aplayer插件，我只能说他们是一种支持html5的网页内嵌播放器插件，至于如何使用，请出门百度查阅官方文档。这里比较麻烦的是aplayer插件、meting插件和hexo-tag-aplayer插件的部署，并且网上很多教程都没有用，最后通过<a href="https://www.cnblogs.com/fby698/p/12663089.html">这里</a>解决了问题。</p>
-<h2 id="http-he-https-xie-yi-de-wen-ti" id="http和https协议的问题">http和https协议的问题</h2>
-<p>在我们使用hexo + github搭建博客时，有时会让我们填写自己github地址或者生成环境仓库的url，使用http还是https是有极大区别的，弄不好会十分麻烦，具体什么区别我也不知道，反正遇到时留意些就行了。</p>
-<h2 id="ping-lun-xi-tong" id="评论系统">评论系统</h2>
-<p>这里的评论系统我使用的是<strong>valine</strong>，需要自己去LeanCloud官网注册一个账号，然后白嫖一个应用，然后创建生成环境，将应用部署到 <code>https://github.com/sviptzk/Valine-Admin-Server</code> 中，（Valine貌似听说在某个版本以后就停止维护了，原因是因为有暴露IP和邮箱地址的风险？Valine-Admin是某大佬基于Valine二次开发的一款应用，提供了许多额外功能例如游客在某站主的blog下评论了一些信息，站主可以及时在预设的邮箱中收到提醒信息，游客也能及时收到站主的回复消息，这些功能都是基于Valine-Admin以及leancloud的），但由于leancloud提供的免费应用功能是十分有限的，免费应用一天必须休眠六小时，想让其合理工作的话需要预设定时唤醒任务，具体百度。</p>
-<h2 id="liao-tian-xi-tong" id="聊天系统">聊天系统</h2>
-<p>blog page的右边栏内置了一个聊天系统的功能，我是用的是Chatra，这玩意没什么好说的，直接在框架内部根据文档提示配置就行了，不过这个东西消息提示音还挺好听的。</p>
-<h2 id="wen-zhang-lu-jing-wen-ti" id="文章路径问题">文章路径问题</h2>
-<p>文章路径一定要归档处理好，路径与站点配置文件.config.yml中的URL有关，可以用你自己喜欢的变量，例如我可以把permalink设置为 <code>mypath</code>，然后在每篇文章的Front-Matter自定义变量mypath为自己想要该文章存储的路径，为了方便，可以在scaffolds中设置初始Front-Matter，在模板中新增mypath变量。而默认的文章路径是:year/:month/:day/:title，这样如果你的文章标题含中文，那么它最后解析出来的URL就会是一串乱码，不仅不美观而且还会引发一些未知的bug，不利于SEO。</p>
-<p>更新：</p>
-<p>上面这样设置路径是不对的，这会使得每篇文章的URL不唯一，无法索引到具体地址，这里需要使用hexo-abbrlink插件，具体怎么使用查文档，有一点需要注意就是有可能会出现 <code>abbrlink-undefined</code>，遇到这种问题可能有几种情况：</p>
-<p>1、文章缓存没有清除，直接 <code>hexo clean &amp;&amp; hexo g</code> 即可</p>
-<p>2、layout引起的问题，如果你的文章开头Front-Matter有设置布局选项layout: [layout]，那么就无法生成abbrlink，具体原因我还不知道，但还好我这里还没有生成过多文章。以后生成新文章记得直接执行 <code>hexo new &quot;xxx&quot;</code>，这样就不会指定布局，但是缺点是所有布局都是统一的。这里参考自<a href="https://cysd.ml/posts/670401894.html">Cycc</a>。</p>
-<p><strong>另外注意：</strong></p>
-<p>一定要在最开始就设置好abbrlink的算法等相关设置，否则后面再改动就会使得原来链接无效，该页面上的评论等内容会全部丢失，切记！</p>
-<h2 id="wen-zhang-mu-lu-de-chao-lian-jie-diu-shi" id="文章目录的超链接丢失">文章目录的超链接丢失</h2>
-<p>发布的文章右边栏的目录发现只有二级标题有超链接，可以点击进行页内跳转，而一级标题通过右键审查元素发现没有href属性，通过<a href="https://convivae.top/posts/hexo-bo-ke-cai-keng/#%E6%96%B9%E6%B3%95-2">这里</a>解决了问题，博客是由markdown-it渲染的，由于Markdown-it的插件并未渲染heading的id所以导致锚点失效，可以通过安装markdown-it-named-headings这个插件解决，首先安装：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install markdown-it-named-headings --save</span><br></pre></td></tr></table></figure>
-<p>然后进入项目的根目录，修改根目录下<br>
-<code>node_modules\hexo-renderer-markdown-it\lib\renderer.js</code> 文件，在 <code>renderer.js</code> 中添加一行以使用此插件：<code>parser.use(require('markdown-it-named-headings'))</code></p>
-<p>像下面这样：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="meta">&#x27;use strict&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> (<span class="params">data, options</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> MdIt = <span class="built_in">require</span>(<span class="string">&#x27;markdown-it&#x27;</span>);</span><br><span class="line">    <span class="keyword">var</span> cfg = <span class="built_in">this</span>.config.markdown;</span><br><span class="line">    <span class="keyword">var</span> opt = (cfg) ? cfg : <span class="string">&#x27;default&#x27;</span>;</span><br><span class="line">    <span class="keyword">var</span> parser = (opt === <span class="string">&#x27;default&#x27;</span> || opt === <span class="string">&#x27;commonmark&#x27;</span> || opt === <span class="string">&#x27;zero&#x27;</span>) ?</span><br><span class="line">        <span class="keyword">new</span> MdIt(opt) :</span><br><span class="line">        <span class="keyword">new</span> MdIt(opt.render);</span><br><span class="line"></span><br><span class="line">    parser.use(<span class="built_in">require</span>(<span class="string">&#x27;markdown-it-named-headings&#x27;</span>))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (opt.plugins) &#123;</span><br><span class="line">        parser = opt.plugins.reduce(<span class="function"><span class="keyword">function</span> (<span class="params">parser, pugs</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> parser.use(<span class="built_in">require</span>(pugs));</span><br><span class="line">        &#125;, parser);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (opt.anchors) &#123;</span><br><span class="line">        parser = parser.use(<span class="built_in">require</span>(<span class="string">&#x27;./anchors&#x27;</span>), opt.anchors);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> parser.render(data.text);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h2 id="guan-yu-markdown-yu-mathjax-de-chong-tu-wen-ti" id="关于Markdown与Mathjax的冲突问题">关于Markdown与Mathjax的冲突问题</h2>
-<p>在编辑一些数学公式的时候，发现公式中的部分下划线 <code>_</code> 被错误的转义了，导致公式无法显示…通过<a href="https://kingsleyxie.cn/markdown-mathjax-conflicts-and-several-solutions/">这篇文章</a>解决了问题。</p>
-<h2 id="guan-yu-ben-di-blog-wen-jian-jia-qian-yi-de-wen-ti" id="关于本地Blog文件夹迁移的问题">关于本地Blog文件夹迁移的问题</h2>
-<p>近几天搞一个服创项目，前后端都要在本地跑起来，而且要求的 <code>nodejs</code> 版本还比较旧，我电脑上的 <code>nodejs</code> 版本太高了，但由于经常要更Blog，所以就下了一个 <code>nvm</code> 用来管理 <code>nodejs</code> 的多个版本，可这玩意恶心的很，要先卸载 <code>nodejs</code>，卸不干净还不能安装，于是我就把 <code>nodejs</code> 全卸了，好家伙，博客环境全没了，但好在迁移博客文件夹需要改动的地方不是很多。</p>
-<p>首先原先的文件夹肯定是不能再用了，但配置文件全在里面，<strong>一定要备份</strong>，<s>不备份就等着哭吧Blog从0开始搭2333</s>，然后在一个新的路径下创建 <code>Blog</code> 文件夹，然后就是正常的搭 <code>hexo</code> 的过程，<code>npm install hexo-cli</code>，<code>npm install</code>，先把新博客搭起来，随后上主题网站上下载新主题，下载完之后将原先站点配置文件 <code>_config.yml</code> 复制进来，更改主题名，保持和下载的主题文件夹名一致。然后将原先根目录下的 <code>hexo-offline.config.cjs</code> （好像是跟 <code>cdn</code> 配置有关的文件）、<code>package-lock.json</code>、<code>package.json</code> （所需要的模块版本各种信息，有了它你就可以将之前所有的依赖包全部装回来）文件复制进来，然后将根目录下的 <code>source</code> 全部覆盖（这里面有你发布的文章的所有源文件），<code>themes</code> 目录下的 <code>source</code> 文件夹全部覆盖，以及 <code>themes</code> 目录下的主题配置文件 <code>_config.yml</code> 全部覆盖。根目录下的 <code>image</code> 全部覆盖（部分图片在这里保存），最后就是发布模板 <code>scaffolds</code> 下文件全覆盖。这样，就可以原封不动的将博客的文件夹全部迁移到新的路径下了。</p>
-<p>另外还有一个地方需要改动，那就是像上面这样还是有一个东西没有加，那就是超链接丢失问题，需要按照上面记录的再操作一遍。</p>
-<h2 id="ping-lun-yang-shi-mei-hua" id="评论样式美化">评论样式美化</h2>
-<p>更新了评论样式美化，具体更改的文件有 <code>themes/butterfly/layout/includes/third-party/comments/valine.pug</code>，以及 <code>/css/index.styl</code>，主要是一些css样式文件的修改，然后还有在主题配置文件中的 <code>valine.min.js</code> 文件。</p>
-<h2 id="dai-xu" id="待续…">待续…</h2>
-]]></content>
-  </entry>
-  <entry>
     <title>DAY9-奶牛过马路</title>
     <url>/DailyOneProblem_2022_Spring/fdf4ccd1/</url>
     <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-description-1980-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/description/1980/">原题链接</a></h1>
@@ -1539,6 +1494,51 @@ $−10^6\leq a_i, b_i\leq 10^6$</p>
         <tag>排序</tag>
         <tag>前缀最值</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>The record of arduousness</title>
+    <url>/others/12b890f/</url>
+    <content><![CDATA[<h1 id="cai-keng-ji-lu">踩坑记录</h1>
+<blockquote>
+<p>顺序与重要性无关</p>
+</blockquote>
+<h2 id="git-qu-fen-da-xiao-xie-wen-ti" id="git区分大小写问题">git区分大小写问题</h2>
+<p>默认情况下，git commit不区分大小写，这也就是导致了我这个音乐界面为什么本地能够显示，push上去就显示不了的原因之一，以后在创建仓库的时候记得一定要设置为区分大小写，否则到最后遇到什么问题你可能死都不知道怎么死的。</p>
+<h2 id="xin-biao-qian-ye-chuang-jian-de-wen-ti" id="新标签页创建的问题">新标签页创建的问题</h2>
+<p>从某网友上copy下来的关于aplayer的js和css代码其实是使用了jsdeliver的cdn，如果要用的话最好下到本地使用，路径规则与Tags，Categories下的img一致。另外，这里我卡了很长时间，大概三四个小时，我以为是css和js文件解析的问题，于是一直在找相关的解决方案，但最后我发现甚至连music这个界面在github page上都是显示404，于是我排除了所有的aplayer文件和meting文件，发现仍然404，这说明我这个music界面压根就是无效的，当场晕倒…原来整个解决问题的方向就是错的，但令我困惑的是这个界面的创建实在是没有什么坑点，最后回想可能是我当初这个music文件夹是手动创建的…正确的姿势是在博客根目录下执行 <code>hexo new page &quot;music&quot;</code>，然后在 <code>/music</code> 目录下编辑 <code>index.md</code>。</p>
+<h2 id="bo-fang-qi-de-wen-ti" id="播放器的问题">播放器的问题</h2>
+<p>网易云（netease）对blog的内嵌音乐支持的是比较好的，其官方提供了生成链接，如果你想为自己的blog添加背景音乐，甚至循环播放列表，那么你可以使用自己的网易云账号，在你的账号中创建blog歌单，然后添加你喜欢的歌曲进去，最后用官方提供的生成链接，取出ID加到meting插件的js中，至于什么是meting插件和aplayer插件，我只能说他们是一种支持html5的网页内嵌播放器插件，至于如何使用，请出门百度查阅官方文档。这里比较麻烦的是aplayer插件、meting插件和hexo-tag-aplayer插件的部署，并且网上很多教程都没有用，最后通过<a href="https://www.cnblogs.com/fby698/p/12663089.html">这里</a>解决了问题。</p>
+<h2 id="http-he-https-xie-yi-de-wen-ti" id="http和https协议的问题">http和https协议的问题</h2>
+<p>在我们使用hexo + github搭建博客时，有时会让我们填写自己github地址或者生成环境仓库的url，使用http还是https是有极大区别的，弄不好会十分麻烦，具体什么区别我也不知道，反正遇到时留意些就行了。</p>
+<h2 id="ping-lun-xi-tong" id="评论系统">评论系统</h2>
+<p>这里的评论系统我使用的是<strong>valine</strong>，需要自己去LeanCloud官网注册一个账号，然后白嫖一个应用，然后创建生成环境，将应用部署到 <code>https://github.com/sviptzk/Valine-Admin-Server</code> 中，（Valine貌似听说在某个版本以后就停止维护了，原因是因为有暴露IP和邮箱地址的风险？Valine-Admin是某大佬基于Valine二次开发的一款应用，提供了许多额外功能例如游客在某站主的blog下评论了一些信息，站主可以及时在预设的邮箱中收到提醒信息，游客也能及时收到站主的回复消息，这些功能都是基于Valine-Admin以及leancloud的），但由于leancloud提供的免费应用功能是十分有限的，免费应用一天必须休眠六小时，想让其合理工作的话需要预设定时唤醒任务，具体百度。</p>
+<h2 id="liao-tian-xi-tong" id="聊天系统">聊天系统</h2>
+<p>blog page的右边栏内置了一个聊天系统的功能，我是用的是Chatra，这玩意没什么好说的，直接在框架内部根据文档提示配置就行了，不过这个东西消息提示音还挺好听的。</p>
+<h2 id="wen-zhang-lu-jing-wen-ti" id="文章路径问题">文章路径问题</h2>
+<p>文章路径一定要归档处理好，路径与站点配置文件.config.yml中的URL有关，可以用你自己喜欢的变量，例如我可以把permalink设置为 <code>mypath</code>，然后在每篇文章的Front-Matter自定义变量mypath为自己想要该文章存储的路径，为了方便，可以在scaffolds中设置初始Front-Matter，在模板中新增mypath变量。而默认的文章路径是:year/:month/:day/:title，这样如果你的文章标题含中文，那么它最后解析出来的URL就会是一串乱码，不仅不美观而且还会引发一些未知的bug，不利于SEO。</p>
+<p>更新：</p>
+<p>上面这样设置路径是不对的，这会使得每篇文章的URL不唯一，无法索引到具体地址，这里需要使用hexo-abbrlink插件，具体怎么使用查文档，有一点需要注意就是有可能会出现 <code>abbrlink-undefined</code>，遇到这种问题可能有几种情况：</p>
+<p>1、文章缓存没有清除，直接 <code>hexo clean &amp;&amp; hexo g</code> 即可</p>
+<p>2、layout引起的问题，如果你的文章开头Front-Matter有设置布局选项layout: [layout]，那么就无法生成abbrlink，具体原因我还不知道，但还好我这里还没有生成过多文章。以后生成新文章记得直接执行 <code>hexo new &quot;xxx&quot;</code>，这样就不会指定布局，但是缺点是所有布局都是统一的。这里参考自<a href="https://cysd.ml/posts/670401894.html">Cycc</a>。</p>
+<p><strong>另外注意：</strong></p>
+<p>一定要在最开始就设置好abbrlink的算法等相关设置，否则后面再改动就会使得原来链接无效，该页面上的评论等内容会全部丢失，切记！</p>
+<h2 id="wen-zhang-mu-lu-de-chao-lian-jie-diu-shi" id="文章目录的超链接丢失">文章目录的超链接丢失</h2>
+<p>发布的文章右边栏的目录发现只有二级标题有超链接，可以点击进行页内跳转，而一级标题通过右键审查元素发现没有href属性，通过<a href="https://convivae.top/posts/hexo-bo-ke-cai-keng/#%E6%96%B9%E6%B3%95-2">这里</a>解决了问题，博客是由markdown-it渲染的，由于Markdown-it的插件并未渲染heading的id所以导致锚点失效，可以通过安装markdown-it-named-headings这个插件解决，首先安装：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install markdown-it-named-headings --save</span><br></pre></td></tr></table></figure>
+<p>然后进入项目的根目录，修改根目录下<br>
+<code>node_modules\hexo-renderer-markdown-it\lib\renderer.js</code> 文件，在 <code>renderer.js</code> 中添加一行以使用此插件：<code>parser.use(require('markdown-it-named-headings'))</code></p>
+<p>像下面这样：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="meta">&#x27;use strict&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> (<span class="params">data, options</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> MdIt = <span class="built_in">require</span>(<span class="string">&#x27;markdown-it&#x27;</span>);</span><br><span class="line">    <span class="keyword">var</span> cfg = <span class="built_in">this</span>.config.markdown;</span><br><span class="line">    <span class="keyword">var</span> opt = (cfg) ? cfg : <span class="string">&#x27;default&#x27;</span>;</span><br><span class="line">    <span class="keyword">var</span> parser = (opt === <span class="string">&#x27;default&#x27;</span> || opt === <span class="string">&#x27;commonmark&#x27;</span> || opt === <span class="string">&#x27;zero&#x27;</span>) ?</span><br><span class="line">        <span class="keyword">new</span> MdIt(opt) :</span><br><span class="line">        <span class="keyword">new</span> MdIt(opt.render);</span><br><span class="line"></span><br><span class="line">    parser.use(<span class="built_in">require</span>(<span class="string">&#x27;markdown-it-named-headings&#x27;</span>))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (opt.plugins) &#123;</span><br><span class="line">        parser = opt.plugins.reduce(<span class="function"><span class="keyword">function</span> (<span class="params">parser, pugs</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> parser.use(<span class="built_in">require</span>(pugs));</span><br><span class="line">        &#125;, parser);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (opt.anchors) &#123;</span><br><span class="line">        parser = parser.use(<span class="built_in">require</span>(<span class="string">&#x27;./anchors&#x27;</span>), opt.anchors);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> parser.render(data.text);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="guan-yu-markdown-yu-mathjax-de-chong-tu-wen-ti" id="关于Markdown与Mathjax的冲突问题">关于Markdown与Mathjax的冲突问题</h2>
+<p>在编辑一些数学公式的时候，发现公式中的部分下划线 <code>_</code> 被错误的转义了，导致公式无法显示…通过<a href="https://kingsleyxie.cn/markdown-mathjax-conflicts-and-several-solutions/">这篇文章</a>解决了问题。</p>
+<h2 id="guan-yu-ben-di-blog-wen-jian-jia-qian-yi-de-wen-ti" id="关于本地Blog文件夹迁移的问题">关于本地Blog文件夹迁移的问题</h2>
+<p>近几天搞一个服创项目，前后端都要在本地跑起来，而且要求的 <code>nodejs</code> 版本还比较旧，我电脑上的 <code>nodejs</code> 版本太高了，但由于经常要更Blog，所以就下了一个 <code>nvm</code> 用来管理 <code>nodejs</code> 的多个版本，可这玩意恶心的很，要先卸载 <code>nodejs</code>，卸不干净还不能安装，于是我就把 <code>nodejs</code> 全卸了，好家伙，博客环境全没了，但好在迁移博客文件夹需要改动的地方不是很多。</p>
+<p>首先原先的文件夹肯定是不能再用了，但配置文件全在里面，<strong>一定要备份</strong>，<s>不备份就等着哭吧Blog从0开始搭2333</s>，然后在一个新的路径下创建 <code>Blog</code> 文件夹，然后就是正常的搭 <code>hexo</code> 的过程，<code>npm install hexo-cli</code>，<code>npm install</code>，先把新博客搭起来，随后上主题网站上下载新主题，下载完之后将原先站点配置文件 <code>_config.yml</code> 复制进来，更改主题名，保持和下载的主题文件夹名一致。然后将原先根目录下的 <code>hexo-offline.config.cjs</code> （好像是跟 <code>cdn</code> 配置有关的文件）、<code>package-lock.json</code>、<code>package.json</code> （所需要的模块版本各种信息，有了它你就可以将之前所有的依赖包全部装回来）文件复制进来，然后将根目录下的 <code>source</code> 全部覆盖（这里面有你发布的文章的所有源文件），<code>themes</code> 目录下的 <code>source</code> 文件夹全部覆盖，以及 <code>themes</code> 目录下的主题配置文件 <code>_config.yml</code> 全部覆盖。根目录下的 <code>image</code> 全部覆盖（部分图片在这里保存），最后就是发布模板 <code>scaffolds</code> 下文件全覆盖。这样，就可以原封不动的将博客的文件夹全部迁移到新的路径下了。</p>
+<p>另外还有一个地方需要改动，那就是像上面这样还是有一个东西没有加，那就是超链接丢失问题，需要按照上面记录的再操作一遍。</p>
+<h2 id="ping-lun-yang-shi-mei-hua" id="评论样式美化">评论样式美化</h2>
+<p>更新了评论样式美化，具体更改的文件有 <code>themes/butterfly/layout/includes/third-party/comments/valine.pug</code>，以及 <code>/css/index.styl</code>，主要是一些css样式文件的修改，然后还有在主题配置文件中的 <code>valine.min.js</code> 文件。</p>
+<h2 id="dai-xu" id="待续…">待续…</h2>
+]]></content>
   </entry>
   <entry>
     <title>Hello Hexo</title>
@@ -1656,27 +1656,6 @@ $$
       </categories>
   </entry>
   <entry>
-    <title>二维前缀和</title>
-    <url>/algo_level1/b8859ab5/</url>
-    <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-798-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/798/">原题链接</a></h1>
-<h1 id="ti-mu-zhong-shu">题目重述</h1>
-<p>输入一个 $n$ 行 $m$ 列的整数矩阵，再输入 $q$ 个询问，每个询问包含四个整数 $x_1, y_1, x_2, y_2$，表示一个子矩阵的左上角坐标和右下角坐标。对于每个询问输出子矩阵中所有数的和。</p>
-<h1 id="suan-fa-si-xiang">算法思想</h1>
-<p><img src="https://cdn.acwing.com/media/article/image/2021/05/31/94631_7918bc07c1-IMG_20210531_174119_edit_1251827793829296.jpg" alt="IMG_20210531_174119_edit_1251827793829296.jpg"></p>
-<h1 id="wan-zheng-dai-ma">完整代码</h1>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">1010</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> a[N][N], s[N][N];</span><br><span class="line"><span class="keyword">int</span> n, m, q;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m &gt;&gt; q;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i ++ ) </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= m; j ++ )</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;a[i][j]);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i ++ )</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= m; j ++ )</span><br><span class="line">            s[i][j] = s[i - <span class="number">1</span>][j] + s[i][j - <span class="number">1</span>] - s[i - <span class="number">1</span>][j - <span class="number">1</span>] + a[i][j];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span> (q -- )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> x1, x2, y1, y2;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d%d%d%d&quot;</span>, &amp;x1, &amp;y1, &amp;x2, &amp;y2);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, s[x2][y2] - s[x2][y1 - <span class="number">1</span>] - s[x1 - <span class="number">1</span>][y2] + s[x1 - <span class="number">1</span>][y1 - <span class="number">1</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    n, m, q = <span class="built_in">map</span>(<span class="built_in">int</span>, <span class="built_in">input</span>().split())</span><br><span class="line">    N = <span class="number">1010</span></span><br><span class="line">    a = [[<span class="number">0</span>] * N <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(N)]</span><br><span class="line">    s = [[<span class="number">0</span>] * N <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(N)]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n + <span class="number">1</span>):</span><br><span class="line">        a[i][<span class="number">1</span>:m+<span class="number">1</span>] = <span class="built_in">list</span>(<span class="built_in">map</span>(<span class="built_in">int</span>, <span class="built_in">input</span>().split()))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n + <span class="number">1</span>):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, m + <span class="number">1</span>):</span><br><span class="line">            s[i][j] = s[i - <span class="number">1</span>][j] + s[i][j - <span class="number">1</span>] - s[i - <span class="number">1</span>][j - <span class="number">1</span>] + a[i][j]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> q:</span><br><span class="line">        q -= <span class="number">1</span></span><br><span class="line">        x1, y1, x2, y2 = <span class="built_in">map</span>(<span class="built_in">int</span>, <span class="built_in">input</span>().split())</span><br><span class="line">        <span class="built_in">print</span>(s[x2][y2] - s[x1 - <span class="number">1</span>][y2] - s[x2][y1 - <span class="number">1</span>] + s[x1 - <span class="number">1</span>][y1 - <span class="number">1</span>])</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>算法学习</category>
-        <category>算法基础</category>
-        <category>基础算法</category>
-      </categories>
-      <tags>
-        <tag>前缀和</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>softmax回归的实现</title>
     <url>/Dive_into_Deep_Learning/fb2fc04f/</url>
     <content><![CDATA[<blockquote>
@@ -1783,6 +1762,27 @@ $$
         <category>《动手学深度学习》学习笔记</category>
         <category>线性神经网络</category>
       </categories>
+  </entry>
+  <entry>
+    <title>二维前缀和</title>
+    <url>/algo_level1/b8859ab5/</url>
+    <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-798-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/798/">原题链接</a></h1>
+<h1 id="ti-mu-zhong-shu">题目重述</h1>
+<p>输入一个 $n$ 行 $m$ 列的整数矩阵，再输入 $q$ 个询问，每个询问包含四个整数 $x_1, y_1, x_2, y_2$，表示一个子矩阵的左上角坐标和右下角坐标。对于每个询问输出子矩阵中所有数的和。</p>
+<h1 id="suan-fa-si-xiang">算法思想</h1>
+<p><img src="https://cdn.acwing.com/media/article/image/2021/05/31/94631_7918bc07c1-IMG_20210531_174119_edit_1251827793829296.jpg" alt="IMG_20210531_174119_edit_1251827793829296.jpg"></p>
+<h1 id="wan-zheng-dai-ma">完整代码</h1>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">1010</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> a[N][N], s[N][N];</span><br><span class="line"><span class="keyword">int</span> n, m, q;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m &gt;&gt; q;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i ++ ) </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= m; j ++ )</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;a[i][j]);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i ++ )</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= m; j ++ )</span><br><span class="line">            s[i][j] = s[i - <span class="number">1</span>][j] + s[i][j - <span class="number">1</span>] - s[i - <span class="number">1</span>][j - <span class="number">1</span>] + a[i][j];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span> (q -- )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> x1, x2, y1, y2;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d%d%d%d&quot;</span>, &amp;x1, &amp;y1, &amp;x2, &amp;y2);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, s[x2][y2] - s[x2][y1 - <span class="number">1</span>] - s[x1 - <span class="number">1</span>][y2] + s[x1 - <span class="number">1</span>][y1 - <span class="number">1</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    n, m, q = <span class="built_in">map</span>(<span class="built_in">int</span>, <span class="built_in">input</span>().split())</span><br><span class="line">    N = <span class="number">1010</span></span><br><span class="line">    a = [[<span class="number">0</span>] * N <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(N)]</span><br><span class="line">    s = [[<span class="number">0</span>] * N <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(N)]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n + <span class="number">1</span>):</span><br><span class="line">        a[i][<span class="number">1</span>:m+<span class="number">1</span>] = <span class="built_in">list</span>(<span class="built_in">map</span>(<span class="built_in">int</span>, <span class="built_in">input</span>().split()))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n + <span class="number">1</span>):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, m + <span class="number">1</span>):</span><br><span class="line">            s[i][j] = s[i - <span class="number">1</span>][j] + s[i][j - <span class="number">1</span>] - s[i - <span class="number">1</span>][j - <span class="number">1</span>] + a[i][j]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> q:</span><br><span class="line">        q -= <span class="number">1</span></span><br><span class="line">        x1, y1, x2, y2 = <span class="built_in">map</span>(<span class="built_in">int</span>, <span class="built_in">input</span>().split())</span><br><span class="line">        <span class="built_in">print</span>(s[x2][y2] - s[x1 - <span class="number">1</span>][y2] - s[x2][y1 - <span class="number">1</span>] + s[x1 - <span class="number">1</span>][y1 - <span class="number">1</span>])</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>算法学习</category>
+        <category>算法基础</category>
+        <category>基础算法</category>
+      </categories>
+      <tags>
+        <tag>前缀和</tag>
+      </tags>
   </entry>
   <entry>
     <title>二进制中1的个数</title>
@@ -2340,6 +2340,44 @@ $2\leq R,C\leq 200$</p>
       </categories>
       <tags>
         <tag>BFS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>翻硬币</title>
+    <url>/LanQiaoCup/cdcb9931/</url>
+    <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-description-1210-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/description/1210/">原题链接</a></h1>
+<h1 id="ti-mu-miao-shu">题目描述</h1>
+<p>小明正在玩一个“翻硬币”的游戏。</p>
+<p>桌上放着排成一排的若干硬币。我们用 <code>*</code> 表示正面，用 <code>o</code> 表示反面（是小写字母，不是零）。</p>
+<p>比如，可能情形是：<code>**oo***oooo</code></p>
+<p>如果同时翻转左边的两个硬币，则变为：<code>oooo***oooo</code></p>
+<p>现在小明的问题是：如果已知了初始状态和要达到的目标状态，每次只能同时翻转相邻的两个硬币,那么对特定的局面，最少要翻动多少次呢？</p>
+<p>我们约定：把翻动相邻的两个硬币叫做一步操作。</p>
+<h2 id="shu-ru-ge-shi" id="输入格式">输入格式</h2>
+<p>两行等长的字符串，分别表示初始状态和要达到的目标状态。</p>
+<h2 id="shu-chu-ge-shi" id="输出格式">输出格式</h2>
+<p>一个整数，表示最小操作步数</p>
+<h2 id="shu-ju-fan-wei" id="数据范围">数据范围</h2>
+<p>输入字符串的长度均不超过 $100$。<br>
+数据保证答案一定有解。</p>
+<h2 id="shu-ru-yang-li" id="输入样例">输入样例</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">**********</span><br><span class="line">o****o****</span><br></pre></td></tr></table></figure>
+<h2 id="shu-chu-yang-li" id="输出样例">输出样例</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">5</span><br></pre></td></tr></table></figure>
+<h2 id="shu-ru-yang-li-1" id="输入样例-2">输入样例</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">*o**o***o***</span><br><span class="line">*o***o**o***</span><br></pre></td></tr></table></figure>
+<h2 id="shu-chu-yang-li-1" id="输出样例-2">输出样例</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1</span><br></pre></td></tr></table></figure>
+<h1 id="ti-mu-fen-xi">题目分析</h1>
+<p>如果原始位置硬币状态与目标状态同一位置的不一样，那么肯定是要翻的，一旦翻过来之后，如果下一个位置，原始状态和目标状态还是不一样，那么肯定要继续翻，并且只需要从一个方向一直操作下去，所有的状态都是确定好的，因此直接遍历一遍即可。</p>
+<h1 id="wan-zheng-dai-ma">完整代码</h1>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">110</span>;</span><br><span class="line"></span><br><span class="line">string src, aim;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">op</span><span class="params">(<span class="keyword">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (src[x] == <span class="string">&#x27;o&#x27;</span>) src[x] = <span class="string">&#x27;*&#x27;</span>;</span><br><span class="line">    <span class="keyword">else</span> src[x] = <span class="string">&#x27;o&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cin &gt;&gt; src &gt;&gt; aim;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; src.<span class="built_in">size</span>() - <span class="number">1</span>; i ++ )</span><br><span class="line">        <span class="keyword">if</span> (src[i] != aim[i])</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">op</span>(i), <span class="built_in">op</span>(i + <span class="number">1</span>);</span><br><span class="line">            cnt ++ ;</span><br><span class="line">        &#125;</span><br><span class="line">    </span><br><span class="line">    cout &lt;&lt; cnt &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>算法学习</category>
+        <category>蓝桥杯刷题笔记</category>
+      </categories>
+      <tags>
+        <tag>递推</tag>
       </tags>
   </entry>
   <entry>
