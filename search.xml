@@ -1112,9 +1112,9 @@
       
         <tags>
             
-            <tag> BFS </tag>
-            
             <tag> DFS </tag>
+            
+            <tag> BFS </tag>
             
             <tag> Flood Fill </tag>
             
