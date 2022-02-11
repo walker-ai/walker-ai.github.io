@@ -468,6 +468,44 @@ $1\leq K\leq 2\times 10^6$</p>
       </tags>
   </entry>
   <entry>
+    <title>DAY18-奶牛慢跑</title>
+    <url>/DailyOneProblem_2022_Spring/f961cec9/</url>
+    <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-1906-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/1906/">原题链接</a></h1>
+<h1 id="ti-mu-miao-shu">题目描述</h1>
+<p>奶牛们又出去锻炼蹄子去了！</p>
+<p>有 $N$ 头奶牛在无限长的单行道上慢跑。</p>
+<p>每头奶牛在跑道上开始奔跑的位置都不相同，一些奶牛的奔跑速度也可能不同。</p>
+<p>由于跑道是单行道，十分狭窄，奶牛们无法相互超越。</p>
+<p>当一头速度很快的牛追上另一头牛时，她必须减速至与另一头牛速度相同以免发生碰撞，并成为同一跑步小组的一员。</p>
+<p>最终，再也没有奶牛会撞到（追上）其他奶牛了。</p>
+<p>约翰想知道在这种情况下，会剩下多少个跑步小组。</p>
+<h2 id="shu-ru-ge-shi" id="输入格式">输入格式</h2>
+<p>第一行包含整数 $N$.</p>
+<p>接下来 $N$ 行，每行包含一头奶牛的初始位置和跑步速度。</p>
+<p>所有奶牛的初始位置各不相同，且是按照递增顺序给出的。</p>
+<h2 id="shu-chu-ge-shi" id="输出格式">输出格式</h2>
+<p>输出一个整数，表示最终剩下的小组数量。</p>
+<h2 id="shu-ju-fan-wei" id="数据范围">数据范围</h2>
+<p>$1\leq N\leq 10^5,$<br>
+初始位置范围 $[0,10^9]$，<br>
+跑步速度范围 $[1,10^9]$</p>
+<h2 id="shu-ru-yang-li" id="输入样例">输入样例</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">5<br>0 1<br>1 2<br>2 3<br>3 2<br>6 1<br></code></pre></td></tr></table></figure>
+<h2 id="shu-chu-yang-li" id="输出样例">输出样例</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">2<br></code></pre></td></tr></table></figure>
+<h1 id="ti-mu-fen-xi">题目分析</h1>
+<p>由于跑道无限长，所以可以想到只要前者的速度大于后者，就一定会发生相撞，这样可将问题转化为，给定一个序列，如果将其中所有的严格单调递减区间缩成一个点，那么最终还剩下多少个点。那么很简单，扫一遍数组，用 <code>vector</code> 存剩下的点就可以了，如果当前枚举到的点的速度小于 <code>vector</code> 中最后一个点，那么就弹出，然后将当前点加入 <code>vector</code>。</p>
+<h1 id="wan-zheng-dai-ma">完整代码</h1>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> n, x, v; <br>    cin &gt;&gt; n;<br>    vector&lt;<span class="hljs-keyword">int</span>&gt; q;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++ )<br>    &#123;<br>        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d%d&quot;</span>, &amp;x, &amp;v);<br>        <span class="hljs-keyword">while</span> (q.<span class="hljs-built_in">size</span>() &amp;&amp; v &lt; q.<span class="hljs-built_in">back</span>()) q.<span class="hljs-built_in">pop_back</span>();<br>        q.<span class="hljs-built_in">push_back</span>(v);<br>    &#125;<br>    cout &lt;&lt; q.<span class="hljs-built_in">size</span>() &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>算法学习</category>
+        <category>2022春季每日一题</category>
+      </categories>
+      <tags>
+        <tag>双指针</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>DAY17-公平摄影</title>
     <url>/DailyOneProblem_2022_Spring/97ec7278/</url>
     <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-description-1915-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/description/1915/">原题链接</a></h1>
@@ -532,94 +570,6 @@ $$
         <tag>枚举</tag>
         <tag>前缀和</tag>
         <tag>哈希表</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>DAY18-奶牛慢跑</title>
-    <url>/DailyOneProblem_2022_Spring/f961cec9/</url>
-    <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-1906-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/1906/">原题链接</a></h1>
-<h1 id="ti-mu-miao-shu">题目描述</h1>
-<p>奶牛们又出去锻炼蹄子去了！</p>
-<p>有 $N$ 头奶牛在无限长的单行道上慢跑。</p>
-<p>每头奶牛在跑道上开始奔跑的位置都不相同，一些奶牛的奔跑速度也可能不同。</p>
-<p>由于跑道是单行道，十分狭窄，奶牛们无法相互超越。</p>
-<p>当一头速度很快的牛追上另一头牛时，她必须减速至与另一头牛速度相同以免发生碰撞，并成为同一跑步小组的一员。</p>
-<p>最终，再也没有奶牛会撞到（追上）其他奶牛了。</p>
-<p>约翰想知道在这种情况下，会剩下多少个跑步小组。</p>
-<h2 id="shu-ru-ge-shi" id="输入格式">输入格式</h2>
-<p>第一行包含整数 $N$.</p>
-<p>接下来 $N$ 行，每行包含一头奶牛的初始位置和跑步速度。</p>
-<p>所有奶牛的初始位置各不相同，且是按照递增顺序给出的。</p>
-<h2 id="shu-chu-ge-shi" id="输出格式">输出格式</h2>
-<p>输出一个整数，表示最终剩下的小组数量。</p>
-<h2 id="shu-ju-fan-wei" id="数据范围">数据范围</h2>
-<p>$1\leq N\leq 10^5,$<br>
-初始位置范围 $[0,10^9]$，<br>
-跑步速度范围 $[1,10^9]$</p>
-<h2 id="shu-ru-yang-li" id="输入样例">输入样例</h2>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">5<br>0 1<br>1 2<br>2 3<br>3 2<br>6 1<br></code></pre></td></tr></table></figure>
-<h2 id="shu-chu-yang-li" id="输出样例">输出样例</h2>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">2<br></code></pre></td></tr></table></figure>
-<h1 id="ti-mu-fen-xi">题目分析</h1>
-<p>由于跑道无限长，所以可以想到只要前者的速度大于后者，就一定会发生相撞，这样可将问题转化为，给定一个序列，如果将其中所有的严格单调递减区间缩成一个点，那么最终还剩下多少个点。那么很简单，扫一遍数组，用 <code>vector</code> 存剩下的点就可以了，如果当前枚举到的点的速度小于 <code>vector</code> 中最后一个点，那么就弹出，然后将当前点加入 <code>vector</code>。</p>
-<h1 id="wan-zheng-dai-ma">完整代码</h1>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> n, x, v; <br>    cin &gt;&gt; n;<br>    vector&lt;<span class="hljs-keyword">int</span>&gt; q;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++ )<br>    &#123;<br>        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d%d&quot;</span>, &amp;x, &amp;v);<br>        <span class="hljs-keyword">while</span> (q.<span class="hljs-built_in">size</span>() &amp;&amp; v &lt; q.<span class="hljs-built_in">back</span>()) q.<span class="hljs-built_in">pop_back</span>();<br>        q.<span class="hljs-built_in">push_back</span>(v);<br>    &#125;<br>    cout &lt;&lt; q.<span class="hljs-built_in">size</span>() &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>算法学习</category>
-        <category>2022春季每日一题</category>
-      </categories>
-      <tags>
-        <tag>双指针</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>DAY2-干草堆</title>
-    <url>/DailyOneProblem_2022_Spring/ce3edfc5/</url>
-    <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-description-2043-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/description/2043/">原题链接</a></h1>
-<h1 id="ti-mu-miao-shu">题目描述</h1>
-<p>贝茜对她最近在农场周围造成的一切恶作剧感到抱歉，她同意帮助农夫约翰把一批新到的干草捆堆起来。</p>
-<p>开始时，共有 $N$ 个空干草堆，编号 $1\sim N$。</p>
-<p>约翰给贝茜下达了 $K$ 个指令，每条指令的格式为 <code>A B</code>，这意味着贝茜要在 $A…B$ 范围内的每个干草堆的顶部添加一个新的干草捆。</p>
-<p>例如，如果贝茜收到指令 <code>10 13</code>，则她应在干草堆 $10,11,12,13$ 中各添加一个干草捆。</p>
-<p>在贝茜完成了所有指令后，约翰想知道 $N$ 个干草堆的中值高度——也就是说，如果干草堆按照高度从小到大排列，位于中间的干草堆的高度。</p>
-<p>方便起见，$N$ 一定是奇数，所以中间堆是唯一的。</p>
-<p>请帮助贝茜确定约翰问题的答案。</p>
-<h2 id="shu-ru-ge-shi" id="输入格式">输入格式</h2>
-<p>第一行包含 $N$ 和 $K$。</p>
-<p>接下来 $K$ 行，每行包含两个整数 $A,B$，用来描述一个指令。</p>
-<h2 id="shu-chu-ge-shi" id="输出格式">输出格式</h2>
-<p>输出完成所有指令后，$N$ 个干草堆的中值高度。</p>
-<h2 id="shu-ju-fan-wei" id="数据范围">数据范围</h2>
-<p>$1\leq N\leq 106,$<br>
-$1\leq K\leq 25000,$<br>
-$1\leq A\leq B\leq N$</p>
-<h2 id="shu-ru-yang-li" id="输入样例">输入样例</h2>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">7 4<br>5 5<br>2 4<br>4 6<br>3 5<br></code></pre></td></tr></table></figure>
-<h2 id="shu-chu-yang-li" id="输出样例">输出样例</h2>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">1<br></code></pre></td></tr></table></figure>
-<h2 id="yang-li-jie-shi" id="样例解释">样例解释</h2>
-<p>贝茜完成所有指令后，各堆高度为 $0,1,2,3,3,1,0$。</p>
-<p>将各高度从小到大排序后，得到 $0,0,1,1,2,3,3$，位于中间的是 $1$。</p>
-<h1 id="ti-mu-fen-xi-wan-zheng-dai-ma">题目分析/完整代码</h1>
-<h2 id="jie-fa-yi" id="解法一">解法一</h2>
-<blockquote>
-<p>差分 + 快速排序 / 第 k 个数</p>
-</blockquote>
-<p>根据题目描述，我们可以想到区间内整体加上一个数可以使用差分的方式实现，然后直接排序一遍即可得到中位数，这里 $1\leq N\leq 10^6$，$O(n\log n)$ 排序复杂度不会超时。我们也可以用STL内的<code>nth_element</code>来以期望 $O(n)$ 的复杂度找到第k个大小的数。</p>
-<p>其中<code>nth_element(first, nth, last, compare)</code>用于求<code>[first, last]</code>这个区间中第n大小的元素，如果参数加入了<code>compare</code>函数，就按<code>compare</code>函数的方式比较。但是仅能确定该数是整个区间<code>[first, last]</code>内第k个大小的数，至于前面和后面数的大小关系无法求出。</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">1e6</span> + <span class="hljs-number">10</span>;<br><br><span class="hljs-keyword">int</span> a[N], b[N];  <span class="hljs-comment">// b1 = a1 - a0, b2 = a2 - a1， b是a的差分数组，a是b的前缀和数组</span><br><span class="hljs-keyword">int</span> n, k;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">insert</span><span class="hljs-params">(<span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r, <span class="hljs-keyword">int</span> c)</span></span><br><span class="hljs-function"></span>&#123;<br>    b[l] += c;  <br>    b[r + <span class="hljs-number">1</span>] -= c;  <br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n &gt;&gt; k;<br>    <br>    <span class="hljs-keyword">while</span> (k -- )<br>    &#123;<br>        <span class="hljs-keyword">int</span> l, r;<br>        cin &gt;&gt; l &gt;&gt; r;<br>        <span class="hljs-built_in">insert</span>(l, r, <span class="hljs-number">1</span>);<br>    &#125;<br>    <br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++ ) a[i] = a[i - <span class="hljs-number">1</span>] + b[i];<br>    <br>    <span class="hljs-comment">// sort(a + 1, a + n + 1);  </span><br>    <span class="hljs-built_in">nth_element</span>(a + <span class="hljs-number">1</span>, a + n / <span class="hljs-number">2</span> + <span class="hljs-number">1</span>, a + n + <span class="hljs-number">1</span>);<br>    <br>    cout &lt;&lt; a[n / <span class="hljs-number">2</span> + <span class="hljs-number">1</span>] &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-<h2 id="jie-fa-er" id="解法二">解法二</h2>
-<blockquote>
-<p>差分 + 桶排序</p>
-</blockquote>
-<p>桶排序的时间复杂度平均也是 $O(n)$ 的，但实现起来感觉有点麻烦，这里就简单做个记录吧：<a href="https://www.acwing.com/blog/content/8989/">桶排序原理</a></p>
-]]></content>
-      <categories>
-        <category>算法学习</category>
-        <category>2022春季每日一题</category>
-      </categories>
-      <tags>
-        <tag>差分</tag>
       </tags>
   </entry>
   <entry>
@@ -710,6 +660,122 @@ $1\leq A\leq B\leq N$</p>
       </tags>
   </entry>
   <entry>
+    <title>DAY2-干草堆</title>
+    <url>/DailyOneProblem_2022_Spring/ce3edfc5/</url>
+    <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-description-2043-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/description/2043/">原题链接</a></h1>
+<h1 id="ti-mu-miao-shu">题目描述</h1>
+<p>贝茜对她最近在农场周围造成的一切恶作剧感到抱歉，她同意帮助农夫约翰把一批新到的干草捆堆起来。</p>
+<p>开始时，共有 $N$ 个空干草堆，编号 $1\sim N$。</p>
+<p>约翰给贝茜下达了 $K$ 个指令，每条指令的格式为 <code>A B</code>，这意味着贝茜要在 $A…B$ 范围内的每个干草堆的顶部添加一个新的干草捆。</p>
+<p>例如，如果贝茜收到指令 <code>10 13</code>，则她应在干草堆 $10,11,12,13$ 中各添加一个干草捆。</p>
+<p>在贝茜完成了所有指令后，约翰想知道 $N$ 个干草堆的中值高度——也就是说，如果干草堆按照高度从小到大排列，位于中间的干草堆的高度。</p>
+<p>方便起见，$N$ 一定是奇数，所以中间堆是唯一的。</p>
+<p>请帮助贝茜确定约翰问题的答案。</p>
+<h2 id="shu-ru-ge-shi" id="输入格式">输入格式</h2>
+<p>第一行包含 $N$ 和 $K$。</p>
+<p>接下来 $K$ 行，每行包含两个整数 $A,B$，用来描述一个指令。</p>
+<h2 id="shu-chu-ge-shi" id="输出格式">输出格式</h2>
+<p>输出完成所有指令后，$N$ 个干草堆的中值高度。</p>
+<h2 id="shu-ju-fan-wei" id="数据范围">数据范围</h2>
+<p>$1\leq N\leq 106,$<br>
+$1\leq K\leq 25000,$<br>
+$1\leq A\leq B\leq N$</p>
+<h2 id="shu-ru-yang-li" id="输入样例">输入样例</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">7 4<br>5 5<br>2 4<br>4 6<br>3 5<br></code></pre></td></tr></table></figure>
+<h2 id="shu-chu-yang-li" id="输出样例">输出样例</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">1<br></code></pre></td></tr></table></figure>
+<h2 id="yang-li-jie-shi" id="样例解释">样例解释</h2>
+<p>贝茜完成所有指令后，各堆高度为 $0,1,2,3,3,1,0$。</p>
+<p>将各高度从小到大排序后，得到 $0,0,1,1,2,3,3$，位于中间的是 $1$。</p>
+<h1 id="ti-mu-fen-xi-wan-zheng-dai-ma">题目分析/完整代码</h1>
+<h2 id="jie-fa-yi" id="解法一">解法一</h2>
+<blockquote>
+<p>差分 + 快速排序 / 第 k 个数</p>
+</blockquote>
+<p>根据题目描述，我们可以想到区间内整体加上一个数可以使用差分的方式实现，然后直接排序一遍即可得到中位数，这里 $1\leq N\leq 10^6$，$O(n\log n)$ 排序复杂度不会超时。我们也可以用STL内的<code>nth_element</code>来以期望 $O(n)$ 的复杂度找到第k个大小的数。</p>
+<p>其中<code>nth_element(first, nth, last, compare)</code>用于求<code>[first, last]</code>这个区间中第n大小的元素，如果参数加入了<code>compare</code>函数，就按<code>compare</code>函数的方式比较。但是仅能确定该数是整个区间<code>[first, last]</code>内第k个大小的数，至于前面和后面数的大小关系无法求出。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">1e6</span> + <span class="hljs-number">10</span>;<br><br><span class="hljs-keyword">int</span> a[N], b[N];  <span class="hljs-comment">// b1 = a1 - a0, b2 = a2 - a1， b是a的差分数组，a是b的前缀和数组</span><br><span class="hljs-keyword">int</span> n, k;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">insert</span><span class="hljs-params">(<span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r, <span class="hljs-keyword">int</span> c)</span></span><br><span class="hljs-function"></span>&#123;<br>    b[l] += c;  <br>    b[r + <span class="hljs-number">1</span>] -= c;  <br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n &gt;&gt; k;<br>    <br>    <span class="hljs-keyword">while</span> (k -- )<br>    &#123;<br>        <span class="hljs-keyword">int</span> l, r;<br>        cin &gt;&gt; l &gt;&gt; r;<br>        <span class="hljs-built_in">insert</span>(l, r, <span class="hljs-number">1</span>);<br>    &#125;<br>    <br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++ ) a[i] = a[i - <span class="hljs-number">1</span>] + b[i];<br>    <br>    <span class="hljs-comment">// sort(a + 1, a + n + 1);  </span><br>    <span class="hljs-built_in">nth_element</span>(a + <span class="hljs-number">1</span>, a + n / <span class="hljs-number">2</span> + <span class="hljs-number">1</span>, a + n + <span class="hljs-number">1</span>);<br>    <br>    cout &lt;&lt; a[n / <span class="hljs-number">2</span> + <span class="hljs-number">1</span>] &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="jie-fa-er" id="解法二">解法二</h2>
+<blockquote>
+<p>差分 + 桶排序</p>
+</blockquote>
+<p>桶排序的时间复杂度平均也是 $O(n)$ 的，但实现起来感觉有点麻烦，这里就简单做个记录吧：<a href="https://www.acwing.com/blog/content/8989/">桶排序原理</a></p>
+]]></content>
+      <categories>
+        <category>算法学习</category>
+        <category>2022春季每日一题</category>
+      </categories>
+      <tags>
+        <tag>差分</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>DAY20-贝茜的报复</title>
+    <url>/DailyOneProblem_2022_Spring/444ae334/</url>
+    <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-1877-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/1877/">原题链接</a></h1>
+<h1 id="ti-mu-miao-shu">题目描述</h1>
+<p>农夫约翰和奶牛贝茜喜欢在业余时间互相出数学题。</p>
+<p>约翰给贝茜出了一道相当难的问题，导致她没能解决。</p>
+<p>现在，她希望通过给约翰出一道有挑战性的难题来报复他。</p>
+<p>贝茜给了约翰一个表达式 $(B+E+S+S+I+E)(G+O+E+S)(M+O+O)$，其中包含七个变量 $B,E,S,I,G,O,M$（$O$ 是变量，不是零）。</p>
+<p>对于每个变量，她给约翰一个列表，表中包含该变量可采用的最多 $20$ 个整数值。</p>
+<p>她要求约翰计算，共有多少种给变量赋值的方法可以使得表达式的计算结果为偶数。</p>
+<h2 id="shu-ru-ge-shi" id="输入格式">输入格式</h2>
+<p>第一行包含一个整数 $N$。</p>
+<p>接下来 $N$ 行，每行包含一个变量和该变量的一个可能值。</p>
+<p>每个变量至少出现 $1$ 次，最多出现 $20$ 次。</p>
+<p>同一变量不会重复列出同一可能值。</p>
+<h2 id="shu-chu-ge-shi" id="输出格式">输出格式</h2>
+<p>输出可以使得表达式的计算结果是偶数的给变量赋值的方法总数。</p>
+<h2 id="shu-ju-fan-wei" id="数据范围">数据范围</h2>
+<p>$7\leq N\leq 140,$</p>
+<p>所有变量的可能取值范围 $[−300,300]$<br>
+本题答案不会超出 <code>int</code> 范围。</p>
+<h2 id="shu-ru-yang-li" id="输入样例">输入样例</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">10<br>B 2<br>E 5<br>S 7<br>I 10<br>O 16<br>M 19<br>B 3<br>G 1<br>I 9<br>M 2<br></code></pre></td></tr></table></figure>
+<h2 id="shu-chu-yang-li" id="输出样例">输出样例</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">6<br></code></pre></td></tr></table></figure>
+<h2 id="yang-li-jie-shi" id="样例解释">样例解释</h2>
+<p>共有 $6$ 种可能的赋值方式：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">(B,E,S,I,G,O,M) = (2, 5, 7, 10, 1, 16, 19) -&gt; 53,244<br>                = (2, 5, 7, 10, 1, 16, 2 ) -&gt; 35,496<br>                = (2, 5, 7, 9,  1, 16, 2 ) -&gt; 34,510<br>                = (3, 5, 7, 10, 1, 16, 2 ) -&gt; 36,482<br>                = (3, 5, 7, 9,  1, 16, 19) -&gt; 53,244<br>                = (3, 5, 7, 9,  1, 16, 2 ) -&gt; 35,496<br></code></pre></td></tr></table></figure>
+<p>注意，<code>(2, 5, 7, 10, 1, 16, 19)</code> 和 <code>(3, 5, 7, 9, 1, 16, 19)</code>，虽然计算结果相同，但是赋值方式不同，所以要分别计数。</p>
+<h1 id="ti-mu-fen-xi-wan-zheng-dai-ma">题目分析/完整代码</h1>
+<h2 id="jie-fa-yi" id="解法一">解法一</h2>
+<blockquote>
+<p>二进制</p>
+</blockquote>
+<p>一共有7个变量，每个变量最多有20个赋值，暴力枚举的话，一共有 $20^{7}$ 种情况，但由于题目要求求出计算结果为偶数的情况一共有多少种，因此可以不用枚举每一种情况。</p>
+<p>这里涉及到一个公式，即</p>
+<p>
+$$
+(a + b)\ \%\ m = c \Rightarrow
+\begin{cases}
+a\ \%\ m = c \\
+c\ \%\ m = c \\
+\end{cases}
+$$
+</p>
+<p>所以我们只需要讨论每个因子的取值情况就可以了。而三个因子中，重复出现的字母例如第一个因子中的 $S$ 和 $E$，第三个因子中的 $O$，出现偶数次的字母可以直接省略。</p>
+<p>这样，就只需要考虑 $B$、$I$、$G$、$O$、$E$、$S$、$M$ 了。可以开一个哈希表，存储每个字母的奇、偶赋值情况，然后用二进制的方法枚举每一个字符选奇、偶的情况，对于每一种情况而言，根据乘法原理，将所有符合当前情况的方案数累乘起来，再累加至总答案即可。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;unordered_map&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> n;<br>    cin &gt;&gt; n;<br>    <br>    unordered_map&lt;<span class="hljs-keyword">char</span>, <span class="hljs-keyword">int</span>&gt; cnt[<span class="hljs-number">2</span>];    <br>    <span class="hljs-keyword">while</span> (n -- )<br>    &#123;<br>        <span class="hljs-keyword">char</span> c;<br>        <span class="hljs-keyword">int</span> x;<br>        cin &gt;&gt; c &gt;&gt; x;<br>        cnt[<span class="hljs-built_in">abs</span>(x) % <span class="hljs-number">2</span>][c] ++ ;<br>    &#125;<br>    <br>    <span class="hljs-keyword">char</span> str[] = <span class="hljs-string">&quot;BESIGOM&quot;</span>;<br>    <br>    unordered_map&lt;<span class="hljs-keyword">char</span>, <span class="hljs-keyword">int</span>&gt; v;  <span class="hljs-comment">// </span><br>    <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">7</span>; i ++ )<br>    &#123;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; <span class="hljs-number">7</span>; j ++ )<br>            v[str[j]] = i &gt;&gt; j &amp; <span class="hljs-number">1</span>;  <span class="hljs-comment">// 记录当前这个字符是奇数还是偶数</span><br>             <br>        <span class="hljs-keyword">if</span> (((v[<span class="hljs-string">&#x27;B&#x27;</span>] + v[<span class="hljs-string">&#x27;I&#x27;</span>]) * (v[<span class="hljs-string">&#x27;G&#x27;</span>] + v[<span class="hljs-string">&#x27;O&#x27;</span>] + v[<span class="hljs-string">&#x27;E&#x27;</span>] + v[<span class="hljs-string">&#x27;S&#x27;</span>]) * v[<span class="hljs-string">&#x27;M&#x27;</span>]) % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>)<br>        &#123;<br>            <span class="hljs-keyword">int</span> sum = <span class="hljs-number">1</span>;<br>            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; <span class="hljs-number">7</span>; j ++ )<br>                sum *= cnt[i &gt;&gt; j &amp; <span class="hljs-number">1</span>][str[j]];<br>            res += sum;<br>        &#125;<br>    &#125;<br>    cout &lt;&lt; res &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="jie-fa-er" id="解法二">解法二</h2>
+<blockquote>
+<p>DFS</p>
+</blockquote>
+<p>思路和解法一一致，只是解法一是用二进制 + 枚举迭代的方式累加答案，而解法二是用DFS累加答案。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;unordered_map&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">int</span> ans;<br>unordered_map&lt;<span class="hljs-keyword">char</span>, <span class="hljs-keyword">int</span>&gt; cnt[<span class="hljs-number">2</span>], v;<br><span class="hljs-keyword">char</span> str[] = <span class="hljs-string">&quot;BESIGOM&quot;</span>;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> x)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span> (u == <span class="hljs-number">7</span>)<br>    &#123;<br>        <span class="hljs-keyword">if</span> (((v[<span class="hljs-string">&#x27;B&#x27;</span>] + v[<span class="hljs-string">&#x27;I&#x27;</span>]) * (v[<span class="hljs-string">&#x27;G&#x27;</span>] + v[<span class="hljs-string">&#x27;O&#x27;</span>] + v[<span class="hljs-string">&#x27;E&#x27;</span>] + v[<span class="hljs-string">&#x27;S&#x27;</span>]) * v[<span class="hljs-string">&#x27;M&#x27;</span>]) % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>)<br>            ans += x;<br>        <span class="hljs-keyword">return</span>;<br>    &#125;<br>    <span class="hljs-keyword">char</span> c = str[u];<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">2</span>; i ++ )   <br>    &#123;<br>        v[c] = i;<br>        <span class="hljs-built_in">dfs</span>(u + <span class="hljs-number">1</span>, x * cnt[i][c]);<br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> n;<br>    cin &gt;&gt; n;<br>    <br>    <span class="hljs-keyword">while</span> (n -- )<br>    &#123;<br>        <span class="hljs-keyword">char</span> c;<br>        <span class="hljs-keyword">int</span> x;<br>        cin &gt;&gt; c &gt;&gt; x;<br>        cnt[<span class="hljs-built_in">abs</span>(x) % <span class="hljs-number">2</span>][c] ++ ;<br>    &#125;<br>    <br>    <span class="hljs-built_in">dfs</span>(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>);<br>    cout &lt;&lt; ans &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>算法学习</category>
+        <category>2022春季每日一题</category>
+      </categories>
+      <tags>
+        <tag>枚举</tag>
+        <tag>二进制</tag>
+        <tag>DFS</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>DAY21-愤怒的奶牛</title>
     <url>/DailyOneProblem_2022_Spring/a894ebc1/</url>
     <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-description-1857-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/description/1857/">原题链接</a></h1>
@@ -797,72 +863,6 @@ $1\leq r_i\leq 100$</p>
       </tags>
   </entry>
   <entry>
-    <title>DAY20-贝茜的报复</title>
-    <url>/DailyOneProblem_2022_Spring/444ae334/</url>
-    <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-1877-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/1877/">原题链接</a></h1>
-<h1 id="ti-mu-miao-shu">题目描述</h1>
-<p>农夫约翰和奶牛贝茜喜欢在业余时间互相出数学题。</p>
-<p>约翰给贝茜出了一道相当难的问题，导致她没能解决。</p>
-<p>现在，她希望通过给约翰出一道有挑战性的难题来报复他。</p>
-<p>贝茜给了约翰一个表达式 $(B+E+S+S+I+E)(G+O+E+S)(M+O+O)$，其中包含七个变量 $B,E,S,I,G,O,M$（$O$ 是变量，不是零）。</p>
-<p>对于每个变量，她给约翰一个列表，表中包含该变量可采用的最多 $20$ 个整数值。</p>
-<p>她要求约翰计算，共有多少种给变量赋值的方法可以使得表达式的计算结果为偶数。</p>
-<h2 id="shu-ru-ge-shi" id="输入格式">输入格式</h2>
-<p>第一行包含一个整数 $N$。</p>
-<p>接下来 $N$ 行，每行包含一个变量和该变量的一个可能值。</p>
-<p>每个变量至少出现 $1$ 次，最多出现 $20$ 次。</p>
-<p>同一变量不会重复列出同一可能值。</p>
-<h2 id="shu-chu-ge-shi" id="输出格式">输出格式</h2>
-<p>输出可以使得表达式的计算结果是偶数的给变量赋值的方法总数。</p>
-<h2 id="shu-ju-fan-wei" id="数据范围">数据范围</h2>
-<p>$7\leq N\leq 140,$</p>
-<p>所有变量的可能取值范围 $[−300,300]$<br>
-本题答案不会超出 <code>int</code> 范围。</p>
-<h2 id="shu-ru-yang-li" id="输入样例">输入样例</h2>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">10<br>B 2<br>E 5<br>S 7<br>I 10<br>O 16<br>M 19<br>B 3<br>G 1<br>I 9<br>M 2<br></code></pre></td></tr></table></figure>
-<h2 id="shu-chu-yang-li" id="输出样例">输出样例</h2>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">6<br></code></pre></td></tr></table></figure>
-<h2 id="yang-li-jie-shi" id="样例解释">样例解释</h2>
-<p>共有 $6$ 种可能的赋值方式：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">(B,E,S,I,G,O,M) = (2, 5, 7, 10, 1, 16, 19) -&gt; 53,244<br>                = (2, 5, 7, 10, 1, 16, 2 ) -&gt; 35,496<br>                = (2, 5, 7, 9,  1, 16, 2 ) -&gt; 34,510<br>                = (3, 5, 7, 10, 1, 16, 2 ) -&gt; 36,482<br>                = (3, 5, 7, 9,  1, 16, 19) -&gt; 53,244<br>                = (3, 5, 7, 9,  1, 16, 2 ) -&gt; 35,496<br></code></pre></td></tr></table></figure>
-<p>注意，<code>(2, 5, 7, 10, 1, 16, 19)</code> 和 <code>(3, 5, 7, 9, 1, 16, 19)</code>，虽然计算结果相同，但是赋值方式不同，所以要分别计数。</p>
-<h1 id="ti-mu-fen-xi-wan-zheng-dai-ma">题目分析/完整代码</h1>
-<h2 id="jie-fa-yi" id="解法一">解法一</h2>
-<blockquote>
-<p>二进制</p>
-</blockquote>
-<p>一共有7个变量，每个变量最多有20个赋值，暴力枚举的话，一共有 $20^{7}$ 种情况，但由于题目要求求出计算结果为偶数的情况一共有多少种，因此可以不用枚举每一种情况。</p>
-<p>这里涉及到一个公式，即</p>
-<p>
-$$
-(a + b)\ \%\ m = c \Rightarrow
-\begin{cases}
-a\ \%\ m = c \\
-c\ \%\ m = c \\
-\end{cases}
-$$
-</p>
-<p>所以我们只需要讨论每个因子的取值情况就可以了。而三个因子中，重复出现的字母例如第一个因子中的 $S$ 和 $E$，第三个因子中的 $O$，出现偶数次的字母可以直接省略。</p>
-<p>这样，就只需要考虑 $B$、$I$、$G$、$O$、$E$、$S$、$M$ 了。可以开一个哈希表，存储每个字母的奇、偶赋值情况，然后用二进制的方法枚举每一个字符选奇、偶的情况，对于每一种情况而言，根据乘法原理，将所有符合当前情况的方案数累乘起来，再累加至总答案即可。</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;unordered_map&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> n;<br>    cin &gt;&gt; n;<br>    <br>    unordered_map&lt;<span class="hljs-keyword">char</span>, <span class="hljs-keyword">int</span>&gt; cnt[<span class="hljs-number">2</span>];    <br>    <span class="hljs-keyword">while</span> (n -- )<br>    &#123;<br>        <span class="hljs-keyword">char</span> c;<br>        <span class="hljs-keyword">int</span> x;<br>        cin &gt;&gt; c &gt;&gt; x;<br>        cnt[<span class="hljs-built_in">abs</span>(x) % <span class="hljs-number">2</span>][c] ++ ;<br>    &#125;<br>    <br>    <span class="hljs-keyword">char</span> str[] = <span class="hljs-string">&quot;BESIGOM&quot;</span>;<br>    <br>    unordered_map&lt;<span class="hljs-keyword">char</span>, <span class="hljs-keyword">int</span>&gt; v;  <span class="hljs-comment">// </span><br>    <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">7</span>; i ++ )<br>    &#123;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; <span class="hljs-number">7</span>; j ++ )<br>            v[str[j]] = i &gt;&gt; j &amp; <span class="hljs-number">1</span>;  <span class="hljs-comment">// 记录当前这个字符是奇数还是偶数</span><br>             <br>        <span class="hljs-keyword">if</span> (((v[<span class="hljs-string">&#x27;B&#x27;</span>] + v[<span class="hljs-string">&#x27;I&#x27;</span>]) * (v[<span class="hljs-string">&#x27;G&#x27;</span>] + v[<span class="hljs-string">&#x27;O&#x27;</span>] + v[<span class="hljs-string">&#x27;E&#x27;</span>] + v[<span class="hljs-string">&#x27;S&#x27;</span>]) * v[<span class="hljs-string">&#x27;M&#x27;</span>]) % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>)<br>        &#123;<br>            <span class="hljs-keyword">int</span> sum = <span class="hljs-number">1</span>;<br>            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; <span class="hljs-number">7</span>; j ++ )<br>                sum *= cnt[i &gt;&gt; j &amp; <span class="hljs-number">1</span>][str[j]];<br>            res += sum;<br>        &#125;<br>    &#125;<br>    cout &lt;&lt; res &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-<h2 id="jie-fa-er" id="解法二">解法二</h2>
-<blockquote>
-<p>DFS</p>
-</blockquote>
-<p>思路和解法一一致，只是解法一是用二进制 + 枚举迭代的方式累加答案，而解法二是用DFS累加答案。</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;unordered_map&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">int</span> ans;<br>unordered_map&lt;<span class="hljs-keyword">char</span>, <span class="hljs-keyword">int</span>&gt; cnt[<span class="hljs-number">2</span>], v;<br><span class="hljs-keyword">char</span> str[] = <span class="hljs-string">&quot;BESIGOM&quot;</span>;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> x)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span> (u == <span class="hljs-number">7</span>)<br>    &#123;<br>        <span class="hljs-keyword">if</span> (((v[<span class="hljs-string">&#x27;B&#x27;</span>] + v[<span class="hljs-string">&#x27;I&#x27;</span>]) * (v[<span class="hljs-string">&#x27;G&#x27;</span>] + v[<span class="hljs-string">&#x27;O&#x27;</span>] + v[<span class="hljs-string">&#x27;E&#x27;</span>] + v[<span class="hljs-string">&#x27;S&#x27;</span>]) * v[<span class="hljs-string">&#x27;M&#x27;</span>]) % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>)<br>            ans += x;<br>        <span class="hljs-keyword">return</span>;<br>    &#125;<br>    <span class="hljs-keyword">char</span> c = str[u];<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">2</span>; i ++ )   <br>    &#123;<br>        v[c] = i;<br>        <span class="hljs-built_in">dfs</span>(u + <span class="hljs-number">1</span>, x * cnt[i][c]);<br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> n;<br>    cin &gt;&gt; n;<br>    <br>    <span class="hljs-keyword">while</span> (n -- )<br>    &#123;<br>        <span class="hljs-keyword">char</span> c;<br>        <span class="hljs-keyword">int</span> x;<br>        cin &gt;&gt; c &gt;&gt; x;<br>        cnt[<span class="hljs-built_in">abs</span>(x) % <span class="hljs-number">2</span>][c] ++ ;<br>    &#125;<br>    <br>    <span class="hljs-built_in">dfs</span>(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>);<br>    cout &lt;&lt; ans &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>算法学习</category>
-        <category>2022春季每日一题</category>
-      </categories>
-      <tags>
-        <tag>枚举</tag>
-        <tag>二进制</tag>
-        <tag>DFS</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>DAY23-农田缩减</title>
     <url>/DailyOneProblem_2022_Spring/57dcba9e/</url>
     <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-1828-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/1828/">原题链接</a></h1>
@@ -910,6 +910,48 @@ $1\leq x,y\leq 40000$</p>
       </tags>
   </entry>
   <entry>
+    <title>DAY24-方块游戏</title>
+    <url>/DailyOneProblem_2022_Spring/2a091d47/</url>
+    <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-description-1815-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/description/1815/">原题链接</a></h1>
+<h1 id="ti-mu-miao-shu">题目描述</h1>
+<p>农夫约翰试图通过给奶牛一套通常用于学龄前儿童的 $N$ 个拼写板来教他的奶牛阅读。</p>
+<p>每个拼写板的每一侧都有一个单词和一个图画。</p>
+<p>例如，一侧可能有单词 <code>cat</code> 和一只小猫，另一侧可能有单词 <code>dog</code> 和一只小狗。</p>
+<p>因此，当所有拼写板放置到地面上时，会显示一组 $N$ 个单词。</p>
+<p>通过翻转其中一部分板子，就可以得到另一组 $N$ 个单词。</p>
+<p>为了帮助奶牛练习单词拼写，约翰想要制作一些木块，在每个木块上都印上一个字母，使得奶牛可以使用这些木块拼出看到的单词。</p>
+<p>为了使得无论哪一组 $N$ 个单词朝上显示，奶牛都能将其全部拼出，就需要印有各种字母的木块都足够的多。</p>
+<p>例如，如果 $N=3$ 且单词 <code>box,cat,car</code> 朝上显示，则奶牛至少需要一个 <code>b</code> 块，一个 <code>o</code> 块，一个 <code>x</code> 块，两个 <code>c</code> 块，两个 <code>a</code> 块，一个 <code>t</code> 块和一个 <code>r</code> 块。</p>
+<p>请帮助约翰确定，印有每种字母的木块至少需要提供多少块，才能使得不管每个板子的哪一侧朝上显示，奶牛都可以拼出所有 $N$ 个可见的单词。</p>
+<h2 id="shu-ru-ge-shi" id="输入格式">输入格式</h2>
+<p>第一行包含整数 $N$。</p>
+<p>接下来 $N$ 行，每行包含两个单词，这两个单词分别位于一块木板的两侧，每个单词都是长度不超过 $10$ 的小写字母构成的字符串。</p>
+<h2 id="shu-chu-ge-shi" id="输出格式">输出格式</h2>
+<p>共 $26$ 行。</p>
+<p>第一行输出印有字母 $a$ 的木块所需的块数。</p>
+<p>第二行输出印有字母 $b$ 的木块所需的块数，以此类推。</p>
+<h2 id="shu-ju-fan-wei" id="数据范围">数据范围</h2>
+<p>$1\leq N\leq 100$</p>
+<h2 id="shu-ru-yang-li" id="输入样例">输入样例</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">3<br>fox box<br>dog cat<br>car bus<br></code></pre></td></tr></table></figure>
+<h2 id="shu-chu-yang-li" id="输出样例">输出样例</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">2<br>2<br>2<br>1<br>0<br>1<br>1<br>0<br>0<br>0<br>0<br>0<br>0<br>0<br>2<br>0<br>0<br>1<br>1<br>1<br>1<br>0<br>0<br>1<br>0<br>0<br></code></pre></td></tr></table></figure>
+<h2 id="yang-li-jie-shi" id="样例解释">样例解释</h2>
+<p>在此样例中，共有 $N=3$ 块拼写板，共有 $8$ 种单词组合：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">fox dog car<br>fox dog bus<br>fox cat car<br>fox cat bus<br>box dog car<br>box dog bus<br>box cat car<br>box cat bus<br></code></pre></td></tr></table></figure>
+<h1 id="ti-mu-fen-xi">题目分析</h1>
+<p>由于每一个方块都有两个面，只要找出两个面所有的单词字母出现的最大值记录下来，然后累加，就是每种字母的方块所需要的最少数量。</p>
+<h1 id="wan-zheng-dai-ma">完整代码</h1>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">30</span>;<br><br><span class="hljs-keyword">int</span> p[N];  <span class="hljs-comment">// 每个字母出现的次数</span><br><span class="hljs-keyword">int</span> n;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++ )<br>    &#123;<br>        string a, b;<br>        cin &gt;&gt; a &gt;&gt; b;<br>        <span class="hljs-keyword">int</span> worda[N] = &#123;<span class="hljs-number">0</span>&#125;, wordb[N] = &#123;<span class="hljs-number">0</span>&#125;;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; a.<span class="hljs-built_in">size</span>(); j ++ ) worda[a[j] - <span class="hljs-string">&#x27;a&#x27;</span>] ++ ;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; b.<span class="hljs-built_in">size</span>(); j ++ ) wordb[b[j] - <span class="hljs-string">&#x27;a&#x27;</span>] ++ ;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; <span class="hljs-number">26</span>; j ++ ) p[j] += <span class="hljs-built_in">max</span>(worda[j], wordb[j]);<br>    &#125;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">26</span>; i ++ ) cout &lt;&lt; p[i] &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>算法学习</category>
+        <category>2022春季每日一题</category>
+      </categories>
+      <tags>
+        <tag>枚举</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>DAY25-蹄子剪刀布</title>
     <url>/DailyOneProblem_2022_Spring/de3a30b1/</url>
     <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-1803-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/1803/">原题链接</a></h1>
@@ -948,48 +990,6 @@ $1\leq x,y\leq 40000$</p>
 <p>这里数字表示两个手势的差。</p>
 <h1 id="wan-zheng-dai-ma">完整代码</h1>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> x first</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> y second</span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">typedef</span> pair&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt; PII;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">110</span>;<br><br>PII match[N];<br><span class="hljs-keyword">int</span> n;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++ ) cin &gt;&gt; match[i].x &gt;&gt; match[i].y;<br>    <br>    <span class="hljs-keyword">int</span> wins1 = <span class="hljs-number">0</span>, wins2 = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++ )<br>    &#123;<br>        <span class="hljs-keyword">int</span> res = match[i].x - match[i].y;<br>        <span class="hljs-keyword">if</span> (res == <span class="hljs-number">-1</span> || res == <span class="hljs-number">2</span>) wins1 ++ ;<br>        <span class="hljs-keyword">if</span> (res == <span class="hljs-number">-2</span> || res == <span class="hljs-number">1</span>) wins2 ++ ;<br>    &#125;<br>    cout &lt;&lt; <span class="hljs-built_in">max</span>(wins1, wins2) &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>算法学习</category>
-        <category>2022春季每日一题</category>
-      </categories>
-      <tags>
-        <tag>枚举</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>DAY24-方块游戏</title>
-    <url>/DailyOneProblem_2022_Spring/2a091d47/</url>
-    <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-description-1815-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/description/1815/">原题链接</a></h1>
-<h1 id="ti-mu-miao-shu">题目描述</h1>
-<p>农夫约翰试图通过给奶牛一套通常用于学龄前儿童的 $N$ 个拼写板来教他的奶牛阅读。</p>
-<p>每个拼写板的每一侧都有一个单词和一个图画。</p>
-<p>例如，一侧可能有单词 <code>cat</code> 和一只小猫，另一侧可能有单词 <code>dog</code> 和一只小狗。</p>
-<p>因此，当所有拼写板放置到地面上时，会显示一组 $N$ 个单词。</p>
-<p>通过翻转其中一部分板子，就可以得到另一组 $N$ 个单词。</p>
-<p>为了帮助奶牛练习单词拼写，约翰想要制作一些木块，在每个木块上都印上一个字母，使得奶牛可以使用这些木块拼出看到的单词。</p>
-<p>为了使得无论哪一组 $N$ 个单词朝上显示，奶牛都能将其全部拼出，就需要印有各种字母的木块都足够的多。</p>
-<p>例如，如果 $N=3$ 且单词 <code>box,cat,car</code> 朝上显示，则奶牛至少需要一个 <code>b</code> 块，一个 <code>o</code> 块，一个 <code>x</code> 块，两个 <code>c</code> 块，两个 <code>a</code> 块，一个 <code>t</code> 块和一个 <code>r</code> 块。</p>
-<p>请帮助约翰确定，印有每种字母的木块至少需要提供多少块，才能使得不管每个板子的哪一侧朝上显示，奶牛都可以拼出所有 $N$ 个可见的单词。</p>
-<h2 id="shu-ru-ge-shi" id="输入格式">输入格式</h2>
-<p>第一行包含整数 $N$。</p>
-<p>接下来 $N$ 行，每行包含两个单词，这两个单词分别位于一块木板的两侧，每个单词都是长度不超过 $10$ 的小写字母构成的字符串。</p>
-<h2 id="shu-chu-ge-shi" id="输出格式">输出格式</h2>
-<p>共 $26$ 行。</p>
-<p>第一行输出印有字母 $a$ 的木块所需的块数。</p>
-<p>第二行输出印有字母 $b$ 的木块所需的块数，以此类推。</p>
-<h2 id="shu-ju-fan-wei" id="数据范围">数据范围</h2>
-<p>$1\leq N\leq 100$</p>
-<h2 id="shu-ru-yang-li" id="输入样例">输入样例</h2>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">3<br>fox box<br>dog cat<br>car bus<br></code></pre></td></tr></table></figure>
-<h2 id="shu-chu-yang-li" id="输出样例">输出样例</h2>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">2<br>2<br>2<br>1<br>0<br>1<br>1<br>0<br>0<br>0<br>0<br>0<br>0<br>0<br>2<br>0<br>0<br>1<br>1<br>1<br>1<br>0<br>0<br>1<br>0<br>0<br></code></pre></td></tr></table></figure>
-<h2 id="yang-li-jie-shi" id="样例解释">样例解释</h2>
-<p>在此样例中，共有 $N=3$ 块拼写板，共有 $8$ 种单词组合：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">fox dog car<br>fox dog bus<br>fox cat car<br>fox cat bus<br>box dog car<br>box dog bus<br>box cat car<br>box cat bus<br></code></pre></td></tr></table></figure>
-<h1 id="ti-mu-fen-xi">题目分析</h1>
-<p>由于每一个方块都有两个面，只要找出两个面所有的单词字母出现的最大值记录下来，然后累加，就是每种字母的方块所需要的最少数量。</p>
-<h1 id="wan-zheng-dai-ma">完整代码</h1>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">30</span>;<br><br><span class="hljs-keyword">int</span> p[N];  <span class="hljs-comment">// 每个字母出现的次数</span><br><span class="hljs-keyword">int</span> n;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++ )<br>    &#123;<br>        string a, b;<br>        cin &gt;&gt; a &gt;&gt; b;<br>        <span class="hljs-keyword">int</span> worda[N] = &#123;<span class="hljs-number">0</span>&#125;, wordb[N] = &#123;<span class="hljs-number">0</span>&#125;;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; a.<span class="hljs-built_in">size</span>(); j ++ ) worda[a[j] - <span class="hljs-string">&#x27;a&#x27;</span>] ++ ;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; b.<span class="hljs-built_in">size</span>(); j ++ ) wordb[b[j] - <span class="hljs-string">&#x27;a&#x27;</span>] ++ ;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; <span class="hljs-number">26</span>; j ++ ) p[j] += <span class="hljs-built_in">max</span>(worda[j], wordb[j]);<br>    &#125;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">26</span>; i ++ ) cout &lt;&lt; p[i] &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>算法学习</category>
         <category>2022春季每日一题</category>
@@ -1124,51 +1124,6 @@ $1\leq a_i\leq N$</p>
       </tags>
   </entry>
   <entry>
-    <title>DAY3-奶牛选美</title>
-    <url>/DailyOneProblem_2022_Spring/5cb64c90/</url>
-    <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-2062-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/2062/">原题链接</a></h1>
-<h1 id="ti-mu-miao-shu">题目描述</h1>
-<p>听说最近两斑点的奶牛最受欢迎，约翰立即购进了一批两斑点牛。</p>
-<p>不幸的是，时尚潮流往往变化很快，当前最受欢迎的牛变成了一斑点牛。</p>
-<p>约翰希望通过给每头奶牛涂色，使得它们身上的两个斑点能够合为一个斑点，让它们能够更加时尚。</p>
-<p>牛皮可用一个 $N\times M$ 的字符矩阵来表示，如下所示：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">................<br>..XXXX....XXX...<br>...XXXX....XX...<br>.XXXX......XXX..<br>........XXXXX...<br>.........XXX....<br></code></pre></td></tr></table></figure>
-<p>其中，$X$ 表示斑点部分。</p>
-<p>如果两个 $X$ 在垂直或水平方向上相邻（对角相邻不算在内），则它们属于同一个斑点，由此看出上图中恰好有两个斑点。</p>
-<p>约翰牛群里<strong>所有的牛都有两个斑点</strong>。</p>
-<p>约翰希望通过使用油漆给奶牛尽可能少的区域内涂色，将两个斑点合为一个。</p>
-<p>在上面的例子中，他只需要给三个 . 区域内涂色即可（新涂色区域用 ∗ 表示）：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">................<br>..XXXX....XXX...<br>...XXXX*...XX...<br>.XXXX..**..XXX..<br>........XXXXX...<br>.........XXX....<br></code></pre></td></tr></table></figure>
-<p>请帮助约翰确定，为了使两个斑点合为一个，他需要涂色区域的最少数量。</p>
-<h2 id="shu-ru-ge-shi" id="输入格式">输入格式</h2>
-<p>第一行包含两个整数 $N$ 和 $M$。</p>
-<p>接下来 $N$ 行，每行包含一个长度为 $M$ 的由 <code>X</code> 和 <code>.</code> 构成的字符串，用来表示描述牛皮图案的字符矩阵。</p>
-<h2 id="shu-chu-ge-shi" id="输出格式">输出格式</h2>
-<p>输出需要涂色区域的最少数量。</p>
-<h2 id="shu-ju-fan-wei" id="数据范围">数据范围</h2>
-<p>$1\leq N,M\leq 50$</p>
-<h2 id="shu-ru-yang-li" id="输入样例">输入样例</h2>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">6 16<br>................<br>..XXXX....XXX...<br>...XXXX....XX...<br>.XXXX......XXX..<br>........XXXXX...<br>.........XXX....<br></code></pre></td></tr></table></figure>
-<h2 id="shu-chu-yang-li" id="输出样例">输出样例</h2>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">3<br></code></pre></td></tr></table></figure>
-<h1 id="ti-mu-fen-xi">题目分析</h1>
-<p>思路是找到两个集合的边缘点（实际上也可以直接两个集合的全部点进行比较），做曼哈顿距离的比较，$O(n)$ 时间内求最小值减 $1$ 就是答案。</p>
-<p>集合可以用DFS或BFS做Flood Fill来求得。</p>
-<p>实际上这里曼哈顿距离的正确性只限于最优解，不适于任意两个点之间的最短距离，关于其正确性可以用基于贪心思想的反证法证明。</p>
-<p>另外有一种做法，用双端队列广搜，能够将时间复杂度降到线性，但代码过于繁琐，仅作一个记录。</p>
-<h1 id="wan-zheng-dai-ma">完整代码</h1>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;unordered_map&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">typedef</span> pair&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt; PII;<br><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">60</span>;<br><br><span class="hljs-keyword">int</span> n, m, id;<br><span class="hljs-keyword">char</span> g[N][N];<br>PII S[<span class="hljs-number">2</span>][N * N];<br><span class="hljs-keyword">bool</span> st[N][N];<br><span class="hljs-keyword">bool</span> is_in[N][N];<br><span class="hljs-keyword">int</span> cnt[<span class="hljs-number">2</span>];<br><br><span class="hljs-keyword">int</span> dx[] = &#123;<span class="hljs-number">-1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>&#125;, dy[] = &#123;<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">-1</span>&#125;;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y)</span></span><br><span class="hljs-function"></span>&#123;<br>    st[x][y] = <span class="hljs-literal">true</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">4</span>; i ++ )<br>    &#123;<br>        <span class="hljs-keyword">int</span> a = x + dx[i], b = y + dy[i];<br>        <span class="hljs-keyword">if</span> (a &lt; <span class="hljs-number">0</span> || a &gt;= n || b &lt; <span class="hljs-number">0</span> || b &gt;= m) <span class="hljs-keyword">continue</span>;<br>        <span class="hljs-keyword">if</span> (g[a][b] == <span class="hljs-string">&#x27;.&#x27;</span> &amp;&amp; !is_in[x][y]) <span class="hljs-comment">// 说明此时的(x, y)是一个边缘点, 加入集合</span><br>        &#123;<br>            S[id][cnt[id] ++ ] = &#123;x, y&#125;;<br>            is_in[x][y] = <span class="hljs-literal">true</span>;<br>        &#125;<br>        <span class="hljs-keyword">if</span> (g[a][b] == <span class="hljs-string">&#x27;X&#x27;</span> &amp;&amp; !st[a][b]) <span class="hljs-built_in">dfs</span>(a, b);<br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-keyword">int</span> <span class="hljs-title">get_dist</span><span class="hljs-params">(PII a, PII b)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">abs</span>(a.first - b.first) + <span class="hljs-built_in">abs</span>(a.second - b.second);<br>&#125; <br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n &gt;&gt; m;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++ ) <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%s&quot;</span>, g[i]);<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++ )<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; m; j ++ )<br>            <span class="hljs-keyword">if</span> (g[i][j] == <span class="hljs-string">&#x27;X&#x27;</span> &amp;&amp; !st[i][j])<br>            &#123;<br>                <span class="hljs-built_in">dfs</span>(i, j);<br>                id ++ ;<br>            &#125;<br><br>    <span class="hljs-keyword">int</span> res = <span class="hljs-number">0x3f3f3f3f</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; cnt[<span class="hljs-number">0</span>]; i ++ )<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; cnt[<span class="hljs-number">1</span>]; j ++ )<br>            res = <span class="hljs-built_in">min</span>(res, <span class="hljs-built_in">get_dist</span>(S[<span class="hljs-number">0</span>][i], S[<span class="hljs-number">1</span>][j]));<br><br>    cout &lt;&lt; res - <span class="hljs-number">1</span> &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br><span class="hljs-comment">// y总代码</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span><br><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> x first</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> y second</span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">typedef</span> pair&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt; PII;<br><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">55</span>;<br><br><span class="hljs-keyword">int</span> n, m;<br><span class="hljs-keyword">char</span> g[N][N];<br>vector&lt;PII&gt; points[<span class="hljs-number">2</span>];<br><br><span class="hljs-keyword">int</span> dx[<span class="hljs-number">4</span>] = &#123;<span class="hljs-number">-1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>&#125;, dy[<span class="hljs-number">4</span>] = &#123;<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">-1</span>&#125;;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y, vector&lt;PII&gt;&amp; ps)</span></span><br><span class="hljs-function"></span>&#123;<br>    g[x][y] = <span class="hljs-string">&#x27;.&#x27;</span>;<br>    ps.<span class="hljs-built_in">push_back</span>(&#123;x, y&#125;);<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">4</span>; i ++ )<br>    &#123;<br>        <span class="hljs-keyword">int</span> a = x + dx[i], b = y + dy[i];<br>        <span class="hljs-keyword">if</span> (a &lt; <span class="hljs-number">0</span> || a &gt;= n || b &lt; <span class="hljs-number">0</span> || b &gt;= m || g[a][b] == <span class="hljs-string">&#x27;.&#x27;</span>) <span class="hljs-keyword">continue</span>;<br>        <span class="hljs-built_in">dfs</span>(a, b, ps);<br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n &gt;&gt; m;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++ ) cin &gt;&gt; g[i];<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>, k = <span class="hljs-number">0</span>; i &lt; n; i ++ )<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; m; j ++ )<br>            <span class="hljs-keyword">if</span> (g[i][j] == <span class="hljs-string">&#x27;X&#x27;</span>)<br>                <span class="hljs-built_in">dfs</span>(i, j, points[k ++ ]);<br><br>    <span class="hljs-keyword">int</span> res = <span class="hljs-number">1e8</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span>&amp; a : points[<span class="hljs-number">0</span>])<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span>&amp; b : points[<span class="hljs-number">1</span>])<br>            res = <span class="hljs-built_in">min</span>(res, <span class="hljs-built_in">abs</span>(a.x - b.x) + <span class="hljs-built_in">abs</span>(a.y - b.y) - <span class="hljs-number">1</span>);<br><br>    cout &lt;&lt; res &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>算法学习</category>
-        <category>2022春季每日一题</category>
-      </categories>
-      <tags>
-        <tag>BFS</tag>
-        <tag>DFS</tag>
-        <tag>Flood Fill</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>DAY29-救生员</title>
     <url>/DailyOneProblem_2022_Spring/40dbb587/</url>
     <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-1752-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/1752/">原题链接</a></h1>
@@ -1209,6 +1164,91 @@ $0\leq 开始时刻\leq 结束时刻\leq 1000$</p>
         <tag>枚举</tag>
         <tag>差分</tag>
         <tag>区间合并</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>DAY3-奶牛选美</title>
+    <url>/DailyOneProblem_2022_Spring/5cb64c90/</url>
+    <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-2062-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/2062/">原题链接</a></h1>
+<h1 id="ti-mu-miao-shu">题目描述</h1>
+<p>听说最近两斑点的奶牛最受欢迎，约翰立即购进了一批两斑点牛。</p>
+<p>不幸的是，时尚潮流往往变化很快，当前最受欢迎的牛变成了一斑点牛。</p>
+<p>约翰希望通过给每头奶牛涂色，使得它们身上的两个斑点能够合为一个斑点，让它们能够更加时尚。</p>
+<p>牛皮可用一个 $N\times M$ 的字符矩阵来表示，如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">................<br>..XXXX....XXX...<br>...XXXX....XX...<br>.XXXX......XXX..<br>........XXXXX...<br>.........XXX....<br></code></pre></td></tr></table></figure>
+<p>其中，$X$ 表示斑点部分。</p>
+<p>如果两个 $X$ 在垂直或水平方向上相邻（对角相邻不算在内），则它们属于同一个斑点，由此看出上图中恰好有两个斑点。</p>
+<p>约翰牛群里<strong>所有的牛都有两个斑点</strong>。</p>
+<p>约翰希望通过使用油漆给奶牛尽可能少的区域内涂色，将两个斑点合为一个。</p>
+<p>在上面的例子中，他只需要给三个 . 区域内涂色即可（新涂色区域用 ∗ 表示）：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">................<br>..XXXX....XXX...<br>...XXXX*...XX...<br>.XXXX..**..XXX..<br>........XXXXX...<br>.........XXX....<br></code></pre></td></tr></table></figure>
+<p>请帮助约翰确定，为了使两个斑点合为一个，他需要涂色区域的最少数量。</p>
+<h2 id="shu-ru-ge-shi" id="输入格式">输入格式</h2>
+<p>第一行包含两个整数 $N$ 和 $M$。</p>
+<p>接下来 $N$ 行，每行包含一个长度为 $M$ 的由 <code>X</code> 和 <code>.</code> 构成的字符串，用来表示描述牛皮图案的字符矩阵。</p>
+<h2 id="shu-chu-ge-shi" id="输出格式">输出格式</h2>
+<p>输出需要涂色区域的最少数量。</p>
+<h2 id="shu-ju-fan-wei" id="数据范围">数据范围</h2>
+<p>$1\leq N,M\leq 50$</p>
+<h2 id="shu-ru-yang-li" id="输入样例">输入样例</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">6 16<br>................<br>..XXXX....XXX...<br>...XXXX....XX...<br>.XXXX......XXX..<br>........XXXXX...<br>.........XXX....<br></code></pre></td></tr></table></figure>
+<h2 id="shu-chu-yang-li" id="输出样例">输出样例</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">3<br></code></pre></td></tr></table></figure>
+<h1 id="ti-mu-fen-xi">题目分析</h1>
+<p>思路是找到两个集合的边缘点（实际上也可以直接两个集合的全部点进行比较），做曼哈顿距离的比较，$O(n)$ 时间内求最小值减 $1$ 就是答案。</p>
+<p>集合可以用DFS或BFS做Flood Fill来求得。</p>
+<p>实际上这里曼哈顿距离的正确性只限于最优解，不适于任意两个点之间的最短距离，关于其正确性可以用基于贪心思想的反证法证明。</p>
+<p>另外有一种做法，用双端队列广搜，能够将时间复杂度降到线性，但代码过于繁琐，仅作一个记录。</p>
+<h1 id="wan-zheng-dai-ma">完整代码</h1>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;unordered_map&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">typedef</span> pair&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt; PII;<br><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">60</span>;<br><br><span class="hljs-keyword">int</span> n, m, id;<br><span class="hljs-keyword">char</span> g[N][N];<br>PII S[<span class="hljs-number">2</span>][N * N];<br><span class="hljs-keyword">bool</span> st[N][N];<br><span class="hljs-keyword">bool</span> is_in[N][N];<br><span class="hljs-keyword">int</span> cnt[<span class="hljs-number">2</span>];<br><br><span class="hljs-keyword">int</span> dx[] = &#123;<span class="hljs-number">-1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>&#125;, dy[] = &#123;<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">-1</span>&#125;;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y)</span></span><br><span class="hljs-function"></span>&#123;<br>    st[x][y] = <span class="hljs-literal">true</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">4</span>; i ++ )<br>    &#123;<br>        <span class="hljs-keyword">int</span> a = x + dx[i], b = y + dy[i];<br>        <span class="hljs-keyword">if</span> (a &lt; <span class="hljs-number">0</span> || a &gt;= n || b &lt; <span class="hljs-number">0</span> || b &gt;= m) <span class="hljs-keyword">continue</span>;<br>        <span class="hljs-keyword">if</span> (g[a][b] == <span class="hljs-string">&#x27;.&#x27;</span> &amp;&amp; !is_in[x][y]) <span class="hljs-comment">// 说明此时的(x, y)是一个边缘点, 加入集合</span><br>        &#123;<br>            S[id][cnt[id] ++ ] = &#123;x, y&#125;;<br>            is_in[x][y] = <span class="hljs-literal">true</span>;<br>        &#125;<br>        <span class="hljs-keyword">if</span> (g[a][b] == <span class="hljs-string">&#x27;X&#x27;</span> &amp;&amp; !st[a][b]) <span class="hljs-built_in">dfs</span>(a, b);<br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-keyword">int</span> <span class="hljs-title">get_dist</span><span class="hljs-params">(PII a, PII b)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">abs</span>(a.first - b.first) + <span class="hljs-built_in">abs</span>(a.second - b.second);<br>&#125; <br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n &gt;&gt; m;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++ ) <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%s&quot;</span>, g[i]);<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++ )<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; m; j ++ )<br>            <span class="hljs-keyword">if</span> (g[i][j] == <span class="hljs-string">&#x27;X&#x27;</span> &amp;&amp; !st[i][j])<br>            &#123;<br>                <span class="hljs-built_in">dfs</span>(i, j);<br>                id ++ ;<br>            &#125;<br><br>    <span class="hljs-keyword">int</span> res = <span class="hljs-number">0x3f3f3f3f</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; cnt[<span class="hljs-number">0</span>]; i ++ )<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; cnt[<span class="hljs-number">1</span>]; j ++ )<br>            res = <span class="hljs-built_in">min</span>(res, <span class="hljs-built_in">get_dist</span>(S[<span class="hljs-number">0</span>][i], S[<span class="hljs-number">1</span>][j]));<br><br>    cout &lt;&lt; res - <span class="hljs-number">1</span> &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br><span class="hljs-comment">// y总代码</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span><br><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> x first</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> y second</span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">typedef</span> pair&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt; PII;<br><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">55</span>;<br><br><span class="hljs-keyword">int</span> n, m;<br><span class="hljs-keyword">char</span> g[N][N];<br>vector&lt;PII&gt; points[<span class="hljs-number">2</span>];<br><br><span class="hljs-keyword">int</span> dx[<span class="hljs-number">4</span>] = &#123;<span class="hljs-number">-1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>&#125;, dy[<span class="hljs-number">4</span>] = &#123;<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">-1</span>&#125;;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y, vector&lt;PII&gt;&amp; ps)</span></span><br><span class="hljs-function"></span>&#123;<br>    g[x][y] = <span class="hljs-string">&#x27;.&#x27;</span>;<br>    ps.<span class="hljs-built_in">push_back</span>(&#123;x, y&#125;);<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">4</span>; i ++ )<br>    &#123;<br>        <span class="hljs-keyword">int</span> a = x + dx[i], b = y + dy[i];<br>        <span class="hljs-keyword">if</span> (a &lt; <span class="hljs-number">0</span> || a &gt;= n || b &lt; <span class="hljs-number">0</span> || b &gt;= m || g[a][b] == <span class="hljs-string">&#x27;.&#x27;</span>) <span class="hljs-keyword">continue</span>;<br>        <span class="hljs-built_in">dfs</span>(a, b, ps);<br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n &gt;&gt; m;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++ ) cin &gt;&gt; g[i];<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>, k = <span class="hljs-number">0</span>; i &lt; n; i ++ )<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; m; j ++ )<br>            <span class="hljs-keyword">if</span> (g[i][j] == <span class="hljs-string">&#x27;X&#x27;</span>)<br>                <span class="hljs-built_in">dfs</span>(i, j, points[k ++ ]);<br><br>    <span class="hljs-keyword">int</span> res = <span class="hljs-number">1e8</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span>&amp; a : points[<span class="hljs-number">0</span>])<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span>&amp; b : points[<span class="hljs-number">1</span>])<br>            res = <span class="hljs-built_in">min</span>(res, <span class="hljs-built_in">abs</span>(a.x - b.x) + <span class="hljs-built_in">abs</span>(a.y - b.y) - <span class="hljs-number">1</span>);<br><br>    cout &lt;&lt; res &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>算法学习</category>
+        <category>2022春季每日一题</category>
+      </categories>
+      <tags>
+        <tag>DFS</tag>
+        <tag>BFS</tag>
+        <tag>Flood Fill</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>DAY4-拖拉机</title>
+    <url>/DailyOneProblem_2022_Spring/6c4708b0/</url>
+    <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-description-2021-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/description/2021/">原题链接</a></h1>
+<h1 id="ti-mu-miao-shu">题目描述</h1>
+<p>干了一整天的活，农夫约翰完全忘记了他把拖拉机落在田地中央了。</p>
+<p>他的奶牛非常调皮，决定对约翰来场恶作剧。</p>
+<p>她们在田地的不同地方放了 $N$ 捆干草，这样一来，约翰想要开走拖拉机就必须先移除一些干草捆。</p>
+<p>拖拉机的位置以及 $N$ 捆干草的位置都是二维平面上的整数坐标点。</p>
+<p>拖拉机的初始位置上没有干草捆。</p>
+<p>当约翰驾驶拖拉机时，他只能沿平行于坐标轴的方向（北，南，东和西）移动拖拉机，并且拖拉机必须每次移动整数距离。</p>
+<p>例如，驾驶拖拉机先向北移动 $2$ 单位长度，然后向东移动 $3$ 单位长度。</p>
+<p>拖拉机无法移动到干草捆占据的位置。</p>
+<p>请帮助约翰确定他需要移除的干草捆的最小数量，以便他能够将拖拉机开到二维平面的原点。</p>
+<h2 id="shu-ru-ge-shi" id="输入格式">输入格式</h2>
+<p>第一行包含三个整数：$N$ 以及拖拉机的初始位置 $(x,y)$。</p>
+<p>接下来 $N$ 行，每行包含一个干草捆的位置坐标 $(x,y)$。</p>
+<h2 id="shu-chu-ge-shi" id="输出格式">输出格式</h2>
+<p>输出约翰需要移除的干草捆的最小数量。</p>
+<h2 id="shu-ju-fan-wei" id="数据范围">数据范围</h2>
+<p>$1\leq N\leq 50000,$<br>
+$1\leq x,y\leq 1000$</p>
+<h2 id="shu-ru-yang-li" id="输入样例">输入样例</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">7 6 3<br>6 2<br>5 2<br>4 3<br>2 1<br>7 3<br>5 4<br>6 4<br></code></pre></td></tr></table></figure>
+<h2 id="shu-chu-yang-li" id="输出样例">输出样例</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">1<br></code></pre></td></tr></table></figure>
+<h1 id="ti-mu-fen-xi">题目分析</h1>
+<p>本题实际上是求<strong>最小操作步数</strong>，走到一个具有干草堆的方格并移开干草堆，视为距离+1，否则视为距离不变，这里属于点权。</p>
+<p>目的是要求从起始点到达终点 $(0, 0)$ 的最短距离，即最小操作步数。这里有个边界问题，由于地图是二维的无限大平面，拖拉机可以开到任意坐标，而干草堆的坐标仅限于 $1\leq x, y\leq 1000$，所以拖拉机是可以开到 $1000$ 以外的位置的，在搜索时需要注意。</p>
+<p>根据上述分析，由于权重只有 $0$ 和 $1$，那么可以使用双端队列BFS来求解。</p>
+<h1 id="wan-zheng-dai-ma">完整代码</h1>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;deque&gt;</span></span><br><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> x first</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> y second</span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">typedef</span> pair&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt; PII;<br><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">1010</span>;<br><br><span class="hljs-keyword">bool</span> g[N][N], st[N][N]; <span class="hljs-comment">// g为地图，有没有干草堆；st为deque出队时的判重数组</span><br><span class="hljs-keyword">int</span> dist[N][N];<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">bfs</span><span class="hljs-params">(<span class="hljs-keyword">int</span> sx, <span class="hljs-keyword">int</span> sy)</span></span><br><span class="hljs-function"></span>&#123;<br>    deque&lt;PII&gt; q;<br>    q.<span class="hljs-built_in">push_back</span>(&#123;sx, sy&#125;);<br>    <span class="hljs-built_in">memset</span>(dist, <span class="hljs-number">0x3f</span>, <span class="hljs-keyword">sizeof</span> dist);<br>    dist[sx][sy] = <span class="hljs-number">0</span>;<br>    <br>    <span class="hljs-keyword">int</span> dx[<span class="hljs-number">4</span>] = &#123;<span class="hljs-number">-1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>&#125;, dy[<span class="hljs-number">4</span>] = &#123;<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">-1</span>&#125;;<br>    <br>    <span class="hljs-keyword">while</span> (q.<span class="hljs-built_in">size</span>())<br>    &#123;<br>        <span class="hljs-keyword">auto</span> t = q.<span class="hljs-built_in">front</span>();<br>        q.<span class="hljs-built_in">pop_front</span>();<br>        <span class="hljs-keyword">if</span> (st[t.x][t.y]) <span class="hljs-keyword">continue</span>;<br>        st[t.x][t.y] = <span class="hljs-literal">true</span>;<br>        <span class="hljs-keyword">if</span> (!t.x &amp;&amp; !t.y) <span class="hljs-keyword">break</span>;  <span class="hljs-comment">// 如果到达原点，直接退出</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">4</span>; i ++ )<br>        &#123;<br>            <span class="hljs-keyword">int</span> x = t.x + dx[i], y = t.y + dy[i];<br>            <span class="hljs-keyword">if</span> (x &gt;= <span class="hljs-number">0</span> &amp;&amp; x &lt;= <span class="hljs-number">1001</span> &amp;&amp; y &gt;= <span class="hljs-number">0</span> &amp;&amp; y &lt;= <span class="hljs-number">1001</span>)<br>            &#123;<br>                <span class="hljs-keyword">int</span> w = <span class="hljs-number">0</span>;<br>                <span class="hljs-keyword">if</span> (g[x][y]) w = <span class="hljs-number">1</span>;<br>                <span class="hljs-keyword">if</span> (dist[x][y] &gt; dist[t.x][t.y] + w)<br>                &#123;<br>                    dist[x][y] = dist[t.x][t.y] + w;<br>                    <span class="hljs-keyword">if</span> (!w) q.<span class="hljs-built_in">push_front</span>(&#123;x, y&#125;);<br>                    <span class="hljs-keyword">else</span> q.<span class="hljs-built_in">push_back</span>(&#123;x, y&#125;);<br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> dist[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>];<br>&#125;<br><br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> n, sx, sy;<br>    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d%d%d&quot;</span>, &amp;n, &amp;sx, &amp;sy);<br>    <span class="hljs-keyword">while</span> (n -- )<br>    &#123;<br>        <span class="hljs-keyword">int</span> x, y;<br>        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d%d&quot;</span>, &amp;x, &amp;y);<br>        g[x][y] = <span class="hljs-literal">true</span>;<br>    &#125;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, <span class="hljs-built_in">bfs</span>(sx, sy));<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>算法学习</category>
+        <category>2022春季每日一题</category>
+      </categories>
+      <tags>
+        <tag>双端队列BFS</tag>
       </tags>
   </entry>
   <entry>
@@ -1256,46 +1296,6 @@ $1\leq H_i\leq 10^9$</p>
         <tag>枚举</tag>
         <tag>离散化</tag>
         <tag>思维题</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>DAY4-拖拉机</title>
-    <url>/DailyOneProblem_2022_Spring/6c4708b0/</url>
-    <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-description-2021-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/description/2021/">原题链接</a></h1>
-<h1 id="ti-mu-miao-shu">题目描述</h1>
-<p>干了一整天的活，农夫约翰完全忘记了他把拖拉机落在田地中央了。</p>
-<p>他的奶牛非常调皮，决定对约翰来场恶作剧。</p>
-<p>她们在田地的不同地方放了 $N$ 捆干草，这样一来，约翰想要开走拖拉机就必须先移除一些干草捆。</p>
-<p>拖拉机的位置以及 $N$ 捆干草的位置都是二维平面上的整数坐标点。</p>
-<p>拖拉机的初始位置上没有干草捆。</p>
-<p>当约翰驾驶拖拉机时，他只能沿平行于坐标轴的方向（北，南，东和西）移动拖拉机，并且拖拉机必须每次移动整数距离。</p>
-<p>例如，驾驶拖拉机先向北移动 $2$ 单位长度，然后向东移动 $3$ 单位长度。</p>
-<p>拖拉机无法移动到干草捆占据的位置。</p>
-<p>请帮助约翰确定他需要移除的干草捆的最小数量，以便他能够将拖拉机开到二维平面的原点。</p>
-<h2 id="shu-ru-ge-shi" id="输入格式">输入格式</h2>
-<p>第一行包含三个整数：$N$ 以及拖拉机的初始位置 $(x,y)$。</p>
-<p>接下来 $N$ 行，每行包含一个干草捆的位置坐标 $(x,y)$。</p>
-<h2 id="shu-chu-ge-shi" id="输出格式">输出格式</h2>
-<p>输出约翰需要移除的干草捆的最小数量。</p>
-<h2 id="shu-ju-fan-wei" id="数据范围">数据范围</h2>
-<p>$1\leq N\leq 50000,$<br>
-$1\leq x,y\leq 1000$</p>
-<h2 id="shu-ru-yang-li" id="输入样例">输入样例</h2>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">7 6 3<br>6 2<br>5 2<br>4 3<br>2 1<br>7 3<br>5 4<br>6 4<br></code></pre></td></tr></table></figure>
-<h2 id="shu-chu-yang-li" id="输出样例">输出样例</h2>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">1<br></code></pre></td></tr></table></figure>
-<h1 id="ti-mu-fen-xi">题目分析</h1>
-<p>本题实际上是求<strong>最小操作步数</strong>，走到一个具有干草堆的方格并移开干草堆，视为距离+1，否则视为距离不变，这里属于点权。</p>
-<p>目的是要求从起始点到达终点 $(0, 0)$ 的最短距离，即最小操作步数。这里有个边界问题，由于地图是二维的无限大平面，拖拉机可以开到任意坐标，而干草堆的坐标仅限于 $1\leq x, y\leq 1000$，所以拖拉机是可以开到 $1000$ 以外的位置的，在搜索时需要注意。</p>
-<p>根据上述分析，由于权重只有 $0$ 和 $1$，那么可以使用双端队列BFS来求解。</p>
-<h1 id="wan-zheng-dai-ma">完整代码</h1>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;deque&gt;</span></span><br><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> x first</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> y second</span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">typedef</span> pair&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt; PII;<br><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">1010</span>;<br><br><span class="hljs-keyword">bool</span> g[N][N], st[N][N]; <span class="hljs-comment">// g为地图，有没有干草堆；st为deque出队时的判重数组</span><br><span class="hljs-keyword">int</span> dist[N][N];<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">bfs</span><span class="hljs-params">(<span class="hljs-keyword">int</span> sx, <span class="hljs-keyword">int</span> sy)</span></span><br><span class="hljs-function"></span>&#123;<br>    deque&lt;PII&gt; q;<br>    q.<span class="hljs-built_in">push_back</span>(&#123;sx, sy&#125;);<br>    <span class="hljs-built_in">memset</span>(dist, <span class="hljs-number">0x3f</span>, <span class="hljs-keyword">sizeof</span> dist);<br>    dist[sx][sy] = <span class="hljs-number">0</span>;<br>    <br>    <span class="hljs-keyword">int</span> dx[<span class="hljs-number">4</span>] = &#123;<span class="hljs-number">-1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>&#125;, dy[<span class="hljs-number">4</span>] = &#123;<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">-1</span>&#125;;<br>    <br>    <span class="hljs-keyword">while</span> (q.<span class="hljs-built_in">size</span>())<br>    &#123;<br>        <span class="hljs-keyword">auto</span> t = q.<span class="hljs-built_in">front</span>();<br>        q.<span class="hljs-built_in">pop_front</span>();<br>        <span class="hljs-keyword">if</span> (st[t.x][t.y]) <span class="hljs-keyword">continue</span>;<br>        st[t.x][t.y] = <span class="hljs-literal">true</span>;<br>        <span class="hljs-keyword">if</span> (!t.x &amp;&amp; !t.y) <span class="hljs-keyword">break</span>;  <span class="hljs-comment">// 如果到达原点，直接退出</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">4</span>; i ++ )<br>        &#123;<br>            <span class="hljs-keyword">int</span> x = t.x + dx[i], y = t.y + dy[i];<br>            <span class="hljs-keyword">if</span> (x &gt;= <span class="hljs-number">0</span> &amp;&amp; x &lt;= <span class="hljs-number">1001</span> &amp;&amp; y &gt;= <span class="hljs-number">0</span> &amp;&amp; y &lt;= <span class="hljs-number">1001</span>)<br>            &#123;<br>                <span class="hljs-keyword">int</span> w = <span class="hljs-number">0</span>;<br>                <span class="hljs-keyword">if</span> (g[x][y]) w = <span class="hljs-number">1</span>;<br>                <span class="hljs-keyword">if</span> (dist[x][y] &gt; dist[t.x][t.y] + w)<br>                &#123;<br>                    dist[x][y] = dist[t.x][t.y] + w;<br>                    <span class="hljs-keyword">if</span> (!w) q.<span class="hljs-built_in">push_front</span>(&#123;x, y&#125;);<br>                    <span class="hljs-keyword">else</span> q.<span class="hljs-built_in">push_back</span>(&#123;x, y&#125;);<br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> dist[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>];<br>&#125;<br><br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> n, sx, sy;<br>    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d%d%d&quot;</span>, &amp;n, &amp;sx, &amp;sy);<br>    <span class="hljs-keyword">while</span> (n -- )<br>    &#123;<br>        <span class="hljs-keyword">int</span> x, y;<br>        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d%d&quot;</span>, &amp;x, &amp;y);<br>        g[x][y] = <span class="hljs-literal">true</span>;<br>    &#125;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, <span class="hljs-built_in">bfs</span>(sx, sy));<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>算法学习</category>
-        <category>2022春季每日一题</category>
-      </categories>
-      <tags>
-        <tag>双端队列BFS</tag>
       </tags>
   </entry>
   <entry>
@@ -1824,28 +1824,6 @@ $k = 3$：<code>1010 &gt;&gt; 3 &amp; 1 = 1</code></p>
       </tags>
   </entry>
   <entry>
-    <title>判断子序列</title>
-    <url>/algo_level1/743b9b29/</url>
-    <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-2818-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/2818/">原题链接</a></h1>
-<h1 id="ti-mu-zhong-shu">题目重述</h1>
-<p>给定一个长度为 $n$ 的整数序列 $a_1,a_2,\ldots,a_n$ 以及一个长度为 $m$ 的整数序列 $b_1,b_2,\ldots,b_m$。</p>
-<p>请你判断 $a$ 序列是否为 $b$ 序列的子序列。</p>
-<p>子序列指序列的一部分项按原有次序排列而得的序列，例如序列 $\lbrace a_1,a_3,a_5 \rbrace$ 是序列 $\lbrace a_1,a_2,a_3,a_4,a_5\rbrace$ 的一个子序列。</p>
-<h1 id="suan-fa-si-xiang">算法思想</h1>
-<p>利用双指针，分别在两个序列中扫一遍，然后判断待测序列中的字符是否都依次在主序列中出现过</p>
-<h1 id="wan-zheng-dai-ma">完整代码</h1>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">1e5</span> + <span class="hljs-number">10</span>;<br><br><span class="hljs-keyword">int</span> n, m;<br><br><span class="hljs-keyword">int</span> a[N], b[N];<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n &gt;&gt; m;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++ ) <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>, &amp;a[i]);<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; m; i ++ ) <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>, &amp;b[i]);<br>    <br>    <span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>, j = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">while</span> (i &lt; n &amp;&amp; j &lt; m)<br>    &#123;<br>        <span class="hljs-keyword">if</span> (a[i] == b[j]) i ++ ;<br>        j ++ ;<br>    &#125;<br>    <span class="hljs-keyword">if</span> (i == n) cout &lt;&lt; <span class="hljs-string">&quot;Yes&quot;</span> &lt;&lt; endl;<br>    <span class="hljs-keyword">else</span> cout &lt;&lt; <span class="hljs-string">&quot;No&quot;</span>;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">if</span> __name == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    n, m = <span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, <span class="hljs-built_in">input</span>().split())<br>    a, b = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, <span class="hljs-built_in">input</span>().split())), <span class="hljs-built_in">list</span>(<span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, <span class="hljs-built_in">input</span>().split()))<br><br>    i, j = <span class="hljs-number">0</span>, <span class="hljs-number">0</span><br>    <span class="hljs-keyword">while</span> i &lt; n <span class="hljs-keyword">and</span> j &lt; m:<br>        <span class="hljs-keyword">if</span> a[i] == b[j]: i += <span class="hljs-number">1</span><br>        <span class="hljs-keyword">else</span>: j += <span class="hljs-number">1</span><br>    <br>    <span class="hljs-keyword">if</span> i == n: <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;Yes&#x27;</span>)<br>    <span class="hljs-keyword">else</span>: <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;No&#x27;</span>)<br></code></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>算法学习</category>
-        <category>算法基础</category>
-        <category>基础算法</category>
-      </categories>
-      <tags>
-        <tag>双指针</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>分巧克力</title>
     <url>/LanQiaoCup/af0b455e/</url>
     <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-description-1229-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/description/1229/">原题链接</a></h1>
@@ -1886,6 +1864,28 @@ $1\leq H_i, W_i\leq 10^5$</p>
       </categories>
       <tags>
         <tag>二分</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>判断子序列</title>
+    <url>/algo_level1/743b9b29/</url>
+    <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-2818-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/2818/">原题链接</a></h1>
+<h1 id="ti-mu-zhong-shu">题目重述</h1>
+<p>给定一个长度为 $n$ 的整数序列 $a_1,a_2,\ldots,a_n$ 以及一个长度为 $m$ 的整数序列 $b_1,b_2,\ldots,b_m$。</p>
+<p>请你判断 $a$ 序列是否为 $b$ 序列的子序列。</p>
+<p>子序列指序列的一部分项按原有次序排列而得的序列，例如序列 $\lbrace a_1,a_3,a_5 \rbrace$ 是序列 $\lbrace a_1,a_2,a_3,a_4,a_5\rbrace$ 的一个子序列。</p>
+<h1 id="suan-fa-si-xiang">算法思想</h1>
+<p>利用双指针，分别在两个序列中扫一遍，然后判断待测序列中的字符是否都依次在主序列中出现过</p>
+<h1 id="wan-zheng-dai-ma">完整代码</h1>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">1e5</span> + <span class="hljs-number">10</span>;<br><br><span class="hljs-keyword">int</span> n, m;<br><br><span class="hljs-keyword">int</span> a[N], b[N];<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n &gt;&gt; m;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++ ) <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>, &amp;a[i]);<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; m; i ++ ) <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>, &amp;b[i]);<br>    <br>    <span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>, j = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">while</span> (i &lt; n &amp;&amp; j &lt; m)<br>    &#123;<br>        <span class="hljs-keyword">if</span> (a[i] == b[j]) i ++ ;<br>        j ++ ;<br>    &#125;<br>    <span class="hljs-keyword">if</span> (i == n) cout &lt;&lt; <span class="hljs-string">&quot;Yes&quot;</span> &lt;&lt; endl;<br>    <span class="hljs-keyword">else</span> cout &lt;&lt; <span class="hljs-string">&quot;No&quot;</span>;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">if</span> __name == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    n, m = <span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, <span class="hljs-built_in">input</span>().split())<br>    a, b = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, <span class="hljs-built_in">input</span>().split())), <span class="hljs-built_in">list</span>(<span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, <span class="hljs-built_in">input</span>().split()))<br><br>    i, j = <span class="hljs-number">0</span>, <span class="hljs-number">0</span><br>    <span class="hljs-keyword">while</span> i &lt; n <span class="hljs-keyword">and</span> j &lt; m:<br>        <span class="hljs-keyword">if</span> a[i] == b[j]: i += <span class="hljs-number">1</span><br>        <span class="hljs-keyword">else</span>: j += <span class="hljs-number">1</span><br>    <br>    <span class="hljs-keyword">if</span> i == n: <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;Yes&#x27;</span>)<br>    <span class="hljs-keyword">else</span>: <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;No&#x27;</span>)<br></code></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>算法学习</category>
+        <category>算法基础</category>
+        <category>基础算法</category>
+      </categories>
+      <tags>
+        <tag>双指针</tag>
       </tags>
   </entry>
   <entry>
@@ -1943,6 +1943,41 @@ $−10^9\leq l_i\leq r_i\leq 10^9$</p>
       <tags>
         <tag>区间合并</tag>
         <tag>贪心</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>差分</title>
+    <url>/algo_level1/a0b0b7bd/</url>
+    <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-799-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/799/">原题链接</a></h1>
+<h1 id="ti-mu-zhong-shu">题目重述</h1>
+<p>输入一个长度为 $n$ 的整数序列。接下来输入 $m$ 个操作，每个操作包含三个整数 $l, r, c$，表示将序列中 <code>[l, r]</code> 之间的每个数加上 $c$。请你输出进行完所有操作后的序列。</p>
+<h1 id="suan-fa-fen-xi">算法分析</h1>
+<p>定义：$a_i = b_1 + b_2 + ··· + b_i$，其作用为在 $a$ 数组的 $[l, r]$ 中均加上一个数 $c$，$a$ 数组是 $b$ 数组的前缀和数组，$b$ 数组是 $a$ 数组的差分数组。</p>
+<p>构造差分数组：</p>
+<p>$<br>
+\begin{align}<br>
+b_0 &amp;= a_0 \\<br>
+b_1 &amp;= a_1 \\<br>
+b_2 &amp;= a_2 - a_1 \\<br>
+b_3 &amp;= a_3 - a_2 \\<br>
+b_4 &amp;= a_4 - a_3 \\<br>
+&amp;…         \\<br>
+a_i &amp;= b_1 + b_2 + b_3 + … + b_i \\<br>
+\end{align}<br>
+$</p>
+<p>对应代码为：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">insert</span><span class="hljs-params">(<span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r, <span class="hljs-keyword">int</span> c)</span></span><br><span class="hljs-function"></span>&#123;<br>    b[l] += c;<br>    b[r + <span class="hljs-number">1</span>] -= c;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>若要进行单点查询，例如查询 $a_i$，则直接对 $b_1\sim b_i$ 求一遍前缀和即可。即：$a_i = b_1 + b_2 + … + b_i$。</p>
+<h1 id="wan-zheng-dai-ma">完整代码</h1>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">1e5</span> + <span class="hljs-number">10</span>;<br><br><span class="hljs-keyword">int</span> n, m;<br><span class="hljs-keyword">int</span> a[N], b[N];<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">insert</span><span class="hljs-params">(<span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r, <span class="hljs-keyword">int</span> c)</span></span><br><span class="hljs-function"></span>&#123;<br>    b[l] += c;<br>    b[r + <span class="hljs-number">1</span>] -= c;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n &gt;&gt; m;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++ ) <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>, &amp;a[i]);<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++ )<br>        <span class="hljs-built_in">insert</span>(i, i, a[i]);<br><br>    <span class="hljs-keyword">while</span> (m -- )<br>    &#123;<br>        <span class="hljs-keyword">int</span> l, r, c;<br>        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d%d%d&quot;</span>, &amp;l, &amp;r, &amp;c);<br>        <span class="hljs-built_in">insert</span>(l, r, c);<br>    &#125;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++ ) b[i] += b[i - <span class="hljs-number">1</span>];<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++ ) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d &quot;</span>, b[i]);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">N = <span class="hljs-built_in">int</span>(<span class="hljs-number">1e5</span> + <span class="hljs-number">10</span>)<br>b = [<span class="hljs-number">0</span>] * N<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">insert</span>(<span class="hljs-params">l, r, c</span>):</span><br>    b[l] += c<br>    b[r + <span class="hljs-number">1</span>] -= c<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    n, m = <span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, <span class="hljs-built_in">input</span>().split())<br>    a = [<span class="hljs-number">0</span>] * N<br>    a[<span class="hljs-number">1</span>:] = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, <span class="hljs-built_in">input</span>().split()))<br><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, n + <span class="hljs-number">1</span>):<br>        insert(i, i, a[i])<br><br>    <span class="hljs-keyword">while</span> m != <span class="hljs-number">0</span>:<br>        m -= <span class="hljs-number">1</span><br>        l, r, c = <span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, <span class="hljs-built_in">input</span>().split())<br>        insert(l, r, c)<br><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, n + <span class="hljs-number">1</span>):<br>        b[i] += b[i - <span class="hljs-number">1</span>]<br><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, n + <span class="hljs-number">1</span>):<br>        <span class="hljs-built_in">print</span>(b[i], end = <span class="hljs-string">&#x27; &#x27;</span>)<br></code></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>算法学习</category>
+        <category>算法基础</category>
+        <category>基础算法</category>
+      </categories>
+      <tags>
+        <tag>差分</tag>
       </tags>
   </entry>
   <entry>
@@ -2014,38 +2049,25 @@ $−10000\leq c\leq 10000$</p>
       </tags>
   </entry>
   <entry>
-    <title>差分</title>
-    <url>/algo_level1/a0b0b7bd/</url>
-    <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-799-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/799/">原题链接</a></h1>
+    <title>归并排序</title>
+    <url>/algo_level1/1599bffe/</url>
+    <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-789-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/789/">原题链接</a></h1>
 <h1 id="ti-mu-zhong-shu">题目重述</h1>
-<p>输入一个长度为 $n$ 的整数序列。接下来输入 $m$ 个操作，每个操作包含三个整数 $l, r, c$，表示将序列中 <code>[l, r]</code> 之间的每个数加上 $c$。请你输出进行完所有操作后的序列。</p>
-<h1 id="suan-fa-fen-xi">算法分析</h1>
-<p>定义：$a_i = b_1 + b_2 + ··· + b_i$，其作用为在 $a$ 数组的 $[l, r]$ 中均加上一个数 $c$，$a$ 数组是 $b$ 数组的前缀和数组，$b$ 数组是 $a$ 数组的差分数组。</p>
-<p>构造差分数组：</p>
-<p>$<br>
-\begin{align}<br>
-b_0 &amp;= a_0 \\<br>
-b_1 &amp;= a_1 \\<br>
-b_2 &amp;= a_2 - a_1 \\<br>
-b_3 &amp;= a_3 - a_2 \\<br>
-b_4 &amp;= a_4 - a_3 \\<br>
-&amp;…         \\<br>
-a_i &amp;= b_1 + b_2 + b_3 + … + b_i \\<br>
-\end{align}<br>
-$</p>
-<p>对应代码为：</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">insert</span><span class="hljs-params">(<span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r, <span class="hljs-keyword">int</span> c)</span></span><br><span class="hljs-function"></span>&#123;<br>    b[l] += c;<br>    b[r + <span class="hljs-number">1</span>] -= c;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>若要进行单点查询，例如查询 $a_i$，则直接对 $b_1\sim b_i$ 求一遍前缀和即可。即：$a_i = b_1 + b_2 + … + b_i$。</p>
+<p>给定你一个长度为 $n$ 的整数数列。请你使用归并排序对这个数列按照从小到大进行排序。并将排好序的数列按顺序输出。</p>
+<h1 id="suan-fa-si-xiang">算法思想</h1>
+<p><img src="https://cdn.acwing.com/media/article/image/2021/07/02/94631_7fb6b17cdb-IMG_20210702_174626.jpg" alt="IMG_20210702_174626.jpg"></p>
+<h1 id="shi-jian-fu-za-du">时间复杂度</h1>
+<p>稳定 $O(n\log n)$</p>
 <h1 id="wan-zheng-dai-ma">完整代码</h1>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">1e5</span> + <span class="hljs-number">10</span>;<br><br><span class="hljs-keyword">int</span> n, m;<br><span class="hljs-keyword">int</span> a[N], b[N];<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">insert</span><span class="hljs-params">(<span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r, <span class="hljs-keyword">int</span> c)</span></span><br><span class="hljs-function"></span>&#123;<br>    b[l] += c;<br>    b[r + <span class="hljs-number">1</span>] -= c;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n &gt;&gt; m;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++ ) <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>, &amp;a[i]);<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++ )<br>        <span class="hljs-built_in">insert</span>(i, i, a[i]);<br><br>    <span class="hljs-keyword">while</span> (m -- )<br>    &#123;<br>        <span class="hljs-keyword">int</span> l, r, c;<br>        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d%d%d&quot;</span>, &amp;l, &amp;r, &amp;c);<br>        <span class="hljs-built_in">insert</span>(l, r, c);<br>    &#125;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++ ) b[i] += b[i - <span class="hljs-number">1</span>];<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++ ) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d &quot;</span>, b[i]);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">N = <span class="hljs-built_in">int</span>(<span class="hljs-number">1e5</span> + <span class="hljs-number">10</span>)<br>b = [<span class="hljs-number">0</span>] * N<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">insert</span>(<span class="hljs-params">l, r, c</span>):</span><br>    b[l] += c<br>    b[r + <span class="hljs-number">1</span>] -= c<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    n, m = <span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, <span class="hljs-built_in">input</span>().split())<br>    a = [<span class="hljs-number">0</span>] * N<br>    a[<span class="hljs-number">1</span>:] = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, <span class="hljs-built_in">input</span>().split()))<br><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, n + <span class="hljs-number">1</span>):<br>        insert(i, i, a[i])<br><br>    <span class="hljs-keyword">while</span> m != <span class="hljs-number">0</span>:<br>        m -= <span class="hljs-number">1</span><br>        l, r, c = <span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, <span class="hljs-built_in">input</span>().split())<br>        insert(l, r, c)<br><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, n + <span class="hljs-number">1</span>):<br>        b[i] += b[i - <span class="hljs-number">1</span>]<br><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, n + <span class="hljs-number">1</span>):<br>        <span class="hljs-built_in">print</span>(b[i], end = <span class="hljs-string">&#x27; &#x27;</span>)<br></code></pre></td></tr></table></figure>]]></content>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">1e5</span> + <span class="hljs-number">10</span>;<br><br><span class="hljs-keyword">int</span> n;<br><span class="hljs-keyword">int</span> q[N], tmp[N];<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">merge_sort</span><span class="hljs-params">(<span class="hljs-keyword">int</span> q[], <span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span> (l &gt;= r) <span class="hljs-keyword">return</span>;<br>    <br>    <span class="hljs-keyword">int</span> mid = l + r &gt;&gt; <span class="hljs-number">1</span>;<br>    <br>    <span class="hljs-built_in">merge_sort</span>(q, l, mid), <span class="hljs-built_in">merge_sort</span>(q, mid + <span class="hljs-number">1</span>, r);<br>    <br>    <span class="hljs-keyword">int</span> k = <span class="hljs-number">0</span>, i = l, j = mid + <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">while</span> (i &lt;= mid &amp;&amp; j &lt;= r)<br>        <span class="hljs-keyword">if</span> (q[i] &lt;= q[j]) tmp[k ++ ] = q[i ++ ];<br>        <span class="hljs-keyword">else</span> tmp[k ++ ] = q[j ++ ];<br>    <br>    <span class="hljs-keyword">while</span> (i &lt;= mid) tmp[k ++ ] = q[i ++ ];<br>    <span class="hljs-keyword">while</span> (j &lt;= r) tmp[k ++ ] = q[j ++ ];<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = l, j = <span class="hljs-number">0</span>; i &lt;= r; i ++ , j ++ ) q[i] = tmp[j];<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++ ) <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>, &amp;q[i]);<br>    <span class="hljs-built_in">merge_sort</span>(q, <span class="hljs-number">0</span>, n - <span class="hljs-number">1</span>);<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++ ) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d &quot;</span>, q[i]);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">merge_sort</span>(<span class="hljs-params">q, l, r</span>):</span><br>    <span class="hljs-keyword">if</span> l &gt;= r: <br>        <span class="hljs-keyword">return</span><br><br>    mid = l + r &gt;&gt; <span class="hljs-number">1</span><br>    merge_sort(q, l, mid)<br>    merge_sort(q, mid + <span class="hljs-number">1</span>, r)<br><br>    i, j, k = l, mid + <span class="hljs-number">1</span>, <span class="hljs-number">0</span><br>    <span class="hljs-keyword">while</span> i &lt;= mid <span class="hljs-keyword">and</span> j &lt;= r:<br>        <span class="hljs-keyword">if</span> q[i] &lt; q[j]:<br>            tmp[k] = q[i]<br>            i += <span class="hljs-number">1</span><br>        <span class="hljs-keyword">else</span>:<br>            tmp[k] = q[j]<br>            j += <span class="hljs-number">1</span><br>        k += <span class="hljs-number">1</span><br><br>    <span class="hljs-keyword">while</span> i &lt;= mid:<br>        tmp[k] = q[i]<br>        i += <span class="hljs-number">1</span><br>        k += <span class="hljs-number">1</span><br>    <span class="hljs-keyword">while</span> j &lt;= r:<br>        tmp[k] = q[j]<br>        j += <span class="hljs-number">1</span><br>        k += <span class="hljs-number">1</span><br><br>    j = <span class="hljs-number">0</span><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(l, r + <span class="hljs-number">1</span>):<br>        q[i] = tmp[j]<br>        j += <span class="hljs-number">1</span><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    n = <span class="hljs-built_in">int</span>(<span class="hljs-built_in">input</span>())<br>    q = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, <span class="hljs-built_in">input</span>().split()))<br>    tmp = [<span class="hljs-number">0</span>] * n<br>    merge_sort(q, <span class="hljs-number">0</span>, n - <span class="hljs-number">1</span>)<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(q)):<br>        <span class="hljs-built_in">print</span>(q[i], end = <span class="hljs-string">&#x27; &#x27;</span>)<br></code></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>算法学习</category>
         <category>算法基础</category>
         <category>基础算法</category>
       </categories>
       <tags>
-        <tag>差分</tag>
+        <tag>归并排序</tag>
       </tags>
   </entry>
   <entry>
@@ -2095,28 +2117,6 @@ $</p>
       </categories>
       <tags>
         <tag>快速排序</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>归并排序</title>
-    <url>/algo_level1/1599bffe/</url>
-    <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-789-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/789/">原题链接</a></h1>
-<h1 id="ti-mu-zhong-shu">题目重述</h1>
-<p>给定你一个长度为 $n$ 的整数数列。请你使用归并排序对这个数列按照从小到大进行排序。并将排好序的数列按顺序输出。</p>
-<h1 id="suan-fa-si-xiang">算法思想</h1>
-<p><img src="https://cdn.acwing.com/media/article/image/2021/07/02/94631_7fb6b17cdb-IMG_20210702_174626.jpg" alt="IMG_20210702_174626.jpg"></p>
-<h1 id="shi-jian-fu-za-du">时间复杂度</h1>
-<p>稳定 $O(n\log n)$</p>
-<h1 id="wan-zheng-dai-ma">完整代码</h1>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">1e5</span> + <span class="hljs-number">10</span>;<br><br><span class="hljs-keyword">int</span> n;<br><span class="hljs-keyword">int</span> q[N], tmp[N];<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">merge_sort</span><span class="hljs-params">(<span class="hljs-keyword">int</span> q[], <span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span> (l &gt;= r) <span class="hljs-keyword">return</span>;<br>    <br>    <span class="hljs-keyword">int</span> mid = l + r &gt;&gt; <span class="hljs-number">1</span>;<br>    <br>    <span class="hljs-built_in">merge_sort</span>(q, l, mid), <span class="hljs-built_in">merge_sort</span>(q, mid + <span class="hljs-number">1</span>, r);<br>    <br>    <span class="hljs-keyword">int</span> k = <span class="hljs-number">0</span>, i = l, j = mid + <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">while</span> (i &lt;= mid &amp;&amp; j &lt;= r)<br>        <span class="hljs-keyword">if</span> (q[i] &lt;= q[j]) tmp[k ++ ] = q[i ++ ];<br>        <span class="hljs-keyword">else</span> tmp[k ++ ] = q[j ++ ];<br>    <br>    <span class="hljs-keyword">while</span> (i &lt;= mid) tmp[k ++ ] = q[i ++ ];<br>    <span class="hljs-keyword">while</span> (j &lt;= r) tmp[k ++ ] = q[j ++ ];<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = l, j = <span class="hljs-number">0</span>; i &lt;= r; i ++ , j ++ ) q[i] = tmp[j];<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++ ) <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>, &amp;q[i]);<br>    <span class="hljs-built_in">merge_sort</span>(q, <span class="hljs-number">0</span>, n - <span class="hljs-number">1</span>);<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++ ) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d &quot;</span>, q[i]);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">merge_sort</span>(<span class="hljs-params">q, l, r</span>):</span><br>    <span class="hljs-keyword">if</span> l &gt;= r: <br>        <span class="hljs-keyword">return</span><br><br>    mid = l + r &gt;&gt; <span class="hljs-number">1</span><br>    merge_sort(q, l, mid)<br>    merge_sort(q, mid + <span class="hljs-number">1</span>, r)<br><br>    i, j, k = l, mid + <span class="hljs-number">1</span>, <span class="hljs-number">0</span><br>    <span class="hljs-keyword">while</span> i &lt;= mid <span class="hljs-keyword">and</span> j &lt;= r:<br>        <span class="hljs-keyword">if</span> q[i] &lt; q[j]:<br>            tmp[k] = q[i]<br>            i += <span class="hljs-number">1</span><br>        <span class="hljs-keyword">else</span>:<br>            tmp[k] = q[j]<br>            j += <span class="hljs-number">1</span><br>        k += <span class="hljs-number">1</span><br><br>    <span class="hljs-keyword">while</span> i &lt;= mid:<br>        tmp[k] = q[i]<br>        i += <span class="hljs-number">1</span><br>        k += <span class="hljs-number">1</span><br>    <span class="hljs-keyword">while</span> j &lt;= r:<br>        tmp[k] = q[j]<br>        j += <span class="hljs-number">1</span><br>        k += <span class="hljs-number">1</span><br><br>    j = <span class="hljs-number">0</span><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(l, r + <span class="hljs-number">1</span>):<br>        q[i] = tmp[j]<br>        j += <span class="hljs-number">1</span><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    n = <span class="hljs-built_in">int</span>(<span class="hljs-built_in">input</span>())<br>    q = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, <span class="hljs-built_in">input</span>().split()))<br>    tmp = [<span class="hljs-number">0</span>] * n<br>    merge_sort(q, <span class="hljs-number">0</span>, n - <span class="hljs-number">1</span>)<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(q)):<br>        <span class="hljs-built_in">print</span>(q[i], end = <span class="hljs-string">&#x27; &#x27;</span>)<br></code></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>算法学习</category>
-        <category>算法基础</category>
-        <category>基础算法</category>
-      </categories>
-      <tags>
-        <tag>归并排序</tag>
       </tags>
   </entry>
   <entry>
@@ -2214,6 +2214,29 @@ $−10^9\leq y_1 &lt; y_2\leq 10^9$</p>
       </tags>
   </entry>
   <entry>
+    <title>数组元素的目标和</title>
+    <url>/algo_level1/a9c09279/</url>
+    <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-802-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/802/">原题链接</a></h1>
+<h1 id="ti-mu-zhong-shu">题目重述</h1>
+<p>给定两个升序排序的有序数组 $A$ 和 $B$，以及一个目标值 $x$。</p>
+<p>数组下标从 $0$ 开始。</p>
+<p>请你求出满足 $A[i]+B[j]=x$ 的数对 $(i,j)$。</p>
+<p>数据保证有唯一解。</p>
+<h1 id="suan-fa-si-xiang">算法思想</h1>
+<p>利用了双指针算法，由于两个数组有序，具有单调性，因此设两个指针 $i, j$ 分别在数组 $A$ 和数组 $B$ 的首尾往中间扫即可。</p>
+<h1 id="wan-zheng-dai-ma">完整代码</h1>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">1e5</span> + <span class="hljs-number">10</span>;<br><br><span class="hljs-keyword">int</span> a[N], b[N];<br><span class="hljs-keyword">int</span> n, m;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> x;<br>    cin &gt;&gt; n &gt;&gt; m &gt;&gt; x;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++ ) <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>, &amp;a[i]);<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; m; i ++ ) <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>, &amp;b[i]);<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>, j = m - <span class="hljs-number">1</span>; i &lt; n; i ++ ) <br>    &#123;<br>        <span class="hljs-keyword">while</span> (j &gt;= <span class="hljs-number">0</span> &amp;&amp; a[i] + b[j] &gt; x) j -- ;<br>        <span class="hljs-keyword">if</span> (a[i] + b[j] == x) cout &lt;&lt; i &lt;&lt; <span class="hljs-string">&#x27; &#x27;</span> &lt;&lt; j &lt;&lt; endl;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">n, m, x = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, <span class="hljs-built_in">input</span>().split()))<br><br>N = <span class="hljs-built_in">int</span>(<span class="hljs-number">1e5</span> + <span class="hljs-number">10</span>)<br>a = [<span class="hljs-number">0</span>] * N<br>b = [<span class="hljs-number">0</span>] * N<br><br>a, b = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, <span class="hljs-built_in">input</span>().split())), <span class="hljs-built_in">list</span>(<span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, <span class="hljs-built_in">input</span>().split()))<br><br>i, j = <span class="hljs-number">0</span>, m - <span class="hljs-number">1</span><br><br><span class="hljs-keyword">while</span> i &lt; n:<br>    <span class="hljs-keyword">while</span> j &gt;= <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> a[i] + b[j] &gt; x: j -= <span class="hljs-number">1</span><br>    <span class="hljs-keyword">if</span> a[i] + b[j] == x: <span class="hljs-built_in">print</span>(<span class="hljs-built_in">str</span>(i) + <span class="hljs-string">&#x27; &#x27;</span> + <span class="hljs-built_in">str</span>(j))<br>    i += <span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>算法学习</category>
+        <category>算法基础</category>
+        <category>基础算法</category>
+      </categories>
+      <tags>
+        <tag>双指针</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>日志统计</title>
     <url>/LanQiaoCup/89e96df4/</url>
     <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-1240-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/1240/">原题链接</a></h1>
@@ -2254,29 +2277,6 @@ $1\leq D\leq 10000$</p>
       </tags>
   </entry>
   <entry>
-    <title>数组元素的目标和</title>
-    <url>/algo_level1/a9c09279/</url>
-    <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-802-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/802/">原题链接</a></h1>
-<h1 id="ti-mu-zhong-shu">题目重述</h1>
-<p>给定两个升序排序的有序数组 $A$ 和 $B$，以及一个目标值 $x$。</p>
-<p>数组下标从 $0$ 开始。</p>
-<p>请你求出满足 $A[i]+B[j]=x$ 的数对 $(i,j)$。</p>
-<p>数据保证有唯一解。</p>
-<h1 id="suan-fa-si-xiang">算法思想</h1>
-<p>利用了双指针算法，由于两个数组有序，具有单调性，因此设两个指针 $i, j$ 分别在数组 $A$ 和数组 $B$ 的首尾往中间扫即可。</p>
-<h1 id="wan-zheng-dai-ma">完整代码</h1>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">1e5</span> + <span class="hljs-number">10</span>;<br><br><span class="hljs-keyword">int</span> a[N], b[N];<br><span class="hljs-keyword">int</span> n, m;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> x;<br>    cin &gt;&gt; n &gt;&gt; m &gt;&gt; x;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++ ) <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>, &amp;a[i]);<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; m; i ++ ) <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>, &amp;b[i]);<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>, j = m - <span class="hljs-number">1</span>; i &lt; n; i ++ ) <br>    &#123;<br>        <span class="hljs-keyword">while</span> (j &gt;= <span class="hljs-number">0</span> &amp;&amp; a[i] + b[j] &gt; x) j -- ;<br>        <span class="hljs-keyword">if</span> (a[i] + b[j] == x) cout &lt;&lt; i &lt;&lt; <span class="hljs-string">&#x27; &#x27;</span> &lt;&lt; j &lt;&lt; endl;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">n, m, x = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, <span class="hljs-built_in">input</span>().split()))<br><br>N = <span class="hljs-built_in">int</span>(<span class="hljs-number">1e5</span> + <span class="hljs-number">10</span>)<br>a = [<span class="hljs-number">0</span>] * N<br>b = [<span class="hljs-number">0</span>] * N<br><br>a, b = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, <span class="hljs-built_in">input</span>().split())), <span class="hljs-built_in">list</span>(<span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, <span class="hljs-built_in">input</span>().split()))<br><br>i, j = <span class="hljs-number">0</span>, m - <span class="hljs-number">1</span><br><br><span class="hljs-keyword">while</span> i &lt; n:<br>    <span class="hljs-keyword">while</span> j &gt;= <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> a[i] + b[j] &gt; x: j -= <span class="hljs-number">1</span><br>    <span class="hljs-keyword">if</span> a[i] + b[j] == x: <span class="hljs-built_in">print</span>(<span class="hljs-built_in">str</span>(i) + <span class="hljs-string">&#x27; &#x27;</span> + <span class="hljs-built_in">str</span>(j))<br>    i += <span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>算法学习</category>
-        <category>算法基础</category>
-        <category>基础算法</category>
-      </categories>
-      <tags>
-        <tag>双指针</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>最长连续不重复子序列</title>
     <url>/algo_level1/d071178/</url>
     <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-801-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/801/">原题链接</a></h1>
@@ -2307,6 +2307,29 @@ $1\leq D\leq 10000$</p>
       </categories>
       <tags>
         <tag>双指针</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>求逆序对数量</title>
+    <url>/algo_level1/a137d74e/</url>
+    <content><![CDATA[<h1 id="a-href-yuan-ti-lian-jie-a"><a href="">原题链接</a></h1>
+<h1 id="suan-fa-si-xiang">算法思想</h1>
+<p><img src="https://cdn.acwing.com/media/article/image/2021/07/03/94631_b2ba9ff7db-QQ%E6%88%AA%E5%9B%BE20210703002220.png" alt="QQ截图20210703002220.png"></p>
+<p>其中</p>
+<p><img src="https://cdn.acwing.com/media/article/image/2021/07/03/94631_d5072b24db-QQ%E6%88%AA%E5%9B%BE20210703002319.png" alt="QQ截图20210703002319.png"></p>
+<p>这是因为当 $q_i &gt; q_j$ 时， $q_i$ 右边的数全部大于 $q_i$, 而 $q_i$ 左边的数也一定小于 $q_j$ ，因为如果不小于的话 $q_j$ 就会被输出了（归并排序双指针算法过程，每次拿两个指针所指数据比较，较小的那个输出），而 $S_j$ 表示对于右半边序列Right的某一个值 $q_j$ 来说，在左半边序列Left中，满足 $q_i &gt; q_j$ 的 $q$ 的个数，即 <code>Sj = mid - i + 1</code>.</p>
+<h1 id="tips">TIPS</h1>
+<p>在最坏的情况下即当序列为从大到小的逆序序列 $1 \sim n$ 时，逆序对数量最大，为：$(n-1) + (n-2)+ … + 1 = \dfrac{n(n-1)}{2}$, 题中所给 $n$ 量级为 $10^5$， 最坏情况下数量约为 $5 × 10 ^ 9$，会爆int， ，故要用long long存。</p>
+<h1 id="wan-zheng-dai-ma">完整代码</h1>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">100010</span>;<br><br><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> LL;<br><br><span class="hljs-keyword">int</span> n;<br><span class="hljs-keyword">int</span> q[N], tmp[N];<br><br><span class="hljs-function">LL <span class="hljs-title">merge_sort</span><span class="hljs-params">(<span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span> (l &gt;= r) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br><br>    <span class="hljs-keyword">int</span> mid = l + r &gt;&gt; <span class="hljs-number">1</span>;<br>    LL res = <span class="hljs-built_in">merge_sort</span>(l, mid) + <span class="hljs-built_in">merge_sort</span>(mid + <span class="hljs-number">1</span>, r);<br><br>    <span class="hljs-comment">// 归并过程</span><br>    <span class="hljs-keyword">int</span> k = <span class="hljs-number">0</span>, i = l, j = mid + <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">while</span> (i &lt;= mid &amp;&amp; j &lt;= r)<br>        <span class="hljs-keyword">if</span> (q[i] &lt;= q[j]) tmp[k ++ ] = q[i ++ ];<br>        <span class="hljs-keyword">else</span> <br>        &#123;<br>            tmp[k ++ ] = q[j ++ ];<br>            res += mid - i + <span class="hljs-number">1</span>;<br>        &#125;<br>    <span class="hljs-comment">// 扫尾</span><br>    <span class="hljs-keyword">while</span> (i &lt;= mid) tmp[k ++ ] = q[i ++ ];<br>    <span class="hljs-keyword">while</span> (j &lt;= r) tmp[k ++ ] = q[j ++ ];<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = l, j = <span class="hljs-number">0</span>; i &lt;= r; i ++ , j ++ ) q[i] = tmp[j];<br>    <span class="hljs-keyword">return</span> res;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++ ) <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>, &amp;q[i]);<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%lld\n&quot;</span>, <span class="hljs-built_in">merge_sort</span>(<span class="hljs-number">0</span>, n - <span class="hljs-number">1</span>));<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">merge_sort</span>(<span class="hljs-params">q, l, r</span>):</span><br>    <span class="hljs-keyword">if</span> l &gt;= r: <span class="hljs-keyword">return</span> <span class="hljs-number">0</span><br><br>    mid = l + r &gt;&gt; <span class="hljs-number">1</span><br>    res = merge_sort(q, l, mid) + merge_sort(q, mid + <span class="hljs-number">1</span>, r)<br><br>    i, j, k = l, mid + <span class="hljs-number">1</span>, <span class="hljs-number">0</span><br>    <span class="hljs-keyword">while</span> i &lt;= mid <span class="hljs-keyword">and</span> j &lt;= r:<br>        <span class="hljs-keyword">if</span> q[i] &lt;= q[j]:<br>            tmp[k] = q[i]<br>            i += <span class="hljs-number">1</span><br>        <span class="hljs-keyword">else</span>:<br>            tmp[k] = q[j]<br>            res += mid - i + <span class="hljs-number">1</span><br>            j += <span class="hljs-number">1</span><br>        k += <span class="hljs-number">1</span><br><br>    <span class="hljs-keyword">while</span> i &lt;= mid:<br>        tmp[k] = q[i]<br>        i += <span class="hljs-number">1</span><br>        k += <span class="hljs-number">1</span><br><br>    <span class="hljs-keyword">while</span> j &lt;= r:<br>        tmp[k] = q[j]<br>        j += <span class="hljs-number">1</span><br>        k += <span class="hljs-number">1</span><br><br>    j = <span class="hljs-number">0</span><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(l, r + <span class="hljs-number">1</span>):<br>        q[i] = tmp[j]<br>        j += <span class="hljs-number">1</span><br>    <span class="hljs-keyword">return</span> res<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    n = <span class="hljs-built_in">int</span>(<span class="hljs-built_in">input</span>())<br>    q = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, <span class="hljs-built_in">input</span>().split()))<br>    tmp = [<span class="hljs-number">0</span>] * n<br>    <span class="hljs-built_in">sum</span> = merge_sort(q, <span class="hljs-number">0</span>, n - <span class="hljs-number">1</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-built_in">sum</span>)<br></code></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>算法学习</category>
+        <category>算法基础</category>
+        <category>基础算法</category>
+      </categories>
+      <tags>
+        <tag>归并排序</tag>
       </tags>
   </entry>
   <entry>
@@ -2354,29 +2377,6 @@ $1\leq D\leq 10000$</p>
       <tags>
         <tag>二分</tag>
         <tag>递推</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>求逆序对数量</title>
-    <url>/algo_level1/a137d74e/</url>
-    <content><![CDATA[<h1 id="a-href-yuan-ti-lian-jie-a"><a href="">原题链接</a></h1>
-<h1 id="suan-fa-si-xiang">算法思想</h1>
-<p><img src="https://cdn.acwing.com/media/article/image/2021/07/03/94631_b2ba9ff7db-QQ%E6%88%AA%E5%9B%BE20210703002220.png" alt="QQ截图20210703002220.png"></p>
-<p>其中</p>
-<p><img src="https://cdn.acwing.com/media/article/image/2021/07/03/94631_d5072b24db-QQ%E6%88%AA%E5%9B%BE20210703002319.png" alt="QQ截图20210703002319.png"></p>
-<p>这是因为当 $q_i &gt; q_j$ 时， $q_i$ 右边的数全部大于 $q_i$, 而 $q_i$ 左边的数也一定小于 $q_j$ ，因为如果不小于的话 $q_j$ 就会被输出了（归并排序双指针算法过程，每次拿两个指针所指数据比较，较小的那个输出），而 $S_j$ 表示对于右半边序列Right的某一个值 $q_j$ 来说，在左半边序列Left中，满足 $q_i &gt; q_j$ 的 $q$ 的个数，即 <code>Sj = mid - i + 1</code>.</p>
-<h1 id="tips">TIPS</h1>
-<p>在最坏的情况下即当序列为从大到小的逆序序列 $1 \sim n$ 时，逆序对数量最大，为：$(n-1) + (n-2)+ … + 1 = \dfrac{n(n-1)}{2}$, 题中所给 $n$ 量级为 $10^5$， 最坏情况下数量约为 $5 × 10 ^ 9$，会爆int， ，故要用long long存。</p>
-<h1 id="wan-zheng-dai-ma">完整代码</h1>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">100010</span>;<br><br><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> LL;<br><br><span class="hljs-keyword">int</span> n;<br><span class="hljs-keyword">int</span> q[N], tmp[N];<br><br><span class="hljs-function">LL <span class="hljs-title">merge_sort</span><span class="hljs-params">(<span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span> (l &gt;= r) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br><br>    <span class="hljs-keyword">int</span> mid = l + r &gt;&gt; <span class="hljs-number">1</span>;<br>    LL res = <span class="hljs-built_in">merge_sort</span>(l, mid) + <span class="hljs-built_in">merge_sort</span>(mid + <span class="hljs-number">1</span>, r);<br><br>    <span class="hljs-comment">// 归并过程</span><br>    <span class="hljs-keyword">int</span> k = <span class="hljs-number">0</span>, i = l, j = mid + <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">while</span> (i &lt;= mid &amp;&amp; j &lt;= r)<br>        <span class="hljs-keyword">if</span> (q[i] &lt;= q[j]) tmp[k ++ ] = q[i ++ ];<br>        <span class="hljs-keyword">else</span> <br>        &#123;<br>            tmp[k ++ ] = q[j ++ ];<br>            res += mid - i + <span class="hljs-number">1</span>;<br>        &#125;<br>    <span class="hljs-comment">// 扫尾</span><br>    <span class="hljs-keyword">while</span> (i &lt;= mid) tmp[k ++ ] = q[i ++ ];<br>    <span class="hljs-keyword">while</span> (j &lt;= r) tmp[k ++ ] = q[j ++ ];<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = l, j = <span class="hljs-number">0</span>; i &lt;= r; i ++ , j ++ ) q[i] = tmp[j];<br>    <span class="hljs-keyword">return</span> res;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++ ) <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>, &amp;q[i]);<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%lld\n&quot;</span>, <span class="hljs-built_in">merge_sort</span>(<span class="hljs-number">0</span>, n - <span class="hljs-number">1</span>));<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">merge_sort</span>(<span class="hljs-params">q, l, r</span>):</span><br>    <span class="hljs-keyword">if</span> l &gt;= r: <span class="hljs-keyword">return</span> <span class="hljs-number">0</span><br><br>    mid = l + r &gt;&gt; <span class="hljs-number">1</span><br>    res = merge_sort(q, l, mid) + merge_sort(q, mid + <span class="hljs-number">1</span>, r)<br><br>    i, j, k = l, mid + <span class="hljs-number">1</span>, <span class="hljs-number">0</span><br>    <span class="hljs-keyword">while</span> i &lt;= mid <span class="hljs-keyword">and</span> j &lt;= r:<br>        <span class="hljs-keyword">if</span> q[i] &lt;= q[j]:<br>            tmp[k] = q[i]<br>            i += <span class="hljs-number">1</span><br>        <span class="hljs-keyword">else</span>:<br>            tmp[k] = q[j]<br>            res += mid - i + <span class="hljs-number">1</span><br>            j += <span class="hljs-number">1</span><br>        k += <span class="hljs-number">1</span><br><br>    <span class="hljs-keyword">while</span> i &lt;= mid:<br>        tmp[k] = q[i]<br>        i += <span class="hljs-number">1</span><br>        k += <span class="hljs-number">1</span><br><br>    <span class="hljs-keyword">while</span> j &lt;= r:<br>        tmp[k] = q[j]<br>        j += <span class="hljs-number">1</span><br>        k += <span class="hljs-number">1</span><br><br>    j = <span class="hljs-number">0</span><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(l, r + <span class="hljs-number">1</span>):<br>        q[i] = tmp[j]<br>        j += <span class="hljs-number">1</span><br>    <span class="hljs-keyword">return</span> res<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    n = <span class="hljs-built_in">int</span>(<span class="hljs-built_in">input</span>())<br>    q = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, <span class="hljs-built_in">input</span>().split()))<br>    tmp = [<span class="hljs-number">0</span>] * n<br>    <span class="hljs-built_in">sum</span> = merge_sort(q, <span class="hljs-number">0</span>, n - <span class="hljs-number">1</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-built_in">sum</span>)<br></code></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>算法学习</category>
-        <category>算法基础</category>
-        <category>基础算法</category>
-      </categories>
-      <tags>
-        <tag>归并排序</tag>
       </tags>
   </entry>
   <entry>
@@ -2641,6 +2641,43 @@ $$
       </tags>
   </entry>
   <entry>
+    <title>递归实现排列型枚举</title>
+    <url>/LanQiaoCup/4ec37128/</url>
+    <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-96-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/96/">原题链接</a></h1>
+<h1 id="ti-mu-miao-shu">题目描述</h1>
+<p>把 $1\sim n$ 这 $n$ 个整数排成一行后随机打乱顺序，输出所有可能的次序。</p>
+<h2 id="shu-ru-ge-shi" id="输入格式">输入格式</h2>
+<p>一个整数 $n$。</p>
+<h2 id="shu-chu-ge-shi" id="输出格式">输出格式</h2>
+<p>按照从小到大的顺序输出所有方案，每行 $1$ 个。</p>
+<p>首先，同一行相邻两个数用一个空格隔开。</p>
+<p>其次，对于两个不同的行，对应下标的数一一比较，字典序较小的排在前面。</p>
+<h2 id="shu-ju-fan-wei" id="数据范围">数据范围</h2>
+<p>$1\leq n\leq 9$</p>
+<h2 id="shu-ru-yang-li" id="输入样例">输入样例</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">3<br></code></pre></td></tr></table></figure>
+<h2 id="shu-chu-yang-li" id="输出样例">输出样例</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">1 2 3<br>1 3 2<br>2 1 3<br>2 3 1<br>3 1 2<br>3 2 1<br></code></pre></td></tr></table></figure>
+<h1 id="ti-mu-fen-xi-wan-zheng-dai-ma">题目分析/完整代码</h1>
+<h2 id="jie-fa-yi" id="解法一">解法一</h2>
+<blockquote>
+<p>st数组判重</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">15</span>;<br><br><span class="hljs-keyword">int</span> n;<br><span class="hljs-keyword">int</span> path[N];<br><span class="hljs-keyword">bool</span> st[N];<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span> (u &gt; n) <br>    &#123;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++ )<br>            cout &lt;&lt; path[i] &lt;&lt; <span class="hljs-string">&#x27; &#x27;</span>;<br>        cout &lt;&lt; endl;<br>    &#125;<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++ )<br>        <span class="hljs-keyword">if</span> (!st[i])<br>        &#123;<br>            st[i] = <span class="hljs-literal">true</span>;<br>            path[u] = i;<br>            <span class="hljs-built_in">dfs</span>(u + <span class="hljs-number">1</span>);<br>            path[u] = <span class="hljs-number">0</span>;<br>            st[i] = <span class="hljs-literal">false</span>;<br>        &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;   <br>    cin &gt;&gt; n;<br>    <span class="hljs-built_in">dfs</span>(<span class="hljs-number">1</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="jie-fa-er" id="解法二">解法二</h2>
+<blockquote>
+<p>位运算</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">int</span> n;<br>vector&lt;<span class="hljs-keyword">int</span>&gt; path;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> state)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span> (u == n)<br>    &#123;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> x : path) cout &lt;&lt; x &lt;&lt; <span class="hljs-string">&#x27; &#x27;</span>;<br>        cout &lt;&lt; endl;<br>        <span class="hljs-keyword">return</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++ )<br>        <span class="hljs-keyword">if</span> (!(state &gt;&gt; i &amp; <span class="hljs-number">1</span>))<br>        &#123;<br>            path.<span class="hljs-built_in">push_back</span>(i + <span class="hljs-number">1</span>);<br>            <span class="hljs-built_in">dfs</span>(u + <span class="hljs-number">1</span>, state + (<span class="hljs-number">1</span> &lt;&lt; i));<br>            path.<span class="hljs-built_in">pop_back</span>();<br>        &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n;<br>    <span class="hljs-built_in">dfs</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>算法学习</category>
+        <category>蓝桥杯刷题笔记</category>
+      </categories>
+      <tags>
+        <tag>递归</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>递归实现组合型枚举</title>
     <url>/LanQiaoCup/e3f06f5/</url>
     <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-95-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/95/">原题链接</a></h1>
@@ -2678,43 +2715,6 @@ $n+(n−m)\leq 25$</p>
       </categories>
       <tags>
         <tag>DFS</tag>
-        <tag>递归</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>递归实现排列型枚举</title>
-    <url>/LanQiaoCup/4ec37128/</url>
-    <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-96-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/96/">原题链接</a></h1>
-<h1 id="ti-mu-miao-shu">题目描述</h1>
-<p>把 $1\sim n$ 这 $n$ 个整数排成一行后随机打乱顺序，输出所有可能的次序。</p>
-<h2 id="shu-ru-ge-shi" id="输入格式">输入格式</h2>
-<p>一个整数 $n$。</p>
-<h2 id="shu-chu-ge-shi" id="输出格式">输出格式</h2>
-<p>按照从小到大的顺序输出所有方案，每行 $1$ 个。</p>
-<p>首先，同一行相邻两个数用一个空格隔开。</p>
-<p>其次，对于两个不同的行，对应下标的数一一比较，字典序较小的排在前面。</p>
-<h2 id="shu-ju-fan-wei" id="数据范围">数据范围</h2>
-<p>$1\leq n\leq 9$</p>
-<h2 id="shu-ru-yang-li" id="输入样例">输入样例</h2>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">3<br></code></pre></td></tr></table></figure>
-<h2 id="shu-chu-yang-li" id="输出样例">输出样例</h2>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">1 2 3<br>1 3 2<br>2 1 3<br>2 3 1<br>3 1 2<br>3 2 1<br></code></pre></td></tr></table></figure>
-<h1 id="ti-mu-fen-xi-wan-zheng-dai-ma">题目分析/完整代码</h1>
-<h2 id="jie-fa-yi" id="解法一">解法一</h2>
-<blockquote>
-<p>st数组判重</p>
-</blockquote>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">15</span>;<br><br><span class="hljs-keyword">int</span> n;<br><span class="hljs-keyword">int</span> path[N];<br><span class="hljs-keyword">bool</span> st[N];<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span> (u &gt; n) <br>    &#123;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++ )<br>            cout &lt;&lt; path[i] &lt;&lt; <span class="hljs-string">&#x27; &#x27;</span>;<br>        cout &lt;&lt; endl;<br>    &#125;<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++ )<br>        <span class="hljs-keyword">if</span> (!st[i])<br>        &#123;<br>            st[i] = <span class="hljs-literal">true</span>;<br>            path[u] = i;<br>            <span class="hljs-built_in">dfs</span>(u + <span class="hljs-number">1</span>);<br>            path[u] = <span class="hljs-number">0</span>;<br>            st[i] = <span class="hljs-literal">false</span>;<br>        &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;   <br>    cin &gt;&gt; n;<br>    <span class="hljs-built_in">dfs</span>(<span class="hljs-number">1</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-<h2 id="jie-fa-er" id="解法二">解法二</h2>
-<blockquote>
-<p>位运算</p>
-</blockquote>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">int</span> n;<br>vector&lt;<span class="hljs-keyword">int</span>&gt; path;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> state)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span> (u == n)<br>    &#123;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> x : path) cout &lt;&lt; x &lt;&lt; <span class="hljs-string">&#x27; &#x27;</span>;<br>        cout &lt;&lt; endl;<br>        <span class="hljs-keyword">return</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++ )<br>        <span class="hljs-keyword">if</span> (!(state &gt;&gt; i &amp; <span class="hljs-number">1</span>))<br>        &#123;<br>            path.<span class="hljs-built_in">push_back</span>(i + <span class="hljs-number">1</span>);<br>            <span class="hljs-built_in">dfs</span>(u + <span class="hljs-number">1</span>, state + (<span class="hljs-number">1</span> &lt;&lt; i));<br>            path.<span class="hljs-built_in">pop_back</span>();<br>        &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n;<br>    <span class="hljs-built_in">dfs</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>算法学习</category>
-        <category>蓝桥杯刷题笔记</category>
-      </categories>
-      <tags>
         <tag>递归</tag>
       </tags>
   </entry>
@@ -2854,29 +2854,6 @@ $$</p>
         <tag>高斯消元</tag>
         <tag>线性空间</tag>
         <tag>异或</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>高精度加法</title>
-    <url>/algo_level1/48362e32/</url>
-    <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-793-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/793/">原题链接</a></h1>
-<h1 id="ti-mu-zhong-shu">题目重述</h1>
-<p>给定两个正整数（不含前导 0），计算它们的和，其中整数长度不超过100000。</p>
-<h1 id="ti-mu-fen-xi">题目分析</h1>
-<p>相当于对实际竖式计算的一个模拟，这里注意两个加数包括最后的和都是低位在前，高位再后存的，因为实际计算过程是先计算低位，再计算高位的，最后逆序输出即可。</p>
-<h1 id="wan-zheng-dai-ma">完整代码</h1>
-<h2 id="po-su-xie-fa" id="朴素写法">朴素写法</h2>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-function">vector&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">add</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt; &amp;A, vector&lt;<span class="hljs-keyword">int</span>&gt; &amp;B)</span></span><br><span class="hljs-function"></span>&#123;<br>    vector&lt;<span class="hljs-keyword">int</span>&gt; C;<br>    <span class="hljs-keyword">int</span> t = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; A.<span class="hljs-built_in">size</span>() || i &lt; B.<span class="hljs-built_in">size</span>(); i ++ )<br>    &#123;<br>        <span class="hljs-keyword">if</span> (i &lt; A.<span class="hljs-built_in">size</span>()) t += A[i];<br>        <span class="hljs-keyword">if</span> (i &lt; B.<span class="hljs-built_in">size</span>()) t += B[i];<br>        C.<span class="hljs-built_in">push_back</span>(t % <span class="hljs-number">10</span>);<br>        t /= <span class="hljs-number">10</span>;<br>    &#125;<br>    <span class="hljs-keyword">if</span> (t) C.<span class="hljs-built_in">push_back</span>(<span class="hljs-number">1</span>);<br>    <span class="hljs-keyword">return</span> C;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    string a, b;<br>    cin &gt;&gt; a &gt;&gt; b;<br>    vector&lt;<span class="hljs-keyword">int</span>&gt; A, B;<br>    <br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = a.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i -- ) A.<span class="hljs-built_in">push_back</span>(a[i] - <span class="hljs-string">&#x27;0&#x27;</span>);<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = b.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i -- ) B.<span class="hljs-built_in">push_back</span>(b[i] - <span class="hljs-string">&#x27;0&#x27;</span>);<br>    <br>    <span class="hljs-keyword">auto</span> C = <span class="hljs-built_in">add</span>(A, B);<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = C.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i -- ) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d&quot;</span>, C[i]);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-<h2 id="gao-jing-du-ya-wei-xie-fa" id="高精度压位写法">高精度压位写法</h2>
-<p>此写法比朴素版快了将近一倍，每9位计算一次压入数组，高精加一般压9位，高精乘一般压4位(如果压5位，10万的平方会爆int)</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> base = <span class="hljs-number">1e9</span>;<br><br><span class="hljs-function">vector&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">add</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt; &amp;A, vector&lt;<span class="hljs-keyword">int</span>&gt; &amp;B)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> t = <span class="hljs-number">0</span>;<br>    vector&lt;<span class="hljs-keyword">int</span>&gt; C;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; A.<span class="hljs-built_in">size</span>() || i &lt; B.<span class="hljs-built_in">size</span>(); i ++ )<br>    &#123;<br>        <span class="hljs-keyword">if</span> (i &lt; A.<span class="hljs-built_in">size</span>()) t += A[i];<br>        <span class="hljs-keyword">if</span> (i &lt; B.<span class="hljs-built_in">size</span>()) t += B[i];<br>        C.<span class="hljs-built_in">push_back</span>(t % base);<br>        t /= base;<br>    &#125;<br><br>    <span class="hljs-keyword">if</span> (t) C.<span class="hljs-built_in">push_back</span>(t);<br>    <span class="hljs-keyword">return</span> C;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    string a, b;<br>    cin &gt;&gt; a &gt;&gt; b;<br>    vector&lt;<span class="hljs-keyword">int</span>&gt; A, B;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = a.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>, s = <span class="hljs-number">0</span>, j = <span class="hljs-number">0</span>, t = <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i -- )   <br>    &#123;<br>        s += (a[i] - <span class="hljs-string">&#x27;0&#x27;</span>) * t;<br>        <span class="hljs-comment">// j表示当前压到第几位</span><br>        j ++ , t *= <span class="hljs-number">10</span>;<br>        <span class="hljs-keyword">if</span> (j == <span class="hljs-number">9</span> || i == <span class="hljs-number">0</span>)<br>        &#123;<br>            A.<span class="hljs-built_in">push_back</span>(s);<br>            s = j = <span class="hljs-number">0</span>;<br>            t = <span class="hljs-number">1</span>;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = b.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>, s = <span class="hljs-number">0</span>, j = <span class="hljs-number">0</span>, t = <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i -- )<br>    &#123;<br>        s += (b[i] - <span class="hljs-string">&#x27;0&#x27;</span>) * t;<br>        j ++ , t *= <span class="hljs-number">10</span>;<br>        <span class="hljs-keyword">if</span> (j == <span class="hljs-number">9</span> || i == <span class="hljs-number">0</span>)<br>        &#123;<br>            B.<span class="hljs-built_in">push_back</span>(s);<br>            s = j = <span class="hljs-number">0</span>;<br>            t = <span class="hljs-number">1</span>;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">auto</span> C = <span class="hljs-built_in">add</span>(A, B);<br>    cout &lt;&lt; C.<span class="hljs-built_in">back</span>(); <span class="hljs-comment">// 第一个数不用补前导0</span><br>    <span class="hljs-comment">// 后面每个数不足9位的要补前导0</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = C.<span class="hljs-built_in">size</span>() - <span class="hljs-number">2</span>; i &gt;= <span class="hljs-number">0</span>; i -- )   <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%09d&quot;</span>, C[i]);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>算法学习</category>
-        <category>算法基础</category>
-        <category>基础算法</category>
-      </categories>
-      <tags>
-        <tag>高精度</tag>
       </tags>
   </entry>
   <entry>
@@ -3034,6 +3011,29 @@ $$</p>
       <tags>
         <tag>高斯消元</tag>
         <tag>线性代数</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>高精度加法</title>
+    <url>/algo_level1/48362e32/</url>
+    <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-793-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/793/">原题链接</a></h1>
+<h1 id="ti-mu-zhong-shu">题目重述</h1>
+<p>给定两个正整数（不含前导 0），计算它们的和，其中整数长度不超过100000。</p>
+<h1 id="ti-mu-fen-xi">题目分析</h1>
+<p>相当于对实际竖式计算的一个模拟，这里注意两个加数包括最后的和都是低位在前，高位再后存的，因为实际计算过程是先计算低位，再计算高位的，最后逆序输出即可。</p>
+<h1 id="wan-zheng-dai-ma">完整代码</h1>
+<h2 id="po-su-xie-fa" id="朴素写法">朴素写法</h2>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-function">vector&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">add</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt; &amp;A, vector&lt;<span class="hljs-keyword">int</span>&gt; &amp;B)</span></span><br><span class="hljs-function"></span>&#123;<br>    vector&lt;<span class="hljs-keyword">int</span>&gt; C;<br>    <span class="hljs-keyword">int</span> t = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; A.<span class="hljs-built_in">size</span>() || i &lt; B.<span class="hljs-built_in">size</span>(); i ++ )<br>    &#123;<br>        <span class="hljs-keyword">if</span> (i &lt; A.<span class="hljs-built_in">size</span>()) t += A[i];<br>        <span class="hljs-keyword">if</span> (i &lt; B.<span class="hljs-built_in">size</span>()) t += B[i];<br>        C.<span class="hljs-built_in">push_back</span>(t % <span class="hljs-number">10</span>);<br>        t /= <span class="hljs-number">10</span>;<br>    &#125;<br>    <span class="hljs-keyword">if</span> (t) C.<span class="hljs-built_in">push_back</span>(<span class="hljs-number">1</span>);<br>    <span class="hljs-keyword">return</span> C;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    string a, b;<br>    cin &gt;&gt; a &gt;&gt; b;<br>    vector&lt;<span class="hljs-keyword">int</span>&gt; A, B;<br>    <br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = a.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i -- ) A.<span class="hljs-built_in">push_back</span>(a[i] - <span class="hljs-string">&#x27;0&#x27;</span>);<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = b.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i -- ) B.<span class="hljs-built_in">push_back</span>(b[i] - <span class="hljs-string">&#x27;0&#x27;</span>);<br>    <br>    <span class="hljs-keyword">auto</span> C = <span class="hljs-built_in">add</span>(A, B);<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = C.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i -- ) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d&quot;</span>, C[i]);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="gao-jing-du-ya-wei-xie-fa" id="高精度压位写法">高精度压位写法</h2>
+<p>此写法比朴素版快了将近一倍，每9位计算一次压入数组，高精加一般压9位，高精乘一般压4位(如果压5位，10万的平方会爆int)</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> base = <span class="hljs-number">1e9</span>;<br><br><span class="hljs-function">vector&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">add</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt; &amp;A, vector&lt;<span class="hljs-keyword">int</span>&gt; &amp;B)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> t = <span class="hljs-number">0</span>;<br>    vector&lt;<span class="hljs-keyword">int</span>&gt; C;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; A.<span class="hljs-built_in">size</span>() || i &lt; B.<span class="hljs-built_in">size</span>(); i ++ )<br>    &#123;<br>        <span class="hljs-keyword">if</span> (i &lt; A.<span class="hljs-built_in">size</span>()) t += A[i];<br>        <span class="hljs-keyword">if</span> (i &lt; B.<span class="hljs-built_in">size</span>()) t += B[i];<br>        C.<span class="hljs-built_in">push_back</span>(t % base);<br>        t /= base;<br>    &#125;<br><br>    <span class="hljs-keyword">if</span> (t) C.<span class="hljs-built_in">push_back</span>(t);<br>    <span class="hljs-keyword">return</span> C;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    string a, b;<br>    cin &gt;&gt; a &gt;&gt; b;<br>    vector&lt;<span class="hljs-keyword">int</span>&gt; A, B;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = a.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>, s = <span class="hljs-number">0</span>, j = <span class="hljs-number">0</span>, t = <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i -- )   <br>    &#123;<br>        s += (a[i] - <span class="hljs-string">&#x27;0&#x27;</span>) * t;<br>        <span class="hljs-comment">// j表示当前压到第几位</span><br>        j ++ , t *= <span class="hljs-number">10</span>;<br>        <span class="hljs-keyword">if</span> (j == <span class="hljs-number">9</span> || i == <span class="hljs-number">0</span>)<br>        &#123;<br>            A.<span class="hljs-built_in">push_back</span>(s);<br>            s = j = <span class="hljs-number">0</span>;<br>            t = <span class="hljs-number">1</span>;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = b.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>, s = <span class="hljs-number">0</span>, j = <span class="hljs-number">0</span>, t = <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i -- )<br>    &#123;<br>        s += (b[i] - <span class="hljs-string">&#x27;0&#x27;</span>) * t;<br>        j ++ , t *= <span class="hljs-number">10</span>;<br>        <span class="hljs-keyword">if</span> (j == <span class="hljs-number">9</span> || i == <span class="hljs-number">0</span>)<br>        &#123;<br>            B.<span class="hljs-built_in">push_back</span>(s);<br>            s = j = <span class="hljs-number">0</span>;<br>            t = <span class="hljs-number">1</span>;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">auto</span> C = <span class="hljs-built_in">add</span>(A, B);<br>    cout &lt;&lt; C.<span class="hljs-built_in">back</span>(); <span class="hljs-comment">// 第一个数不用补前导0</span><br>    <span class="hljs-comment">// 后面每个数不足9位的要补前导0</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = C.<span class="hljs-built_in">size</span>() - <span class="hljs-number">2</span>; i &gt;= <span class="hljs-number">0</span>; i -- )   <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%09d&quot;</span>, C[i]);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>算法学习</category>
+        <category>算法基础</category>
+        <category>基础算法</category>
+      </categories>
+      <tags>
+        <tag>高精度</tag>
       </tags>
   </entry>
 </search>
