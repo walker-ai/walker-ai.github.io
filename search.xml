@@ -1,6 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>DAY1-笨拙的手指</title>
+    <url>/DailyOneProblem_2022_Spring/303049a7/</url>
+    <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-2060-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/2060/">原题链接</a></h1>
+<h1 id="ti-mu-miao-shu">题目描述</h1>
+<p>奶牛贝茜正在学习如何在不同进制之间转换数字。</p>
+<p>但是她总是犯错误，因为她无法轻易的用两个前蹄握住笔。</p>
+<p>每当贝茜将数字转换为一个新的进制并写下结果时，她总是将其中的某一位数字写错。</p>
+<p>例如，如果她将数字 $14$ 转换为二进制数，那么正确的结果应为 $1110$，但她可能会写下 $0110$ 或 $1111$。</p>
+<p>贝茜不会额外添加或删除数字，但是可能会由于写错数字的原因，写下包含前导 $0$ 的数字。</p>
+<p>给定贝茜将数字 $N$ 转换为二进制数字以及三进制数字的结果，请确定 $N$ 的正确初始值（十进制表示）。</p>
+<h2 id="shu-ru-ge-shi" id="输入格式">输入格式</h2>
+<p>第一行包含 $N$ 的二进制表示，其中一位是错误的。</p>
+<p>第二行包含 $N$ 的三进制表示，其中一位是错误的。</p>
+<h2 id="shu-chu-ge-shi" id="输出格式">输出格式</h2>
+<p>输出正确的 $N$ 的值。</p>
+<h2 id="shu-ju-fan-wei" id="数据范围">数据范围</h2>
+<p>$0\leq N\leq 10^9$，且存在唯一解。</p>
+<h2 id="shu-ru-yang-li" id="输入样例">输入样例</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">1010<br>212<br></code></pre></td></tr></table></figure>
+<h2 id="shu-chu-yang-li" id="输出样例">输出样例</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">14<br></code></pre></td></tr></table></figure>
+<h2 id="yang-li-jie-shi" id="样例解释">样例解释</h2>
+<p>$14$ 在二进制下的正确表示为 $1110$，在三进制下的正确表示为 $112$。</p>
+<h1 id="ti-mu-fen-xi">题目分析</h1>
+<p>首先 $N$ 的范围较大，不可以暴力枚举，经过分析可以发现如果只枚举所有只有1位与原数字不同的数，在二进制的情况下只需要枚举约30个，而在三进制的情况下只需要枚举约60个，我们可以先将其中一种进制下的所有枚举出来的数放入一个哈希表中，然后继续枚举第二种进制，判断当前枚举的数是否在哈希表中出现过，如果出现过，由于题目设定答案唯一，说明两种进制下枚举数构成的集合的交集只有答案这一个数，所以当前枚举到的数就一定是答案，否则就继续找下去。</p>
+<h1 id="wan-zheng-dai-ma">完整代码</h1>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;unordered_set&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br>unordered_set&lt;<span class="hljs-keyword">int</span>&gt; S;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">get</span><span class="hljs-params">(string a, <span class="hljs-keyword">int</span> b)</span>  <span class="hljs-comment">// 秦九韶算法，将b进制的数字a转化成10进制</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> c : a)<br>    &#123;<br>        res = res * b + c - <span class="hljs-string">&#x27;0&#x27;</span>;<br>    &#125;<br>    <span class="hljs-keyword">return</span> res;<br>&#125;   <br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    string a, b;<br>    cin &gt;&gt; a &gt;&gt; b;<br>    <br>    <span class="hljs-comment">// 枚举所有只有1位与a不同的数，加入集合S，然后再枚举所有只有1位与b不同的数，然后再判断这个数</span><br>    <span class="hljs-comment">// 有没有在集合S中出现过，如果出现过，由于只有唯一解，那么这个数就是答案，直接退出即可，否则继续找</span><br>    <br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span>&amp; c : a)<br>    &#123;<br>        c ^= <span class="hljs-number">1</span>;<br>        S.<span class="hljs-built_in">insert</span>(<span class="hljs-built_in">get</span>(a, <span class="hljs-number">2</span>));<br>        c ^= <span class="hljs-number">1</span>;<br>    &#125;<br>    <br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span>&amp; c : b)<br>    &#123;<br>        <span class="hljs-keyword">char</span> t = c;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">3</span>; i ++ )<br>            <span class="hljs-keyword">if</span> (i + <span class="hljs-string">&#x27;0&#x27;</span> != t)<br>            &#123;<br>                c = i + <span class="hljs-string">&#x27;0&#x27;</span>;<br>                <span class="hljs-keyword">int</span> x = <span class="hljs-built_in">get</span>(b, <span class="hljs-number">3</span>);<br>                <span class="hljs-keyword">if</span> (S.<span class="hljs-built_in">count</span>(x)) <br>                &#123;<br>                    cout &lt;&lt; x &lt;&lt; endl;<br>                    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>                &#125;<br>            &#125;<br>        c = t;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>算法学习</category>
+        <category>2022春季每日一题</category>
+      </categories>
+      <tags>
+        <tag>进位制</tag>
+        <tag>哈希</tag>
+        <tag>枚举</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>DAY10-品种邻近</title>
     <url>/DailyOneProblem_2022_Spring/ce84eda9/</url>
     <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-1971-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/1971/">原题链接</a></h1>
@@ -49,87 +87,6 @@ $1\leq K &lt; N,$</p>
         <tag>滑动窗口</tag>
         <tag>队列</tag>
         <tag>双指针</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>DAY1-笨拙的手指</title>
-    <url>/DailyOneProblem_2022_Spring/303049a7/</url>
-    <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-2060-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/2060/">原题链接</a></h1>
-<h1 id="ti-mu-miao-shu">题目描述</h1>
-<p>奶牛贝茜正在学习如何在不同进制之间转换数字。</p>
-<p>但是她总是犯错误，因为她无法轻易的用两个前蹄握住笔。</p>
-<p>每当贝茜将数字转换为一个新的进制并写下结果时，她总是将其中的某一位数字写错。</p>
-<p>例如，如果她将数字 $14$ 转换为二进制数，那么正确的结果应为 $1110$，但她可能会写下 $0110$ 或 $1111$。</p>
-<p>贝茜不会额外添加或删除数字，但是可能会由于写错数字的原因，写下包含前导 $0$ 的数字。</p>
-<p>给定贝茜将数字 $N$ 转换为二进制数字以及三进制数字的结果，请确定 $N$ 的正确初始值（十进制表示）。</p>
-<h2 id="shu-ru-ge-shi" id="输入格式">输入格式</h2>
-<p>第一行包含 $N$ 的二进制表示，其中一位是错误的。</p>
-<p>第二行包含 $N$ 的三进制表示，其中一位是错误的。</p>
-<h2 id="shu-chu-ge-shi" id="输出格式">输出格式</h2>
-<p>输出正确的 $N$ 的值。</p>
-<h2 id="shu-ju-fan-wei" id="数据范围">数据范围</h2>
-<p>$0\leq N\leq 10^9$，且存在唯一解。</p>
-<h2 id="shu-ru-yang-li" id="输入样例">输入样例</h2>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">1010<br>212<br></code></pre></td></tr></table></figure>
-<h2 id="shu-chu-yang-li" id="输出样例">输出样例</h2>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">14<br></code></pre></td></tr></table></figure>
-<h2 id="yang-li-jie-shi" id="样例解释">样例解释</h2>
-<p>$14$ 在二进制下的正确表示为 $1110$，在三进制下的正确表示为 $112$。</p>
-<h1 id="ti-mu-fen-xi">题目分析</h1>
-<p>首先 $N$ 的范围较大，不可以暴力枚举，经过分析可以发现如果只枚举所有只有1位与原数字不同的数，在二进制的情况下只需要枚举约30个，而在三进制的情况下只需要枚举约60个，我们可以先将其中一种进制下的所有枚举出来的数放入一个哈希表中，然后继续枚举第二种进制，判断当前枚举的数是否在哈希表中出现过，如果出现过，由于题目设定答案唯一，说明两种进制下枚举数构成的集合的交集只有答案这一个数，所以当前枚举到的数就一定是答案，否则就继续找下去。</p>
-<h1 id="wan-zheng-dai-ma">完整代码</h1>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;unordered_set&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br>unordered_set&lt;<span class="hljs-keyword">int</span>&gt; S;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">get</span><span class="hljs-params">(string a, <span class="hljs-keyword">int</span> b)</span>  <span class="hljs-comment">// 秦九韶算法，将b进制的数字a转化成10进制</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> c : a)<br>    &#123;<br>        res = res * b + c - <span class="hljs-string">&#x27;0&#x27;</span>;<br>    &#125;<br>    <span class="hljs-keyword">return</span> res;<br>&#125;   <br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    string a, b;<br>    cin &gt;&gt; a &gt;&gt; b;<br>    <br>    <span class="hljs-comment">// 枚举所有只有1位与a不同的数，加入集合S，然后再枚举所有只有1位与b不同的数，然后再判断这个数</span><br>    <span class="hljs-comment">// 有没有在集合S中出现过，如果出现过，由于只有唯一解，那么这个数就是答案，直接退出即可，否则继续找</span><br>    <br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span>&amp; c : a)<br>    &#123;<br>        c ^= <span class="hljs-number">1</span>;<br>        S.<span class="hljs-built_in">insert</span>(<span class="hljs-built_in">get</span>(a, <span class="hljs-number">2</span>));<br>        c ^= <span class="hljs-number">1</span>;<br>    &#125;<br>    <br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span>&amp; c : b)<br>    &#123;<br>        <span class="hljs-keyword">char</span> t = c;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">3</span>; i ++ )<br>            <span class="hljs-keyword">if</span> (i + <span class="hljs-string">&#x27;0&#x27;</span> != t)<br>            &#123;<br>                c = i + <span class="hljs-string">&#x27;0&#x27;</span>;<br>                <span class="hljs-keyword">int</span> x = <span class="hljs-built_in">get</span>(b, <span class="hljs-number">3</span>);<br>                <span class="hljs-keyword">if</span> (S.<span class="hljs-built_in">count</span>(x)) <br>                &#123;<br>                    cout &lt;&lt; x &lt;&lt; endl;<br>                    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>                &#125;<br>            &#125;<br>        c = t;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>算法学习</category>
-        <category>2022春季每日一题</category>
-      </categories>
-      <tags>
-        <tag>枚举</tag>
-        <tag>进位制</tag>
-        <tag>哈希</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>DAY11-闪烁</title>
-    <url>/DailyOneProblem_2022_Spring/92370853/</url>
-    <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-1962-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/1962/">原题链接</a></h1>
-<h1 id="ti-mu-miao-shu">题目描述</h1>
-<p>农夫约翰对牛棚里昏暗的灯光感到不满，刚刚安装了一个新吊灯。</p>
-<p>新吊灯由 $N$ 个灯泡组成，这 $N$ 个灯泡围成一圈，编号为 $0\sim N−1$。</p>
-<p>奶牛对这个新吊灯非常着迷，并且喜欢玩以下游戏：</p>
-<p>对于第 $i$ 个灯泡，如果在 $T−1$ 时刻，它左侧的灯泡（当 $i&gt;0$ 时，为第 $i−1$ 个灯泡；当 $i=0$ 时，为第 $N−1$ 个灯泡）是开着，那么在 $T$ 时刻，就切换这个灯泡的状态。</p>
-<p>这个游戏将持续 $B$ 单位时间。</p>
-<p>给定灯泡的初始状态，请确定在 $B$ 单位时间后，它们的最终状态。</p>
-<h2 id="shu-ru-ge-shi" id="输入格式">输入格式</h2>
-<p>第一行包含两个整数 $N$ 和 $B$。</p>
-<p>接下来 $N$ 行，按顺序描述每个灯泡的初始状态，每行包含一个整数 $1$ （表示开）或 $0$（表示关）。</p>
-<h2 id="shu-chu-ge-shi" id="输出格式">输出格式</h2>
-<p>共 $N$ 行，按顺序每行输出一个灯泡的最终状态。</p>
-<h2 id="shu-ju-fan-wei" id="数据范围">数据范围</h2>
-<p>$3\leq N\leq 16,$<br>
-$1\leq B\leq 10^{15}$</p>
-<h2 id="shu-ru-yang-li" id="输入样例">输入样例</h2>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">5 6<br>1<br>0<br>0<br>0<br>0<br></code></pre></td></tr></table></figure>
-<h2 id="shu-chu-yang-li" id="输出样例">输出样例</h2>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">1<br>1<br>1<br>0<br>1<br></code></pre></td></tr></table></figure>
-<h2 id="yang-li-jie-shi" id="样例解释">样例解释</h2>
-<p>灯泡状态如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">时刻 T=0: 1 0 0 0 0<br>时刻 T=1: 1 1 0 0 0<br>时刻 T=2: 1 0 1 0 0<br>时刻 T=3: 1 1 1 1 0<br>时刻 T=4: 1 0 0 0 1<br>时刻 T=5: 0 1 0 0 1<br>时刻 T=6: 1 1 1 0 1<br></code></pre></td></tr></table></figure>
-<h1 id="ti-mu-fen-xi">题目分析</h1>
-<p>观察数据范围可知，表示状态的二进制01串最多只有16位，因此所有的状态总数为 $2^{16} = 65536$，而变化次数 $B$ 远大于状态总数，根据鸽巢原理，这说明最坏情况下状态变化的过程中一定存在环，由于一个状态有且仅有一个后继，我们可以很容易的将环找出来，然后重复走环的过程可以被略去，进而可以求出最终状态。</p>
-<p>如果不重复走循环，那么最终走的步数会小于等于 $2^{16}$。</p>
-<p>我们将用一个 <code>int</code> 类型的整数来表示一个二进制01状态，如果用 <code>string</code> 类型来存储状态，每次计算需要遍历一次字符串，不如 <code>int</code> 型来的快。而且进行状态间的逐位计算可以直接使用位操作符。</p>
-<p>关于求环的长度，可以开一个数组 <code>p[state]</code>，记录每一个状态是第几步走到的，这样当两次走到同样一个状态点时，就可以拿当前的步数减去之前记录的步数，这样即求得环的长度（环的长度定义为构成环的点的个数）。</p>
-<h1 id="wan-zheng-dai-ma">完整代码</h1>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">16</span>;<br><br><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> LL;<br><br><span class="hljs-keyword">int</span> n;<br>LL m;  <span class="hljs-comment">// 操作数10^15，用long long</span><br><span class="hljs-keyword">int</span> p[N];  <span class="hljs-comment">// 存储所有的状态点</span><br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">update</span><span class="hljs-params">(<span class="hljs-keyword">int</span> state)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;  <span class="hljs-comment">// 下一个状态，state表示当前状态</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++ )  <span class="hljs-comment">// 枚举每一位</span><br>    &#123;<br>        <span class="hljs-keyword">int</span> j = (i - <span class="hljs-number">1</span> + n) % n;  <span class="hljs-comment">// 前一位，+n取消负数的出现</span><br>        <span class="hljs-keyword">int</span> x = state &gt;&gt; i &amp; <span class="hljs-number">1</span>, y = state &gt;&gt; j &amp; <span class="hljs-number">1</span>;  <span class="hljs-comment">// 取出具体数位</span><br>        res |= (x ^ y) &lt;&lt; i;  <span class="hljs-comment">// 加到第i位上，用|=实现累加</span><br>    &#125;<br>    <span class="hljs-keyword">return</span> res;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">(<span class="hljs-keyword">int</span> state)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++ )<br>        cout &lt;&lt; (state &gt;&gt; i &amp; <span class="hljs-number">1</span>) &lt;&lt; endl;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n &gt;&gt; m;<br>    <br>    <span class="hljs-keyword">int</span> state = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++ )<br>    &#123;<br>        <span class="hljs-keyword">int</span> x;<br>        cin &gt;&gt; x;<br>        state |= x &lt;&lt; i;<br>    &#125;<br>    <br>    <span class="hljs-built_in">memset</span>(p, <span class="hljs-number">-1</span>, <span class="hljs-keyword">sizeof</span> p);<br>    p[state] = <span class="hljs-number">0</span>;  <span class="hljs-comment">// 初始状态是第0步走到的</span><br>    <br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>;; i ++ )<br>    &#123;<br>        state = <span class="hljs-built_in">update</span>(state);  <span class="hljs-comment">// 走到下一步，更新状态</span><br>        <span class="hljs-keyword">if</span> (i == m)  <span class="hljs-comment">// 达到步数限制了，直接输出当前状态并退出</span><br>        &#123;<br>            <span class="hljs-built_in">print</span>(state);<br>            <span class="hljs-keyword">break</span>;<br>        &#125;<br>        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (p[state] == <span class="hljs-number">-1</span>) p[state] = i;  <span class="hljs-comment">// 如果当前这个状态没被初始化过就初始化为第i步走到的</span><br>        <span class="hljs-keyword">else</span>  <span class="hljs-comment">// 否则发现一个环</span><br>        &#123;<br>            <span class="hljs-keyword">int</span> len = i - p[state];  <span class="hljs-comment">// len表示环的长度</span><br>            <span class="hljs-keyword">int</span> r = (m - i) % len;  <span class="hljs-comment">// 当前还要走的步数，环的长度的余数</span><br>            <span class="hljs-keyword">while</span> (r -- ) state = <span class="hljs-built_in">update</span>(state);<br>            <span class="hljs-built_in">print</span>(state);<br>            <span class="hljs-keyword">break</span>;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>算法学习</category>
-        <category>2022春季每日一题</category>
-      </categories>
-      <tags>
-        <tag>状态压缩</tag>
-        <tag>位运算</tag>
-        <tag>找环</tag>
       </tags>
   </entry>
   <entry>
@@ -184,6 +141,49 @@ $0\leq A_i\leq B_i\leq 10^9$</p>
       <tags>
         <tag>差分</tag>
         <tag>离散化</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>DAY11-闪烁</title>
+    <url>/DailyOneProblem_2022_Spring/92370853/</url>
+    <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-1962-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/1962/">原题链接</a></h1>
+<h1 id="ti-mu-miao-shu">题目描述</h1>
+<p>农夫约翰对牛棚里昏暗的灯光感到不满，刚刚安装了一个新吊灯。</p>
+<p>新吊灯由 $N$ 个灯泡组成，这 $N$ 个灯泡围成一圈，编号为 $0\sim N−1$。</p>
+<p>奶牛对这个新吊灯非常着迷，并且喜欢玩以下游戏：</p>
+<p>对于第 $i$ 个灯泡，如果在 $T−1$ 时刻，它左侧的灯泡（当 $i&gt;0$ 时，为第 $i−1$ 个灯泡；当 $i=0$ 时，为第 $N−1$ 个灯泡）是开着，那么在 $T$ 时刻，就切换这个灯泡的状态。</p>
+<p>这个游戏将持续 $B$ 单位时间。</p>
+<p>给定灯泡的初始状态，请确定在 $B$ 单位时间后，它们的最终状态。</p>
+<h2 id="shu-ru-ge-shi" id="输入格式">输入格式</h2>
+<p>第一行包含两个整数 $N$ 和 $B$。</p>
+<p>接下来 $N$ 行，按顺序描述每个灯泡的初始状态，每行包含一个整数 $1$ （表示开）或 $0$（表示关）。</p>
+<h2 id="shu-chu-ge-shi" id="输出格式">输出格式</h2>
+<p>共 $N$ 行，按顺序每行输出一个灯泡的最终状态。</p>
+<h2 id="shu-ju-fan-wei" id="数据范围">数据范围</h2>
+<p>$3\leq N\leq 16,$<br>
+$1\leq B\leq 10^{15}$</p>
+<h2 id="shu-ru-yang-li" id="输入样例">输入样例</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">5 6<br>1<br>0<br>0<br>0<br>0<br></code></pre></td></tr></table></figure>
+<h2 id="shu-chu-yang-li" id="输出样例">输出样例</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">1<br>1<br>1<br>0<br>1<br></code></pre></td></tr></table></figure>
+<h2 id="yang-li-jie-shi" id="样例解释">样例解释</h2>
+<p>灯泡状态如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">时刻 T=0: 1 0 0 0 0<br>时刻 T=1: 1 1 0 0 0<br>时刻 T=2: 1 0 1 0 0<br>时刻 T=3: 1 1 1 1 0<br>时刻 T=4: 1 0 0 0 1<br>时刻 T=5: 0 1 0 0 1<br>时刻 T=6: 1 1 1 0 1<br></code></pre></td></tr></table></figure>
+<h1 id="ti-mu-fen-xi">题目分析</h1>
+<p>观察数据范围可知，表示状态的二进制01串最多只有16位，因此所有的状态总数为 $2^{16} = 65536$，而变化次数 $B$ 远大于状态总数，根据鸽巢原理，这说明最坏情况下状态变化的过程中一定存在环，由于一个状态有且仅有一个后继，我们可以很容易的将环找出来，然后重复走环的过程可以被略去，进而可以求出最终状态。</p>
+<p>如果不重复走循环，那么最终走的步数会小于等于 $2^{16}$。</p>
+<p>我们将用一个 <code>int</code> 类型的整数来表示一个二进制01状态，如果用 <code>string</code> 类型来存储状态，每次计算需要遍历一次字符串，不如 <code>int</code> 型来的快。而且进行状态间的逐位计算可以直接使用位操作符。</p>
+<p>关于求环的长度，可以开一个数组 <code>p[state]</code>，记录每一个状态是第几步走到的，这样当两次走到同样一个状态点时，就可以拿当前的步数减去之前记录的步数，这样即求得环的长度（环的长度定义为构成环的点的个数）。</p>
+<h1 id="wan-zheng-dai-ma">完整代码</h1>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">16</span>;<br><br><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> LL;<br><br><span class="hljs-keyword">int</span> n;<br>LL m;  <span class="hljs-comment">// 操作数10^15，用long long</span><br><span class="hljs-keyword">int</span> p[N];  <span class="hljs-comment">// 存储所有的状态点</span><br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">update</span><span class="hljs-params">(<span class="hljs-keyword">int</span> state)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;  <span class="hljs-comment">// 下一个状态，state表示当前状态</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++ )  <span class="hljs-comment">// 枚举每一位</span><br>    &#123;<br>        <span class="hljs-keyword">int</span> j = (i - <span class="hljs-number">1</span> + n) % n;  <span class="hljs-comment">// 前一位，+n取消负数的出现</span><br>        <span class="hljs-keyword">int</span> x = state &gt;&gt; i &amp; <span class="hljs-number">1</span>, y = state &gt;&gt; j &amp; <span class="hljs-number">1</span>;  <span class="hljs-comment">// 取出具体数位</span><br>        res |= (x ^ y) &lt;&lt; i;  <span class="hljs-comment">// 加到第i位上，用|=实现累加</span><br>    &#125;<br>    <span class="hljs-keyword">return</span> res;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">(<span class="hljs-keyword">int</span> state)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++ )<br>        cout &lt;&lt; (state &gt;&gt; i &amp; <span class="hljs-number">1</span>) &lt;&lt; endl;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n &gt;&gt; m;<br>    <br>    <span class="hljs-keyword">int</span> state = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++ )<br>    &#123;<br>        <span class="hljs-keyword">int</span> x;<br>        cin &gt;&gt; x;<br>        state |= x &lt;&lt; i;<br>    &#125;<br>    <br>    <span class="hljs-built_in">memset</span>(p, <span class="hljs-number">-1</span>, <span class="hljs-keyword">sizeof</span> p);<br>    p[state] = <span class="hljs-number">0</span>;  <span class="hljs-comment">// 初始状态是第0步走到的</span><br>    <br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>;; i ++ )<br>    &#123;<br>        state = <span class="hljs-built_in">update</span>(state);  <span class="hljs-comment">// 走到下一步，更新状态</span><br>        <span class="hljs-keyword">if</span> (i == m)  <span class="hljs-comment">// 达到步数限制了，直接输出当前状态并退出</span><br>        &#123;<br>            <span class="hljs-built_in">print</span>(state);<br>            <span class="hljs-keyword">break</span>;<br>        &#125;<br>        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (p[state] == <span class="hljs-number">-1</span>) p[state] = i;  <span class="hljs-comment">// 如果当前这个状态没被初始化过就初始化为第i步走到的</span><br>        <span class="hljs-keyword">else</span>  <span class="hljs-comment">// 否则发现一个环</span><br>        &#123;<br>            <span class="hljs-keyword">int</span> len = i - p[state];  <span class="hljs-comment">// len表示环的长度</span><br>            <span class="hljs-keyword">int</span> r = (m - i) % len;  <span class="hljs-comment">// 当前还要走的步数，环的长度的余数</span><br>            <span class="hljs-keyword">while</span> (r -- ) state = <span class="hljs-built_in">update</span>(state);<br>            <span class="hljs-built_in">print</span>(state);<br>            <span class="hljs-keyword">break</span>;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>算法学习</category>
+        <category>2022春季每日一题</category>
+      </categories>
+      <tags>
+        <tag>状态压缩</tag>
+        <tag>位运算</tag>
+        <tag>找环</tag>
       </tags>
   </entry>
   <entry>
@@ -438,44 +438,6 @@ $1\leq K\leq 2\times 10^6$</p>
       </tags>
   </entry>
   <entry>
-    <title>DAY18-奶牛慢跑</title>
-    <url>/DailyOneProblem_2022_Spring/f961cec9/</url>
-    <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-1906-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/1906/">原题链接</a></h1>
-<h1 id="ti-mu-miao-shu">题目描述</h1>
-<p>奶牛们又出去锻炼蹄子去了！</p>
-<p>有 $N$ 头奶牛在无限长的单行道上慢跑。</p>
-<p>每头奶牛在跑道上开始奔跑的位置都不相同，一些奶牛的奔跑速度也可能不同。</p>
-<p>由于跑道是单行道，十分狭窄，奶牛们无法相互超越。</p>
-<p>当一头速度很快的牛追上另一头牛时，她必须减速至与另一头牛速度相同以免发生碰撞，并成为同一跑步小组的一员。</p>
-<p>最终，再也没有奶牛会撞到（追上）其他奶牛了。</p>
-<p>约翰想知道在这种情况下，会剩下多少个跑步小组。</p>
-<h2 id="shu-ru-ge-shi" id="输入格式">输入格式</h2>
-<p>第一行包含整数 $N$.</p>
-<p>接下来 $N$ 行，每行包含一头奶牛的初始位置和跑步速度。</p>
-<p>所有奶牛的初始位置各不相同，且是按照递增顺序给出的。</p>
-<h2 id="shu-chu-ge-shi" id="输出格式">输出格式</h2>
-<p>输出一个整数，表示最终剩下的小组数量。</p>
-<h2 id="shu-ju-fan-wei" id="数据范围">数据范围</h2>
-<p>$1\leq N\leq 10^5,$<br>
-初始位置范围 $[0,10^9]$，<br>
-跑步速度范围 $[1,10^9]$</p>
-<h2 id="shu-ru-yang-li" id="输入样例">输入样例</h2>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">5<br>0 1<br>1 2<br>2 3<br>3 2<br>6 1<br></code></pre></td></tr></table></figure>
-<h2 id="shu-chu-yang-li" id="输出样例">输出样例</h2>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">2<br></code></pre></td></tr></table></figure>
-<h1 id="ti-mu-fen-xi">题目分析</h1>
-<p>由于跑道无限长，所以可以想到只要前者的速度大于后者，就一定会发生相撞，这样可将问题转化为，给定一个序列，如果将其中所有的严格单调递减区间缩成一个点，那么最终还剩下多少个点。那么很简单，扫一遍数组，用 <code>vector</code> 存剩下的点就可以了，如果当前枚举到的点的速度小于 <code>vector</code> 中最后一个点，那么就弹出，然后将当前点加入 <code>vector</code>。</p>
-<h1 id="wan-zheng-dai-ma">完整代码</h1>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> n, x, v; <br>    cin &gt;&gt; n;<br>    vector&lt;<span class="hljs-keyword">int</span>&gt; q;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++ )<br>    &#123;<br>        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d%d&quot;</span>, &amp;x, &amp;v);<br>        <span class="hljs-keyword">while</span> (q.<span class="hljs-built_in">size</span>() &amp;&amp; v &lt; q.<span class="hljs-built_in">back</span>()) q.<span class="hljs-built_in">pop_back</span>();<br>        q.<span class="hljs-built_in">push_back</span>(v);<br>    &#125;<br>    cout &lt;&lt; q.<span class="hljs-built_in">size</span>() &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>算法学习</category>
-        <category>2022春季每日一题</category>
-      </categories>
-      <tags>
-        <tag>双指针</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>DAY17-公平摄影</title>
     <url>/DailyOneProblem_2022_Spring/97ec7278/</url>
     <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-description-1915-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/description/1915/">原题链接</a></h1>
@@ -627,6 +589,44 @@ $$
         <tag>递推</tag>
         <tag>DP</tag>
         <tag>状态机</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>DAY18-奶牛慢跑</title>
+    <url>/DailyOneProblem_2022_Spring/f961cec9/</url>
+    <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-1906-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/1906/">原题链接</a></h1>
+<h1 id="ti-mu-miao-shu">题目描述</h1>
+<p>奶牛们又出去锻炼蹄子去了！</p>
+<p>有 $N$ 头奶牛在无限长的单行道上慢跑。</p>
+<p>每头奶牛在跑道上开始奔跑的位置都不相同，一些奶牛的奔跑速度也可能不同。</p>
+<p>由于跑道是单行道，十分狭窄，奶牛们无法相互超越。</p>
+<p>当一头速度很快的牛追上另一头牛时，她必须减速至与另一头牛速度相同以免发生碰撞，并成为同一跑步小组的一员。</p>
+<p>最终，再也没有奶牛会撞到（追上）其他奶牛了。</p>
+<p>约翰想知道在这种情况下，会剩下多少个跑步小组。</p>
+<h2 id="shu-ru-ge-shi" id="输入格式">输入格式</h2>
+<p>第一行包含整数 $N$.</p>
+<p>接下来 $N$ 行，每行包含一头奶牛的初始位置和跑步速度。</p>
+<p>所有奶牛的初始位置各不相同，且是按照递增顺序给出的。</p>
+<h2 id="shu-chu-ge-shi" id="输出格式">输出格式</h2>
+<p>输出一个整数，表示最终剩下的小组数量。</p>
+<h2 id="shu-ju-fan-wei" id="数据范围">数据范围</h2>
+<p>$1\leq N\leq 10^5,$<br>
+初始位置范围 $[0,10^9]$，<br>
+跑步速度范围 $[1,10^9]$</p>
+<h2 id="shu-ru-yang-li" id="输入样例">输入样例</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">5<br>0 1<br>1 2<br>2 3<br>3 2<br>6 1<br></code></pre></td></tr></table></figure>
+<h2 id="shu-chu-yang-li" id="输出样例">输出样例</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">2<br></code></pre></td></tr></table></figure>
+<h1 id="ti-mu-fen-xi">题目分析</h1>
+<p>由于跑道无限长，所以可以想到只要前者的速度大于后者，就一定会发生相撞，这样可将问题转化为，给定一个序列，如果将其中所有的严格单调递减区间缩成一个点，那么最终还剩下多少个点。那么很简单，扫一遍数组，用 <code>vector</code> 存剩下的点就可以了，如果当前枚举到的点的速度小于 <code>vector</code> 中最后一个点，那么就弹出，然后将当前点加入 <code>vector</code>。</p>
+<h1 id="wan-zheng-dai-ma">完整代码</h1>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> n, x, v; <br>    cin &gt;&gt; n;<br>    vector&lt;<span class="hljs-keyword">int</span>&gt; q;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++ )<br>    &#123;<br>        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d%d&quot;</span>, &amp;x, &amp;v);<br>        <span class="hljs-keyword">while</span> (q.<span class="hljs-built_in">size</span>() &amp;&amp; v &lt; q.<span class="hljs-built_in">back</span>()) q.<span class="hljs-built_in">pop_back</span>();<br>        q.<span class="hljs-built_in">push_back</span>(v);<br>    &#125;<br>    cout &lt;&lt; q.<span class="hljs-built_in">size</span>() &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>算法学习</category>
+        <category>2022春季每日一题</category>
+      </categories>
+      <tags>
+        <tag>双指针</tag>
       </tags>
   </entry>
   <entry>
@@ -880,6 +880,48 @@ $1\leq x,y\leq 40000$</p>
       </tags>
   </entry>
   <entry>
+    <title>DAY24-方块游戏</title>
+    <url>/DailyOneProblem_2022_Spring/2a091d47/</url>
+    <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-description-1815-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/description/1815/">原题链接</a></h1>
+<h1 id="ti-mu-miao-shu">题目描述</h1>
+<p>农夫约翰试图通过给奶牛一套通常用于学龄前儿童的 $N$ 个拼写板来教他的奶牛阅读。</p>
+<p>每个拼写板的每一侧都有一个单词和一个图画。</p>
+<p>例如，一侧可能有单词 <code>cat</code> 和一只小猫，另一侧可能有单词 <code>dog</code> 和一只小狗。</p>
+<p>因此，当所有拼写板放置到地面上时，会显示一组 $N$ 个单词。</p>
+<p>通过翻转其中一部分板子，就可以得到另一组 $N$ 个单词。</p>
+<p>为了帮助奶牛练习单词拼写，约翰想要制作一些木块，在每个木块上都印上一个字母，使得奶牛可以使用这些木块拼出看到的单词。</p>
+<p>为了使得无论哪一组 $N$ 个单词朝上显示，奶牛都能将其全部拼出，就需要印有各种字母的木块都足够的多。</p>
+<p>例如，如果 $N=3$ 且单词 <code>box,cat,car</code> 朝上显示，则奶牛至少需要一个 <code>b</code> 块，一个 <code>o</code> 块，一个 <code>x</code> 块，两个 <code>c</code> 块，两个 <code>a</code> 块，一个 <code>t</code> 块和一个 <code>r</code> 块。</p>
+<p>请帮助约翰确定，印有每种字母的木块至少需要提供多少块，才能使得不管每个板子的哪一侧朝上显示，奶牛都可以拼出所有 $N$ 个可见的单词。</p>
+<h2 id="shu-ru-ge-shi" id="输入格式">输入格式</h2>
+<p>第一行包含整数 $N$。</p>
+<p>接下来 $N$ 行，每行包含两个单词，这两个单词分别位于一块木板的两侧，每个单词都是长度不超过 $10$ 的小写字母构成的字符串。</p>
+<h2 id="shu-chu-ge-shi" id="输出格式">输出格式</h2>
+<p>共 $26$ 行。</p>
+<p>第一行输出印有字母 $a$ 的木块所需的块数。</p>
+<p>第二行输出印有字母 $b$ 的木块所需的块数，以此类推。</p>
+<h2 id="shu-ju-fan-wei" id="数据范围">数据范围</h2>
+<p>$1\leq N\leq 100$</p>
+<h2 id="shu-ru-yang-li" id="输入样例">输入样例</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">3<br>fox box<br>dog cat<br>car bus<br></code></pre></td></tr></table></figure>
+<h2 id="shu-chu-yang-li" id="输出样例">输出样例</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">2<br>2<br>2<br>1<br>0<br>1<br>1<br>0<br>0<br>0<br>0<br>0<br>0<br>0<br>2<br>0<br>0<br>1<br>1<br>1<br>1<br>0<br>0<br>1<br>0<br>0<br></code></pre></td></tr></table></figure>
+<h2 id="yang-li-jie-shi" id="样例解释">样例解释</h2>
+<p>在此样例中，共有 $N=3$ 块拼写板，共有 $8$ 种单词组合：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">fox dog car<br>fox dog bus<br>fox cat car<br>fox cat bus<br>box dog car<br>box dog bus<br>box cat car<br>box cat bus<br></code></pre></td></tr></table></figure>
+<h1 id="ti-mu-fen-xi">题目分析</h1>
+<p>由于每一个方块都有两个面，只要找出两个面所有的单词字母出现的最大值记录下来，然后累加，就是每种字母的方块所需要的最少数量。</p>
+<h1 id="wan-zheng-dai-ma">完整代码</h1>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">30</span>;<br><br><span class="hljs-keyword">int</span> p[N];  <span class="hljs-comment">// 每个字母出现的次数</span><br><span class="hljs-keyword">int</span> n;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++ )<br>    &#123;<br>        string a, b;<br>        cin &gt;&gt; a &gt;&gt; b;<br>        <span class="hljs-keyword">int</span> worda[N] = &#123;<span class="hljs-number">0</span>&#125;, wordb[N] = &#123;<span class="hljs-number">0</span>&#125;;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; a.<span class="hljs-built_in">size</span>(); j ++ ) worda[a[j] - <span class="hljs-string">&#x27;a&#x27;</span>] ++ ;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; b.<span class="hljs-built_in">size</span>(); j ++ ) wordb[b[j] - <span class="hljs-string">&#x27;a&#x27;</span>] ++ ;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; <span class="hljs-number">26</span>; j ++ ) p[j] += <span class="hljs-built_in">max</span>(worda[j], wordb[j]);<br>    &#125;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">26</span>; i ++ ) cout &lt;&lt; p[i] &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>算法学习</category>
+        <category>2022春季每日一题</category>
+      </categories>
+      <tags>
+        <tag>枚举</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>DAY25-蹄子剪刀布</title>
     <url>/DailyOneProblem_2022_Spring/de3a30b1/</url>
     <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-1803-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/1803/">原题链接</a></h1>
@@ -918,48 +960,6 @@ $1\leq x,y\leq 40000$</p>
 <p>这里数字表示两个手势的差。</p>
 <h1 id="wan-zheng-dai-ma">完整代码</h1>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> x first</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> y second</span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">typedef</span> pair&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt; PII;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">110</span>;<br><br>PII match[N];<br><span class="hljs-keyword">int</span> n;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++ ) cin &gt;&gt; match[i].x &gt;&gt; match[i].y;<br>    <br>    <span class="hljs-keyword">int</span> wins1 = <span class="hljs-number">0</span>, wins2 = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++ )<br>    &#123;<br>        <span class="hljs-keyword">int</span> res = match[i].x - match[i].y;<br>        <span class="hljs-keyword">if</span> (res == <span class="hljs-number">-1</span> || res == <span class="hljs-number">2</span>) wins1 ++ ;<br>        <span class="hljs-keyword">if</span> (res == <span class="hljs-number">-2</span> || res == <span class="hljs-number">1</span>) wins2 ++ ;<br>    &#125;<br>    cout &lt;&lt; <span class="hljs-built_in">max</span>(wins1, wins2) &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>算法学习</category>
-        <category>2022春季每日一题</category>
-      </categories>
-      <tags>
-        <tag>枚举</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>DAY24-方块游戏</title>
-    <url>/DailyOneProblem_2022_Spring/2a091d47/</url>
-    <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-description-1815-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/description/1815/">原题链接</a></h1>
-<h1 id="ti-mu-miao-shu">题目描述</h1>
-<p>农夫约翰试图通过给奶牛一套通常用于学龄前儿童的 $N$ 个拼写板来教他的奶牛阅读。</p>
-<p>每个拼写板的每一侧都有一个单词和一个图画。</p>
-<p>例如，一侧可能有单词 <code>cat</code> 和一只小猫，另一侧可能有单词 <code>dog</code> 和一只小狗。</p>
-<p>因此，当所有拼写板放置到地面上时，会显示一组 $N$ 个单词。</p>
-<p>通过翻转其中一部分板子，就可以得到另一组 $N$ 个单词。</p>
-<p>为了帮助奶牛练习单词拼写，约翰想要制作一些木块，在每个木块上都印上一个字母，使得奶牛可以使用这些木块拼出看到的单词。</p>
-<p>为了使得无论哪一组 $N$ 个单词朝上显示，奶牛都能将其全部拼出，就需要印有各种字母的木块都足够的多。</p>
-<p>例如，如果 $N=3$ 且单词 <code>box,cat,car</code> 朝上显示，则奶牛至少需要一个 <code>b</code> 块，一个 <code>o</code> 块，一个 <code>x</code> 块，两个 <code>c</code> 块，两个 <code>a</code> 块，一个 <code>t</code> 块和一个 <code>r</code> 块。</p>
-<p>请帮助约翰确定，印有每种字母的木块至少需要提供多少块，才能使得不管每个板子的哪一侧朝上显示，奶牛都可以拼出所有 $N$ 个可见的单词。</p>
-<h2 id="shu-ru-ge-shi" id="输入格式">输入格式</h2>
-<p>第一行包含整数 $N$。</p>
-<p>接下来 $N$ 行，每行包含两个单词，这两个单词分别位于一块木板的两侧，每个单词都是长度不超过 $10$ 的小写字母构成的字符串。</p>
-<h2 id="shu-chu-ge-shi" id="输出格式">输出格式</h2>
-<p>共 $26$ 行。</p>
-<p>第一行输出印有字母 $a$ 的木块所需的块数。</p>
-<p>第二行输出印有字母 $b$ 的木块所需的块数，以此类推。</p>
-<h2 id="shu-ju-fan-wei" id="数据范围">数据范围</h2>
-<p>$1\leq N\leq 100$</p>
-<h2 id="shu-ru-yang-li" id="输入样例">输入样例</h2>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">3<br>fox box<br>dog cat<br>car bus<br></code></pre></td></tr></table></figure>
-<h2 id="shu-chu-yang-li" id="输出样例">输出样例</h2>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">2<br>2<br>2<br>1<br>0<br>1<br>1<br>0<br>0<br>0<br>0<br>0<br>0<br>0<br>2<br>0<br>0<br>1<br>1<br>1<br>1<br>0<br>0<br>1<br>0<br>0<br></code></pre></td></tr></table></figure>
-<h2 id="yang-li-jie-shi" id="样例解释">样例解释</h2>
-<p>在此样例中，共有 $N=3$ 块拼写板，共有 $8$ 种单词组合：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">fox dog car<br>fox dog bus<br>fox cat car<br>fox cat bus<br>box dog car<br>box dog bus<br>box cat car<br>box cat bus<br></code></pre></td></tr></table></figure>
-<h1 id="ti-mu-fen-xi">题目分析</h1>
-<p>由于每一个方块都有两个面，只要找出两个面所有的单词字母出现的最大值记录下来，然后累加，就是每种字母的方块所需要的最少数量。</p>
-<h1 id="wan-zheng-dai-ma">完整代码</h1>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">30</span>;<br><br><span class="hljs-keyword">int</span> p[N];  <span class="hljs-comment">// 每个字母出现的次数</span><br><span class="hljs-keyword">int</span> n;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++ )<br>    &#123;<br>        string a, b;<br>        cin &gt;&gt; a &gt;&gt; b;<br>        <span class="hljs-keyword">int</span> worda[N] = &#123;<span class="hljs-number">0</span>&#125;, wordb[N] = &#123;<span class="hljs-number">0</span>&#125;;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; a.<span class="hljs-built_in">size</span>(); j ++ ) worda[a[j] - <span class="hljs-string">&#x27;a&#x27;</span>] ++ ;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; b.<span class="hljs-built_in">size</span>(); j ++ ) wordb[b[j] - <span class="hljs-string">&#x27;a&#x27;</span>] ++ ;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; <span class="hljs-number">26</span>; j ++ ) p[j] += <span class="hljs-built_in">max</span>(worda[j], wordb[j]);<br>    &#125;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">26</span>; i ++ ) cout &lt;&lt; p[i] &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>算法学习</category>
         <category>2022春季每日一题</category>
@@ -1723,8 +1723,55 @@ $1\leq p_i\leq 1000$</p>
         <category>2022春季每日一题</category>
       </categories>
       <tags>
-        <tag>枚举</tag>
         <tag>哈希</tag>
+        <tag>枚举</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>DAY5-岛</title>
+    <url>/DailyOneProblem_2022_Spring/2496e024/</url>
+    <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-2016-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/2016/">原题链接</a></h1>
+<h1 id="ti-mu-miao-shu">题目描述</h1>
+<p>每当下雨时，农夫约翰的田地总是被洪水淹没。</p>
+<p>由于田地不是完全水平的，所以一些地方充满水后，留下了许多被水隔开的“岛”。</p>
+<p>约翰的田地被描述为由 $N$ 个连续高度值 $H_1,\ldots, H_N$ 指定的一维场景。</p>
+<p>假设该场景被无限高的围墙包围着，请考虑暴雨期间发生的情况：</p>
+<p>最低处首先被水覆盖，形成一些不连贯的岛，随着水位的不断上升，这些岛最终都会被覆盖。</p>
+<p>一旦水位等于一块田地的高度，那块田地就被认为位于水下。</p>
+<p><img src="19_8c986a0cb5-fig_islands.png" alt="岛"></p>
+<p>上图显示了一个示例：在左图中，我们只加入了刚好超过 $1$ 单位的水，此时剩下 $4$ 个岛（最大岛屿剩余数量），而在右图中，我们共加入了 $7$ 单位的水，此时仅剩下 $2$ 个岛。</p>
+<p>请计算，暴风雨期间我们能在某个时间点看到的最大岛屿数量。</p>
+<p>水会一直上升到所有田地都在水下。</p>
+<h2 id="shu-ru-ge-shi" id="输入格式">输入格式</h2>
+<p>第一行包含整数 $N$。</p>
+<p>接下来 $N$ 行，每行包含一个整数表示 $H_i$。</p>
+<h2 id="shu-chu-ge-shi" id="输出格式">输出格式</h2>
+<p>输出暴风雨期间我们能在某个时间点看到的最大岛屿数量。</p>
+<h2 id="shu-ju-fan-wei" id="数据范围">数据范围</h2>
+<p>$1\leq N\leq 10^5$,<br>
+$1\leq H_i\leq 10^9$</p>
+<h2 id="shu-ru-yang-li" id="输入样例">输入样例</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">8<br>3<br>5<br>2<br>3<br>1<br>4<br>2<br>3<br></code></pre></td></tr></table></figure>
+<h2 id="shu-chu-yang-li" id="输出样例">输出样例</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">4<br></code></pre></td></tr></table></figure>
+<h1 id="ti-mu-fen-xi">题目分析</h1>
+<p>首先，如果按顺序枚举每个柱子肯定是不行的，这样的话每次得找到最低的柱子，然后考虑小岛个数变化，这样复杂度是 $O(n^2)$ 的。因为雨水是按照同一水平面上升的，可以按照柱子的高度从低到高枚举，然后判断小岛数量变化。</p>
+<p>分析可以发现，对于每个柱子淹没前后，小岛个数变化可以分为以下四种情况：</p>
+<p><img src="94631_ade6f24e74-%E6%97%A0%E6%A0%87%E9%A2%98.png" alt="无标题.png"></p>
+<p>其中只有三四两种情况，才会使小岛数量发生变化，所以我们只考虑三四两种情况。这样每次枚举可以 $O(1)$ 得出数量变化。</p>
+<p>存在一种情况需要考虑，就是连续相邻的柱子高度都相同，这种情况下数量变化与上述情况一样，但是最坏情况下需要枚举 $n$ 次，使复杂度从 $O(1)$ 退化至 $O(1)$，所以我们需要采用离散化的思想，将相邻的相同高度的柱子去重。</p>
+<p>另外存在一种情况，即不相邻但具有相同高度的柱子，如果存在这种情况，我们则不着急更新答案，每次只更新相同高度柱子中的最后一个，这样就能保证所有柱子的情况都考虑到了。</p>
+<p><img src="94631_9067d15874-%E6%97%A0%E6%A0%87%E9%A2%98.png" alt="无标题.png"></p>
+<h1 id="wan-zheng-dai-ma">完整代码</h1>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> x first</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> y second</span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">typedef</span> pair&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt; PII;<br><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">100010</span>;<br><br><span class="hljs-keyword">int</span> n;<br><span class="hljs-keyword">int</span> h[N];<br>PII q[N];<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>, &amp;n);<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++ ) <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>, &amp;h[i]);<br>    <br>    n = <span class="hljs-built_in">unique</span>(h + <span class="hljs-number">1</span>, h + n + <span class="hljs-number">1</span>) - h - <span class="hljs-number">1</span>;<br>    h[n + <span class="hljs-number">1</span>] = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++ ) q[i] = &#123;h[i], i&#125;;<br>    <br>    <span class="hljs-built_in">sort</span>(q + <span class="hljs-number">1</span>, q + n + <span class="hljs-number">1</span>);<br>    <br>    <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>, cnt = <span class="hljs-number">1</span>;  <span class="hljs-comment">// cnt表示当前小岛数量</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++ ) <br>    &#123;<br>        <span class="hljs-keyword">int</span> k = q[i].y;  <span class="hljs-comment">// 当前小岛下标</span><br>        <span class="hljs-keyword">if</span> (h[k - <span class="hljs-number">1</span>] &lt; h[k] &amp;&amp; h[k + <span class="hljs-number">1</span>] &lt; h[k]) cnt -- ;<br>        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (h[k - <span class="hljs-number">1</span>] &gt; h[k] &amp;&amp; h[k + <span class="hljs-number">1</span>] &gt; h[k]) cnt ++ ;<br>        <br>        <span class="hljs-keyword">if</span> (q[i].x != q[i + <span class="hljs-number">1</span>].x)<br>            res = <span class="hljs-built_in">max</span>(res, cnt);<br>    &#125;<br>    <br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, res);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>算法学习</category>
+        <category>2022春季每日一题</category>
+      </categories>
+      <tags>
+        <tag>枚举</tag>
+        <tag>离散化</tag>
+        <tag>思维题</tag>
       </tags>
   </entry>
   <entry>
@@ -1774,53 +1821,6 @@ $$</p>
       </categories>
       <tags>
         <tag>DFS</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>DAY5-岛</title>
-    <url>/DailyOneProblem_2022_Spring/2496e024/</url>
-    <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-2016-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/2016/">原题链接</a></h1>
-<h1 id="ti-mu-miao-shu">题目描述</h1>
-<p>每当下雨时，农夫约翰的田地总是被洪水淹没。</p>
-<p>由于田地不是完全水平的，所以一些地方充满水后，留下了许多被水隔开的“岛”。</p>
-<p>约翰的田地被描述为由 $N$ 个连续高度值 $H_1,\ldots, H_N$ 指定的一维场景。</p>
-<p>假设该场景被无限高的围墙包围着，请考虑暴雨期间发生的情况：</p>
-<p>最低处首先被水覆盖，形成一些不连贯的岛，随着水位的不断上升，这些岛最终都会被覆盖。</p>
-<p>一旦水位等于一块田地的高度，那块田地就被认为位于水下。</p>
-<p><img src="19_8c986a0cb5-fig_islands.png" alt="岛"></p>
-<p>上图显示了一个示例：在左图中，我们只加入了刚好超过 $1$ 单位的水，此时剩下 $4$ 个岛（最大岛屿剩余数量），而在右图中，我们共加入了 $7$ 单位的水，此时仅剩下 $2$ 个岛。</p>
-<p>请计算，暴风雨期间我们能在某个时间点看到的最大岛屿数量。</p>
-<p>水会一直上升到所有田地都在水下。</p>
-<h2 id="shu-ru-ge-shi" id="输入格式">输入格式</h2>
-<p>第一行包含整数 $N$。</p>
-<p>接下来 $N$ 行，每行包含一个整数表示 $H_i$。</p>
-<h2 id="shu-chu-ge-shi" id="输出格式">输出格式</h2>
-<p>输出暴风雨期间我们能在某个时间点看到的最大岛屿数量。</p>
-<h2 id="shu-ju-fan-wei" id="数据范围">数据范围</h2>
-<p>$1\leq N\leq 10^5$,<br>
-$1\leq H_i\leq 10^9$</p>
-<h2 id="shu-ru-yang-li" id="输入样例">输入样例</h2>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">8<br>3<br>5<br>2<br>3<br>1<br>4<br>2<br>3<br></code></pre></td></tr></table></figure>
-<h2 id="shu-chu-yang-li" id="输出样例">输出样例</h2>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">4<br></code></pre></td></tr></table></figure>
-<h1 id="ti-mu-fen-xi">题目分析</h1>
-<p>首先，如果按顺序枚举每个柱子肯定是不行的，这样的话每次得找到最低的柱子，然后考虑小岛个数变化，这样复杂度是 $O(n^2)$ 的。因为雨水是按照同一水平面上升的，可以按照柱子的高度从低到高枚举，然后判断小岛数量变化。</p>
-<p>分析可以发现，对于每个柱子淹没前后，小岛个数变化可以分为以下四种情况：</p>
-<p><img src="94631_ade6f24e74-%E6%97%A0%E6%A0%87%E9%A2%98.png" alt="无标题.png"></p>
-<p>其中只有三四两种情况，才会使小岛数量发生变化，所以我们只考虑三四两种情况。这样每次枚举可以 $O(1)$ 得出数量变化。</p>
-<p>存在一种情况需要考虑，就是连续相邻的柱子高度都相同，这种情况下数量变化与上述情况一样，但是最坏情况下需要枚举 $n$ 次，使复杂度从 $O(1)$ 退化至 $O(1)$，所以我们需要采用离散化的思想，将相邻的相同高度的柱子去重。</p>
-<p>另外存在一种情况，即不相邻但具有相同高度的柱子，如果存在这种情况，我们则不着急更新答案，每次只更新相同高度柱子中的最后一个，这样就能保证所有柱子的情况都考虑到了。</p>
-<p><img src="94631_9067d15874-%E6%97%A0%E6%A0%87%E9%A2%98.png" alt="无标题.png"></p>
-<h1 id="wan-zheng-dai-ma">完整代码</h1>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> x first</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> y second</span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">typedef</span> pair&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt; PII;<br><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">100010</span>;<br><br><span class="hljs-keyword">int</span> n;<br><span class="hljs-keyword">int</span> h[N];<br>PII q[N];<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>, &amp;n);<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++ ) <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>, &amp;h[i]);<br>    <br>    n = <span class="hljs-built_in">unique</span>(h + <span class="hljs-number">1</span>, h + n + <span class="hljs-number">1</span>) - h - <span class="hljs-number">1</span>;<br>    h[n + <span class="hljs-number">1</span>] = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++ ) q[i] = &#123;h[i], i&#125;;<br>    <br>    <span class="hljs-built_in">sort</span>(q + <span class="hljs-number">1</span>, q + n + <span class="hljs-number">1</span>);<br>    <br>    <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>, cnt = <span class="hljs-number">1</span>;  <span class="hljs-comment">// cnt表示当前小岛数量</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++ ) <br>    &#123;<br>        <span class="hljs-keyword">int</span> k = q[i].y;  <span class="hljs-comment">// 当前小岛下标</span><br>        <span class="hljs-keyword">if</span> (h[k - <span class="hljs-number">1</span>] &lt; h[k] &amp;&amp; h[k + <span class="hljs-number">1</span>] &lt; h[k]) cnt -- ;<br>        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (h[k - <span class="hljs-number">1</span>] &gt; h[k] &amp;&amp; h[k + <span class="hljs-number">1</span>] &gt; h[k]) cnt ++ ;<br>        <br>        <span class="hljs-keyword">if</span> (q[i].x != q[i + <span class="hljs-number">1</span>].x)<br>            res = <span class="hljs-built_in">max</span>(res, cnt);<br>    &#125;<br>    <br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, res);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>算法学习</category>
-        <category>2022春季每日一题</category>
-      </categories>
-      <tags>
-        <tag>枚举</tag>
-        <tag>离散化</tag>
-        <tag>思维题</tag>
       </tags>
   </entry>
   <entry>
@@ -2002,6 +2002,52 @@ $1\leq A_i\leq 100000$</p>
       </categories>
       <tags>
         <tag>前缀和</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Nim游戏</title>
+    <url>/algo_level1/cec2a751/</url>
+    <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-893-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/893/">原题链接</a></h1>
+<h1 id="ti-mu-miao-shu">题目描述</h1>
+<p>给定 $n$ 堆石子，两位玩家轮流操作，每次操作可以从任意一堆石子中拿走任意数量的石子（可以拿完，但不能不拿），最后无法进行操作的人视为失败。</p>
+<p>问如果两人都采用最优策略，先手是否必胜。</p>
+<h2 id="shu-ru-ge-shi" id="输入格式">输入格式</h2>
+<p>第一行包含整数 $n$。</p>
+<p>第二行包含 $n$ 个数字，其中第 $i$ 个数字表示第 $i$ 堆石子的数量。</p>
+<h2 id="shu-chu-ge-shi" id="输出格式">输出格式</h2>
+<p>如果先手方必胜，则输出 <code>Yes</code>。</p>
+<p>否则，输出 <code>No</code>。</p>
+<h2 id="shu-ju-fan-wei" id="数据范围">数据范围</h2>
+<p>$1\leq n\leq 10^5,$<br>
+$1\leq \text{每堆石子数}\leq 10^9$</p>
+<h2 id="shu-ru-yang-li" id="输入样例">输入样例</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">2<br>2 3<br></code></pre></td></tr></table></figure>
+<h2 id="shu-chu-yang-li" id="输出样例">输出样例</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">Yes<br></code></pre></td></tr></table></figure>
+<h1 id="qian-zhi-zhi-shi">前置知识</h1>
+<p>Nim博弈有一个一般的形式：</p>
+<p>给定 $n$ 堆物品，第 $i$ 堆有 $A_i$ 个。两名玩家轮流行动，每次可任选一堆，取走任意多个物品，可把一堆取光，但不能不取。取走最后一件物品者获胜。两人都采取最优策略，问先手能否必胜。</p>
+<p>这种游戏被称为<strong>NIM博弈</strong>。把游戏过程中面临的状态称为<strong>局面</strong>。整局游戏第一个行动的称为<strong>先手</strong>，第二个行动的称为<strong>后手</strong>。若在某一局面下无论采取何种行动，都会输掉游戏，则称该局面<strong>必败</strong>。所谓采取最优策略是指，若在某一局面下存在某种行动，使得行动后对手面临必败局面，则优先采取该行动。同时，这样的局面被称为<strong>必胜</strong>。我们讨论的博弈问题一般都只考虑理想情况，即两人均无失误，都采取最优策略行动时游戏的结果。<strong>NIM博弈</strong>不存在平局，只有<strong>先手必胜</strong>和<strong>先手必败</strong>两种情况。</p>
+<h2 id="ding-li" id="定理">定理</h2>
+<p>NIM博弈先手必胜，当且仅当 $A_1\ \text{xor}\ A_2\ \text{xor}\ \cdots\ \text{xor}\ A_n \neq 0$</p>
+<p>证明：</p>
+<p>所有物品都被取光是一个<strong>必败局面</strong>（对手取走最后一件物品，已经获得胜利），此时显然有 $$A_1\ \text{xor}\ A_2\ \text{xor}\ \cdots\ \text{xor}\ A_n = 0$$</p>
+<p>对于任意一个局面，如果 $A_1\ \text{xor}\ A_2\ \text{xor}\ \cdots\ \text{xor}\ A_n = x \neq 0$，设 $x$ 的二进制表示下最高位的 1 在第 $k$ 位，那么至少存在一堆石子 $A_i$，它的第 $k$ 位是1。显然 $A_i\ \text{xor}\ x &lt; A_i$，我们就从 $A_i$ 堆中取走若干石子，使其变为 $A_i\ \text{xor}\ x$，就得到了一个各堆石子数异或起来等于0的局面。</p>
+<p>对于任意一个局面，如果 $A_1\ \text{xor}\ A_2\ \text{xor}\ \cdots\ \text{xor}\ A_n = 0$，那么无论如何取石子，得到的局面下各堆狮子异或起来都不等于0。可用反证法证明，假设 $A_i$ 被取成了 $A_i’$，并且 $A_1\ \text{xor}\ A_2\ \text{xor}\ \cdots\ \text{xor}\ A_i’\ \text{xor}\ \cdots\ \text{xor}\ A_n = 0$。由异或运算的消去律得 $A_i’ = A_i$，与“不能不取石子”的规则矛盾。</p>
+<p>综上所述，再由数学归纳法得知，$A_1\ \text{xor}\ A_2\ \text{xor}\ \cdots\ \text{xor}\ A_n \neq 0$ 为必胜局面，一定存在一种行动让对手面临“各堆石子异或起来等于0”。$A_1\ \text{xor}\ A_2\ \text{xor}\ \cdots\ \text{xor}\ A_n = 0$ 为必败局面，无论如何行动，都会让对手面临一个“各堆石子异或起来不等于0”的必胜局面。</p>
+<h1 id="ti-mu-fen-xi">题目分析</h1>
+<p>根据 Nim 博弈原理，直接统计当前局面即可。</p>
+<h1 id="wan-zheng-dai-ma">完整代码</h1>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> n;<br>    cin &gt;&gt; n;<br>    <span class="hljs-keyword">int</span> ans = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++ )<br>    &#123;<br>        <span class="hljs-keyword">int</span> x;<br>        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>, &amp;x);<br>        ans ^= x;<br>    &#125;<br>    <span class="hljs-keyword">if</span> (!ans) cout &lt;&lt; <span class="hljs-string">&quot;No&quot;</span> &lt;&lt; endl;<br>    <span class="hljs-keyword">else</span> cout &lt;&lt; <span class="hljs-string">&quot;Yes&quot;</span> &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>算法学习</category>
+        <category>算法基础</category>
+        <category>数学知识</category>
+      </categories>
+      <tags>
+        <tag>数学知识</tag>
+        <tag>博弈论</tag>
+        <tag>Nim游戏</tag>
       </tags>
   </entry>
   <entry>
@@ -4119,6 +4165,35 @@ m. 长度为 $2^{i_m}$ 的小区间 $[2^{i_1} + 2^{i_2} + \cdots + 2^{i_{m-1}} +
       </tags>
   </entry>
   <entry>
+    <title>特别数的和</title>
+    <url>/LanQiaoCup/f5c137b8/</url>
+    <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-1247-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/1247/">原题链接</a></h1>
+<h1 id="ti-mu-miao-shu">题目描述</h1>
+<p>小明对数位中含有 $2、0、1、9$ 的数字很感兴趣（不包括前导 $0$），在 $1$ 到 $40$ 中这样的数包括 $1、2、9、10$ 至 $32、39$ 和 $40$，共 $28$ 个，他们的和是 $574$。</p>
+<p>请问，在 $1$ 到 $n$ 中，所有这样的数的和是多少？</p>
+<h2 id="shu-ru-ge-shi" id="输入格式">输入格式</h2>
+<p>共一行，包含一个整数 $n$。</p>
+<h2 id="shu-chu-ge-shi" id="输出格式">输出格式</h2>
+<p>共一行，包含一个整数，表示满足条件的数的和。</p>
+<h2 id="shu-ju-fan-wei" id="数据范围">数据范围</h2>
+<p>$1\leq n\leq 10000$</p>
+<h2 id="shu-ru-yang-li" id="输入样例">输入样例</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">40<br></code></pre></td></tr></table></figure>
+<h2 id="shu-chu-yang-li" id="输出样例">输出样例</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">574<br></code></pre></td></tr></table></figure>
+<h1 id="ti-mu-fen-xi">题目分析</h1>
+<p>纯纯的模拟，时间复杂度为线性。</p>
+<h1 id="wan-zheng-dai-ma">完整代码</h1>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">int</span> n;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n;<br>    <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++ )<br>    &#123;<br>        <span class="hljs-keyword">int</span> x = i;<br>        <span class="hljs-keyword">while</span> (x)<br>        &#123;<br>            <span class="hljs-keyword">int</span> c = x % <span class="hljs-number">10</span>;<br>            <span class="hljs-keyword">if</span> (c == <span class="hljs-number">2</span> || c == <span class="hljs-number">0</span> || c == <span class="hljs-number">1</span> || c == <span class="hljs-number">9</span>)<br>            &#123;<br>                res += i;<br>                <span class="hljs-keyword">break</span>;<br>            &#125;<br>            x /= <span class="hljs-number">10</span>;<br>        &#125;<br>    &#125;<br>    cout &lt;&lt; res &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>算法学习</category>
+        <category>蓝桥杯刷题笔记</category>
+      </categories>
+      <tags>
+        <tag>模拟</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>热浪</title>
     <url>/algo_level2/7e7bf8e0/</url>
     <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-1131-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/1131/">原题链接</a></h1>
@@ -4168,35 +4243,6 @@ $1\leq C_i\leq 1000$</p>
       </categories>
       <tags>
         <tag>单源最短路</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>特别数的和</title>
-    <url>/LanQiaoCup/f5c137b8/</url>
-    <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-1247-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/1247/">原题链接</a></h1>
-<h1 id="ti-mu-miao-shu">题目描述</h1>
-<p>小明对数位中含有 $2、0、1、9$ 的数字很感兴趣（不包括前导 $0$），在 $1$ 到 $40$ 中这样的数包括 $1、2、9、10$ 至 $32、39$ 和 $40$，共 $28$ 个，他们的和是 $574$。</p>
-<p>请问，在 $1$ 到 $n$ 中，所有这样的数的和是多少？</p>
-<h2 id="shu-ru-ge-shi" id="输入格式">输入格式</h2>
-<p>共一行，包含一个整数 $n$。</p>
-<h2 id="shu-chu-ge-shi" id="输出格式">输出格式</h2>
-<p>共一行，包含一个整数，表示满足条件的数的和。</p>
-<h2 id="shu-ju-fan-wei" id="数据范围">数据范围</h2>
-<p>$1\leq n\leq 10000$</p>
-<h2 id="shu-ru-yang-li" id="输入样例">输入样例</h2>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">40<br></code></pre></td></tr></table></figure>
-<h2 id="shu-chu-yang-li" id="输出样例">输出样例</h2>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">574<br></code></pre></td></tr></table></figure>
-<h1 id="ti-mu-fen-xi">题目分析</h1>
-<p>纯纯的模拟，时间复杂度为线性。</p>
-<h1 id="wan-zheng-dai-ma">完整代码</h1>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">int</span> n;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n;<br>    <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++ )<br>    &#123;<br>        <span class="hljs-keyword">int</span> x = i;<br>        <span class="hljs-keyword">while</span> (x)<br>        &#123;<br>            <span class="hljs-keyword">int</span> c = x % <span class="hljs-number">10</span>;<br>            <span class="hljs-keyword">if</span> (c == <span class="hljs-number">2</span> || c == <span class="hljs-number">0</span> || c == <span class="hljs-number">1</span> || c == <span class="hljs-number">9</span>)<br>            &#123;<br>                res += i;<br>                <span class="hljs-keyword">break</span>;<br>            &#125;<br>            x /= <span class="hljs-number">10</span>;<br>        &#125;<br>    &#125;<br>    cout &lt;&lt; res &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>算法学习</category>
-        <category>蓝桥杯刷题笔记</category>
-      </categories>
-      <tags>
-        <tag>模拟</tag>
       </tags>
   </entry>
   <entry>
@@ -5136,6 +5182,87 @@ $1\leq a_i, b_i\leq 1200000$</p>
       <tags>
         <tag>数学知识</tag>
         <tag>中国剩余定理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>集合-Nim游戏</title>
+    <url>/algo_level1/7bff69a5/</url>
+    <content><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-895-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/895/">原题链接</a></h1>
+<h1 id="ti-mu-miao-shu">题目描述</h1>
+<p>给定 $n$ 堆石子以及一个由 $k$ 个不同正整数构成的数字集合 $S$。</p>
+<p>现在有两位玩家轮流操作，每次操作可以从任意一堆石子中拿取石子，每次拿取的石子数量必须包含于集合 $S$，最后无法进行操作的人视为失败。</p>
+<p>问如果两人都采用最优策略，先手是否必胜。</p>
+<h2 id="shu-ru-ge-shi" id="输入格式">输入格式</h2>
+<p>第一行包含整数 $k$，表示数字集合 $S$ 中数字的个数。</p>
+<p>第二行包含 $k$ 个整数，其中第 $i$ 个整数表示数字集合 $S$ 中的第 $i$ 个数 $s_i$。</p>
+<p>第三行包含整数 $n$。</p>
+<p>第四行包含 $n$ 个整数，其中第 $i$ 个整数表示第 $i$ 堆石子的数量 $h_i$。</p>
+<h2 id="shu-chu-ge-shi" id="输出格式">输出格式</h2>
+<p>如果先手方必胜，则输出 <code>Yes</code>。</p>
+<p>否则，输出 <code>No</code>。</p>
+<h2 id="shu-ju-fan-wei" id="数据范围">数据范围</h2>
+<p>$1\leq n,k\leq 100,$<br>
+$1\leq s_i, h_i\leq 10000$</p>
+<h2 id="shu-ru-yang-li" id="输入样例">输入样例</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">2<br>2 5<br>3<br>2 4 7<br></code></pre></td></tr></table></figure>
+<h2 id="shu-chu-yang-li" id="输出样例">输出样例</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">Yes<br></code></pre></td></tr></table></figure>
+<h1 id="qian-zhi-zhi-shi">前置知识</h1>
+<h2 id="gong-ping-zu-he-you-xi-icg" id="公平组合游戏ICG">公平组合游戏ICG</h2>
+<p>若一个游戏满足:</p>
+<ol>
+<li>由两名玩家交替行动。</li>
+<li>在游戏进程的任意时刻，可以执行的合法行动与轮到哪名玩家无关。</li>
+<li>不能行动的玩家判负。</li>
+</ol>
+<p>则称该游戏为一个公平组合游戏。</p>
+<p>NIM博弈属于公平组合游戏，但常见的棋类游戏，比如围棋，就不是公平组合游戏。因为围棋交战双方分别只能落黑子和白子，胜负判定也比较复杂，不满足条件2和条件3。</p>
+<h2 id="you-xiang-tu-you-xi" id="有向图游戏">有向图游戏</h2>
+<p>给定一个有向无环图，图中有一个唯一的起点，在起点上放有一枚棋子。两名玩家交替地把这枚棋子沿有向边进行移动，每次可以移动一步，无法移动者判负。该游戏被称为<strong>有向图游戏</strong>。</p>
+<p>任何一个公平组合游戏都可以转化为有向图游戏。具体方法是，把每个局面看成图中的一个节点，并且从每个局面向沿着合法行动能够到达的下一个局面连有向边。</p>
+<h2 id="text-mex-yun-suan" id="text-Mex-运算">$\text{Mex}$ 运算</h2>
+<p>设 $S$ 表示一个非负整数集合。定义 $\text{mex}(S)$ 为求出不属于集合 $S$ 的最小非负整数的运算，即：</p>
+<p>$$<br>
+\text{mex}(S) = \min\limits_{x\in \mathbb{N}, x\notin S} \lbrace x \rbrace<br>
+$$</p>
+<h2 id="text-sg-han-shu" id="text-SG-函数">$\text{SG}$ 函数</h2>
+<p>在有向图游戏中，对于每个节点 $x$，设从 $x$ 出发共有 $k$ 条有向边，分别到达节点 $y_1, y_2, \cdots, y_k$，定义 $\text{SG}(x)$ 为 $x$ 的后继节点 $y_1, y_2, \cdots, y_k$ 的 $\text{SG}$ 函数值构成的集合，再执行 $\text{mex}$ 运算的结果，即：</p>
+<p>$$<br>
+\text{SG}(x) = \text{mex}(\lbrace \text{SG}(y_1), \text{SG}(y_2), \cdots, \text{SG}(y_k) \rbrace)<br>
+$$</p>
+<p>特别地，整个有向图游戏 $G$ 的 $\text{SG}$ 函数值被定义为有向图游戏起点 $s$ 的 $\text{SG}$ 函数值，即 $\text{SG}(G) = SG(s)$。</p>
+<h2 id="you-xiang-tu-you-xi-de-he" id="有向图游戏的和">有向图游戏的和</h2>
+<p>设 $G_1, G_2, \cdots, G_m$ 是 $m$ 个有向图游戏。定义有向图游戏 $G$，它的行动规则是任选某个有向图游戏 $G_i$，并在 $G_i$ 上行动一步。$G$ 被称为有向图游戏 $G_1, G_2, \cdots, G_m$ 的和。</p>
+<p>有向图游戏的和的 $\text{SG}$ 函数值等于它包含的各个子游戏 $\text{SG}$ 函数值的异或和，即：</p>
+<p>$$<br>
+\text{SG}(G) = \text{SG}(G_1)\ \text{xor}\ \text{SG}(G_2)\ \text{xor}\ \cdots\ \text{xor}\ \text{SG}(G_m)<br>
+$$</p>
+<h2 id="ding-li" id="定理">定理</h2>
+<ul>
+<li>有向图游戏的某个局面必胜，当且仅当该局面对应节点的  $\text{SG}$ 函数值大于0。</li>
+<li>有向图游戏的某个局面必败，当且仅当该局面对应节点的 $\text{SG}$ 函数值等于0。</li>
+</ul>
+<p>可以这样理解：在一个没有出边的节点上，棋子不能移动，它的 $\text{SG}$ 值为0，对应必败局面。</p>
+<p>若一个节点的某个后继节点 $\text{SG}$ 值为0，在 $\text{mex}$ 运算后，该节点的 $\text{SG}$ 值大于0。这等价于，若一个局面的后继局面中存在必败局面，则当前局面为必胜局面。</p>
+<p>若一个节点的后继节点 $\text{SG}$ 值均不为0，在 $\text{mex}$ 运算后，该节点的 $\text{SG}$ 值为0。这等价于，若一个局面的后继局面全部为必胜局面，则当前局面为必败局面。</p>
+<p>对于若干个有向图游戏的和，其证明方法与NIM博弈类似。</p>
+<h1 id="ti-mu-fen-xi">题目分析</h1>
+<p>题目给定 $n$ 堆石子，可以视为 $n$ 个有向图游戏，玩家可以任意从其中一堆石子中拿取固定数目（$\in S$）的石子，显然，可以转化为有向图游戏，然后用 $\text{SG}$ 函数求解。</p>
+<p>为了能够更好地理解 $\text{SG}$ 函数是怎么起作用的，我们来模拟一下过程，这里先以一个子有向图游戏为例</p>
+<p>设当前这堆石子共有10个，每次拿取石子的数量集合 $S$ 为 $\lbrace 2, 5\rbrace$，那么可以得到这样一个有向图，其中黑色数字表示当前状态（还剩几个石子），红色数字表示当前状态的 $\text{SG}$ 函数值。</p>
+<p><img src="x1.png" alt="xx"></p>
+<p>这样，我们就可以得到这个子有向图游戏的起点的 $\text{SG}$ 函数值，如果有更多的子有向图游戏，同样的道理，都可以得出来它们起点的 $\text{SG}$ 函数值，根据上面前置知识中叙述的定理，我们就可以得知当前整个有向图游戏的 $\text{SG}$ 函数值，即可判断当前的局面了。</p>
+<h1 id="wan-zheng-dai-ma">完整代码</h1>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;unordered_set&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">110</span>, M = <span class="hljs-number">10010</span>;  <span class="hljs-comment">// 石子堆数，石子个数</span><br><br><span class="hljs-keyword">int</span> n, m;<br><span class="hljs-keyword">int</span> s[N], f[M];  <span class="hljs-comment">// s表示石子个数，f表示sg值</span><br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">sg</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span>  <span class="hljs-comment">// f用来存每个状态是否被算过，x表示当前这堆石子还剩多少个，返回一个sg值</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-comment">// 这样保证每个状态只会被计算一次</span><br>    <span class="hljs-comment">// 每堆石子个数最多1w，最多1w个状态</span><br>    <span class="hljs-comment">// 一共100堆石子，总共1e6的计算量</span><br>    <span class="hljs-keyword">if</span> (f[x] != <span class="hljs-number">-1</span>) <span class="hljs-keyword">return</span> f[x];  <span class="hljs-comment">// 如果被算过，就不重复计算，直接返回</span><br>    <br>    <span class="hljs-comment">// 看当前局面能够到达哪些局面</span><br>    unordered_set&lt;<span class="hljs-keyword">int</span>&gt; S;  <span class="hljs-comment">// S存的是每个状态的sg值</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; m; i ++ )<br>    &#123;<br>        <span class="hljs-keyword">int</span> sum = s[i];  <span class="hljs-comment">// 数字集合中第i个数字</span><br>        <span class="hljs-keyword">if</span> (x &gt;= sum) S.<span class="hljs-built_in">insert</span>(<span class="hljs-built_in">sg</span>(x - sum));<br>    &#125;<br>    <br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; ; i ++ )  <span class="hljs-comment">// mex 运算，找到当前不在这个集合中的最小的自然数</span><br>        <span class="hljs-keyword">if</span> (!S.<span class="hljs-built_in">count</span>(i))<br>            <span class="hljs-keyword">return</span> f[x] = i;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; m;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; m; i ++ ) cin &gt;&gt; s[i];<br>    cin &gt;&gt; n;<br>    <br>    <span class="hljs-built_in">memset</span>(f, <span class="hljs-number">-1</span>, <span class="hljs-keyword">sizeof</span> f);<br>    <br>    <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;  <span class="hljs-comment">// 用记忆化搜索来求每个状态的sg值</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++ )  <span class="hljs-comment">// 每个子游戏</span><br>    &#123;<br>        <span class="hljs-keyword">int</span> x;  <span class="hljs-comment">// 第i堆石子数量，根据数量就可以求出子游戏的sg，即初始状态的sg</span><br>        cin &gt;&gt; x;<br>        <span class="hljs-comment">// sg用记忆化搜索来求</span><br>        res ^= <span class="hljs-built_in">sg</span>(x);  <span class="hljs-comment">// 异或起来，看最终res是0还是1，0表示必败，1表示必胜</span><br>    &#125;<br>    <span class="hljs-keyword">if</span> (res) <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;Yes&quot;</span>);<br>    <span class="hljs-keyword">else</span> <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;No&quot;</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>算法学习</category>
+        <category>算法基础</category>
+        <category>数学知识</category>
+      </categories>
+      <tags>
+        <tag>数学知识</tag>
+        <tag>博弈论</tag>
+        <tag>SG函数</tag>
       </tags>
   </entry>
   <entry>
