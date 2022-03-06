@@ -4,6 +4,148 @@
   
     
     <entry>
+      <title>求组合数III</title>
+      <link href="/algo_level1/52e47378/"/>
+      <url>/algo_level1/52e47378/</url>
+      
+        <content type="html"><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-889-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/889/">原题链接</a></h1><h1 id="ti-mu-miao-shu">题目描述</h1><p>给定 $n$ 组询问，每组询问给定三个整数 $a, b, p$，其中 $p$ 是质数，请你输出 $C_a^b \pmod p$ 的值。</p><h2 id="shu-ru-ge-shi" id="输入格式">输入格式</h2><p>第一行包含整数 $n$。</p><p>接下来 $n$ 行，每行包含一组 $a,b,p$。</p><h2 id="shu-chu-ge-shi" id="输出格式">输出格式</h2><p>共 $n$ 行，每行输出一个询问的解。</p><h2 id="shu-ju-fan-wei" id="数据范围">数据范围</h2><p>$1\leq n\leq 20,$<br>$1\leq b\leq a\leq 10^{18},$<br>$1\leq p\leq 10^5,$</p><h2 id="shu-ru-yang-li" id="输入样例">输入样例</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">3<br>5 3 7<br>3 1 5<br>6 4 13<br></code></pre></td></tr></table></figure><h2 id="shu-chu-yang-li" id="输出样例">输出样例</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">3<br>3<br>2<br></code></pre></td></tr></table></figure><h1 id="qian-zhi-zhi-shi">前置知识</h1><h2 id="er-xiang-shi-ding-li" id="二项式定理">二项式定理</h2><p>$$ (a + b)^n = C_n^0 b^n + C_n^1 a^1\cdot b^{n - 1} + \cdots + C_n^na^n = \sum_{k=0}^n C_n^ka^kb^{n-k}$$</p><h2 id="lucas-ding-li" id="Lucas-定理">Lucas 定理</h2><p>对于非负整数 $m, n$ 和 质数 $p$，$C_m^n = \prod\limits_{i=0}^k C_m^in_i \pmod p$，其中 $m = m_kp^k + \cdots + m_1p + m_0$，$n = n_kp^k + \cdots + n_1p + n_0$，分别是 $m$ 和 $n$ 的 $p$ 进制展开。一般常用与之等价的另一个式子：</p><p>$$ C_m^n = C_{m\ \bmod\ p}^{n\ \bmod\ p}\cdot C_{\lfloor \frac{m}{p} \rfloor}^{\lfloor \frac{n}{p} \rfloor }\pmod p$$</p><p>其中，当 $m &lt; n$ 时，规定 $C_m^n = 0$。</p><p><strong>证明：</strong></p><h3 id="yin-li-yi" id="引理一">引理一</h3><p>$$C_p^x \equiv 0\pmod p,\ 0 &lt; x &lt; p$$</p><p>其中，$p$ 是质数。</p><p><strong>证明：</strong></p><p>由于 $0 &lt; x &lt; p$，并且 $p$ 是质数，因此</p><p>$$<br>C_p^x = \dfrac{p!}{x!\cdot (p - x)!}= \dfrac{p\cdot (p - 1)!}{x\cdot (x - 1)!\cdot (p - x)!}= \dfrac{p}{x}\cdot C_{p - 1}^{x - 1}<br>$$</p><p>由于 $x &lt; p$ 并且 $p$ 是质数，因此 $x$ 存在模 $p$ 意义下的逆元，即：</p><p>$$<br>C_p^x \equiv p\cdot \text{inv}(x)\cdot C_{p-1}^{x-1}\pmod p<br>$$</p><p>显然右边是 $p$ 的倍数，因此 $C_p^x \equiv 0\pmod p$。</p><h3 id="yin-li-er" id="引理二">引理二</h3><p>$$ (1 + x)^p \equiv 1 + x^p \pmod p $$</p><p>证明：</p><p>首先进行二项式展开：</p><p>$$ (x + 1)^p = \sum_{i=0}^p C_p^i x^i $$</p><p>由于除了 $i = 0, i = p$ 这两项，其余项都存在模数 $p$ 的倍数，因此有： $$ (1 + x)^p \equiv 1 + x^p\pmod p $$</p><p><strong>下面来证明 Lucas 定理，我们要证明的是：</strong></p><p>$$<br>C_m^n = C_{m\ \bmod\ p}^{n\ \bmod\ p}\cdot C_{\lfloor \frac{m}{p} \rfloor}^{\lfloor \frac{n}{p} \rfloor }\pmod p<br>$$</p><p>假设有</p><p>$$\begin{cases}m = k_1p + r_1 \\n = k_2p + r_2 \end{cases}$$</p><p>则有：</p><p>$$ \begin{aligned}(1 + x)^m \equiv (1 + x)^{k_1p + r_1}           &\equiv (1 + x)^{k_1p}\cdot (1 + x)^{r_1} \pmod p\\\          &\equiv [(1 + x)^p]^{k_1}\cdot (1 + x)^{r_1}\pmod p \\\          &\equiv (1 + x^p)^{k_1}\cdot (1 + x)^{r_1} \pmod p\ \ \text{(引理二)}\\\          &\equiv \sum_{i=0}^{k_1} C_{k_1}^i x^{ip} \cdot \sum_{j=0}^{r_1} C_{r_1}^j x^j \pmod p\ \ \text{(二项式定理)}\end{aligned}$$</p><p>将其展开得：</p><p>$$<br>\begin{aligned}<br>(C_{k_1}^0 + C_{k_1}^1 x^p + \cdots + C_{k_1}^{k_1}x^{k_1p})\cdot \left(C_{r_1}^{0} + C_{r_1}^{1}x + \cdots + C_{r_1}^{r_1}x^{r_1}<br>\right)<br>\end{aligned}<br>$$</p><p>若进一步展开，可见 $x^0$ 的系数为 $C_{k_1}^{0}\cdot C_{r_1}^{0}$，$\ldots$，$x^{r_1}$ 系数为 $C_{k_1}^{0}\cdot C_{r_1}^{r_1}$，$x^p$ 系数为 $C_{k_1}^{1}\cdot C_{r_1}^{0}$，$\ldots$，$x^{k_1p}$ 的系数为 $C_{k_1}^{k_1}\cdot C_{r_1}^{0}$，并且上述的展开式一定能够遍历到 $x^0\sim x^{r_1}, x^p\sim x^{p+r_1}, \cdots, x^{k_1p + r_1}$ 中间的每一项，并且一共只有 $(k_1 + 1)(r_1 + 1)$ 项。</p><p>所以可以归纳总结出 $x^{ip + j}$ 的系数，枚举 $k = ip+j$，即将上式</p><p>$$<br>(1 + x)^m \equiv \sum_{i=0}^{k_1} C_{k_1}^{i}x^{ip} \cdot \sum_{j=0}^{r_1} C_{r_1}^{j} x^j \pmod p<br>$$</p><p>转化为：</p><p>$$<br>(1 + x)^m \equiv \sum_{k=0}^m C_{k_1}^{\lfloor \frac{k}{p} \rfloor}\cdot C_{r_1}^{k\ \bmod\ p}x^k \pmod p<br>$$</p><p>又根据二项式定理，得到 $$ (1+x)^m\equiv \sum_{k=0}^m C_{m}^{k}x^k $$</p><p>将上面两式联立，得到</p><p>$$<br>\sum_{k=0}^m C_{m}^{k}x^k = \sum_{k=0}^m C_{k_1}^{\lfloor \frac{k}{p} \rfloor}\cdot C_{r_1}^{k\ \bmod\ p}x^k \pmod p<br>$$</p><p>对比系数，令 $k = n$，则有：</p><p>$$ C_{m}^{n} = C_{k_1}^{\lfloor \frac{n}{p} \rfloor}\cdot C_{r_1}^{n\ \bmod\ p} \pmod p$$</p><p>而 $k_1 = \lfloor \dfrac{m}{p} \rfloor,\ r_1 = m\bmod p$，故：</p><p>$$<br>C_{m}^{n} = C_{m\ \bmod\ p}^{n\ \bmod\ p}\cdot C_{\lfloor \frac{m}{p} \rfloor}^{\lfloor \frac{n}{p} \rfloor} \pmod p<br>$$</p><p>得证。</p><p><a href="https://www.zhihu.com/people/walker-11-97">以上证明参考</a></p><p><strong>时间复杂度分析：</strong></p><p>Lucas 定理： $ C_m^n = C_{m\ \bmod\ p}^{n\ \bmod\ p}\cdot C_{\lfloor \frac{m}{p} \rfloor}^{\lfloor \frac{n}{p} \rfloor }\pmod p$，将 $m$ 和 $n$ 用 $p$ 进制表示，复杂度为 $\log_p n$，如果再用快速幂求逆元计算普通组合数，复杂度约为 $p$，故总的时间复杂度为 $O(p\log_p N)$，这里 $N$ 表示的是 $a, b$ 的取值范围 $10^{18}$，如果预处理阶乘和阶乘逆元，则时间复杂度能降至 $O(p + \log_p N)$。</p><h1 id="wan-zheng-dai-ma">完整代码</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> LL;<br><br><span class="hljs-keyword">int</span> p;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">qmi</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> k)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> res = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">while</span> (k)<br>    &#123;<br>        <span class="hljs-keyword">if</span> (k &amp; <span class="hljs-number">1</span>) res = (LL)res * a % p;<br>        k &gt;&gt;= <span class="hljs-number">1</span>;<br>        a = (LL)a * a % p;<br>    &#125;<br>    <span class="hljs-keyword">return</span> res;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">C</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> res = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>, j = a; i &lt;= b; i ++, j -- )<br>    &#123;<br>        res = (LL)res * j % p;<br>        res = (LL)res * <span class="hljs-built_in">qmi</span>(i, p - <span class="hljs-number">2</span>) % p;<br>    &#125;<br>    <span class="hljs-keyword">return</span> res;<br>&#125;<br>    <br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">lucas</span><span class="hljs-params">(LL a, LL b)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span> (a &lt; p &amp;&amp; b &lt; p) <span class="hljs-keyword">return</span> <span class="hljs-built_in">C</span>(a, b);<br>    <span class="hljs-keyword">return</span> (LL)<span class="hljs-built_in">C</span>(a % p, b % p) * <span class="hljs-built_in">lucas</span>(a / p, b / p) % p;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> n;<br>    cin &gt;&gt; n;<br>    <span class="hljs-keyword">while</span> (n -- )<br>    &#123;<br>        LL a, b;<br>        cin &gt;&gt; a &gt;&gt; b &gt;&gt; p;<br>        cout &lt;&lt; <span class="hljs-built_in">lucas</span>(a, b) &lt;&lt; endl;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 算法学习 </category>
+          
+          <category> 算法基础 </category>
+          
+          <category> 数学知识 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 组合数学 </tag>
+            
+            <tag> 组合计数 </tag>
+            
+            <tag> 逆元 </tag>
+            
+            <tag> 快速幂 </tag>
+            
+            <tag> 费马小定理 </tag>
+            
+            <tag> Lucas定理 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>求组合数II</title>
+      <link href="/algo_level1/83fb3edc/"/>
+      <url>/algo_level1/83fb3edc/</url>
+      
+        <content type="html"><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-888-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/888/">原题链接</a></h1><h1 id="ti-mu-miao-shu">题目描述</h1><p>给定 $n$ 组询问，每组询问给定两个整数 $a$，$b$，请你输出 $C_a^b \pmod {10^9+7}$ 的值。</p><h2 id="shu-ru-ge-shi" id="输入格式">输入格式</h2><p>第一行包含整数 $n$。</p><p>接下来 $n$ 行，每行包含一组 $a$ 和 $b$。</p><h2 id="shu-chu-ge-shi" id="输出格式">输出格式</h2><p>共 $n$ 行，每行输出一个询问的解。</p><h2 id="shu-ju-fan-wei" id="数据范围">数据范围</h2><p>$1\leq n\leq 10000,$<br>$1\leq b\leq a\leq 10^5$</p><h2 id="shu-ru-yang-li" id="输入样例">输入样例</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">3<br>3 1<br>5 3<br>2 2<br></code></pre></td></tr></table></figure><h2 id="shu-chu-yang-li" id="输出样例">输出样例</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">3<br>10<br>1<br></code></pre></td></tr></table></figure><h1 id="qian-zhi-zhi-shi">前置知识</h1><ul><li><a href="https://walker-blog.top/algo_level1/db0bf279/">快速幂 / 扩展欧几里得求逆元</a></li></ul><h1 id="suan-fa-fen-xi">算法分析</h1><p>由于 $\dfrac{a}{b}\bmod p \neq \dfrac{a\bmod p}{b\bmod p}$，我们可以利用乘法逆元，来将除法化成乘法。</p><p>预处理 <code>fact[i]</code> 和 <code>infact[i]</code>，其中 <code>fact[i]</code> 表示 $(i!) \bmod (10^9 + 7)$，<code>infact[i]</code> 表示 $(i!)^{-1} \bmod (10^9 + 7)$。</p><p>这时有： $$C_a^b = \dfrac{a!}{b!(a - b)!} = \text{fact[a]}\cdot \text{infact[b]} \cdot \text{infact[a - b]}$$</p><p>由于模数 $p = 10^9 + 7$ 是一个质数，故我们可以求逆元来进行预处理 $\text{infact[b]}$ 和 $\text{infact[a - b}]$。</p><p>其中如果使用快速幂求逆元，则时间复杂度为 $O(b\cdot \log (\bmod - 2))$，约为 $3\times 10^6$ 的计算量。</p><p>如果使用扩展欧几里得求逆元，时间复杂度为 $O(b\cdot \log (\bmod))$，与快速幂求逆元复杂度基本一致。</p><h1 id="wan-zheng-dai-ma">完整代码</h1><h2 id="xie-fa-yi" id="写法一">写法一</h2><blockquote><p>快速幂求逆元</p></blockquote><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> LL;<br><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">100010</span>, mod = <span class="hljs-number">1e9</span> + <span class="hljs-number">7</span>;<br><br><span class="hljs-keyword">int</span> fact[N], infact[N];<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">qmi</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> k, <span class="hljs-keyword">int</span> p)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> res = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">while</span> (k)<br>    &#123;<br>        <span class="hljs-keyword">if</span> (k &amp; <span class="hljs-number">1</span>) res = (LL)res * a % p;<br>        k &gt;&gt;= <span class="hljs-number">1</span>;<br>        a = (LL)a * a % p;<br>    &#125;<br>    <span class="hljs-keyword">return</span> res;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    fact[<span class="hljs-number">0</span>] = infact[<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; N; i ++ )<br>    &#123;<br>        fact[i] = (LL)fact[i - <span class="hljs-number">1</span>] * i % mod;<br>        infact[i] = (LL)infact[i - <span class="hljs-number">1</span>] * <span class="hljs-built_in">qmi</span>(i, mod - <span class="hljs-number">2</span>, mod) % mod;<br>    &#125;   <br><br>    <span class="hljs-keyword">int</span> n;<br>    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>, &amp;n); <br>    <span class="hljs-keyword">while</span> (n -- )<br>    &#123;<br>        <span class="hljs-keyword">int</span> a, b;<br>        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d%d&quot;</span>, &amp;a, &amp;b);<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, (LL)fact[a] * infact[b] % mod * infact[a - b]% mod); <br>        <span class="hljs-comment">// 两个1e9 的数相乘不会溢出</span><br>        <span class="hljs-comment">// 但三个就不一定了，因此乘两个的时候先 mod 一下。</span><br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure><h2 id="xie-fa-er" id="写法二">写法二</h2><blockquote><p>扩展欧几里得求逆元</p></blockquote><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">100010</span>, mod = <span class="hljs-number">1e9</span> + <span class="hljs-number">7</span>;<br><br><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> LL;<br><br><span class="hljs-keyword">int</span> fact[N], infact[N];<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">exgcd</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b, <span class="hljs-keyword">int</span> &amp;x, <span class="hljs-keyword">int</span> &amp;y)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span> (!b)<br>    &#123;<br>        x = <span class="hljs-number">1</span>, y = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">return</span> a;<br>    &#125;<br>    <br>    <span class="hljs-keyword">int</span> d = <span class="hljs-built_in">exgcd</span>(b, a % b, y, x);<br>    y -= a / b * x;<br>    <span class="hljs-keyword">return</span> d;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    fact[<span class="hljs-number">0</span>] = infact[<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">int</span> x = <span class="hljs-number">0</span>, y = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; N; i ++ )<br>    &#123;<br>        fact[i] = (LL)fact[i - <span class="hljs-number">1</span>] * i % mod;<br>        <br>        <span class="hljs-keyword">int</span> d = <span class="hljs-built_in">exgcd</span>(i, mod, x, y);<br>        x = ((LL)x + mod) % mod; <span class="hljs-comment">// 要保证 逆元x 为正数</span><br>        <span class="hljs-keyword">if</span> (d == <span class="hljs-number">1</span>) infact[i] = (LL)infact[i - <span class="hljs-number">1</span>] * x % mod;<br>    &#125;<br>    <br>    <span class="hljs-keyword">int</span> n;<br>    cin &gt;&gt; n;<br>    <span class="hljs-keyword">while</span> (n -- )<br>    &#123;<br>        <span class="hljs-keyword">int</span> a, b;<br>        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d%d&quot;</span>, &amp;a, &amp;b);<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, (LL)fact[a] * infact[b] % mod * infact[a - b] % mod);<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 算法学习 </category>
+          
+          <category> 算法基础 </category>
+          
+          <category> 数学知识 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 组合数学 </tag>
+            
+            <tag> 组合计数 </tag>
+            
+            <tag> 逆元 </tag>
+            
+            <tag> 快速幂 </tag>
+            
+            <tag> 费马小定理 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>求组合数I</title>
+      <link href="/algo_level1/27d16b78/"/>
+      <url>/algo_level1/27d16b78/</url>
+      
+        <content type="html"><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-887-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/887/">原题链接</a></h1><h1 id="ti-mu-miao-shu">题目描述</h1><p>给定 $n$ 组询问，每组询问给定两个整数 $a$，$b$，请你输出 $C_b^a \pmod {10^9+7}$ 的值。</p><h2 id="shu-ru-ge-shi" id="输入格式">输入格式</h2><p>第一行包含整数 $n$。</p><p>接下来 $n$ 行，每行包含一组 $a$ 和 $b$。</p><h2 id="shu-chu-ge-shi" id="输出格式">输出格式</h2><p>共 $n$ 行，每行输出一个询问的解。</p><h2 id="shu-ju-fan-wei" id="数据范围">数据范围</h2><p>$1\leq n\leq 10000,$<br>$1\leq b\leq a\leq 2000$</p><h2 id="shu-ru-yang-li" id="输入样例">输入样例</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">3<br>3 1<br>5 3<br>2 2<br></code></pre></td></tr></table></figure><h2 id="shu-chu-yang-li" id="输出样例">输出样例</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">3<br>10<br>1<br></code></pre></td></tr></table></figure><h1 id="qian-zhi-zhi-shi">前置知识</h1><ul><li><p>$C_m^n = \dfrac{m!}{n!(m - n)!} = C(m, n)$</p></li><li><p>组合数递推式：$C_m^n = C_{m - 1}^n + C_{m - 1}^{n - 1}$，特别地，当 $n = 0$ 时，$c_m^0 = 1$。</p></li></ul><h2 id="ti-mu-zhong-shu" id="题目重述">题目重述</h2><p>给定 $n$ 组询问，每组询问给定两个整数 $a, b$，请你输出 $C_b^a \bmod(10^9+7) $ 的值。</p><p>其中，$1\leq n\leq 10^4,\ 1\leq b\leq a\leq 2000$。</p><h1 id="suan-fa-fen-xi">算法分析</h1><p>如果暴力求解，$C_a^b = \dfrac{a(a - 1)(a - 2)\cdots(a - b + 1)}{1\times2\times3\times\cdots\times b}$，如此每计算一个组合数，最坏需要 $2000$ 次运算，总共 $10^4$ 组询问，每次 $2000$。需要考虑优化。</p><p>由于总共的组合数 $C_a^b$ 最多只有 $2000^2$ 对，我们可以先预处理所有的组合数，然后查表访问即可。</p><p>我们可以根据递推式，递推出所有 $C_a^b$ 的值然后打表，这样总的计算量只有两重循环，时间复杂度为 $O(nm)$， 约 $4\times 10^6$ 的计算量。</p><h1 id="wan-zheng-dai-ma">完整代码</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">2010</span>, mod = <span class="hljs-number">1e9</span> + <span class="hljs-number">7</span>;<br><br><span class="hljs-keyword">int</span> c[N][N];<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">get_combinum</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; N; i ++ )<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt;= i; j ++ )<br>            <span class="hljs-keyword">if</span> (!j) c[i][j] = <span class="hljs-number">1</span>;    <br>            <span class="hljs-keyword">else</span> c[i][j] = (c[i - <span class="hljs-number">1</span>][j] + c[i - <span class="hljs-number">1</span>][j - <span class="hljs-number">1</span>]) % mod;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">get_combinum</span>();<br><br>    <span class="hljs-keyword">int</span> n;<br>    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>, &amp;n);<br><br>    <span class="hljs-keyword">while</span> (n -- )<br>    &#123;<br>        <span class="hljs-keyword">int</span> a, b;<br>        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d%d&quot;</span>, &amp;a, &amp;b);<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, c[a][b]);<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 算法学习 </category>
+          
+          <category> 算法基础 </category>
+          
+          <category> 数学知识 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 组合数学 </tag>
+            
+            <tag> 组合计数 </tag>
+            
+            <tag> 递推 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>扩展欧几里得算法</title>
+      <link href="/algo_level1/32ceef63/"/>
+      <url>/algo_level1/32ceef63/</url>
+      
+        <content type="html"><![CDATA[<h1 id="ti-mu-miao-shu">题目描述</h1><p>给定 $n$ 对正整数 $a_i, b_i$，对于每对数，求出一组 $x_i, y_i$，使其满足 $a_i\times x_i + b_i\times y_i=\gcd(a_i,b_i)$。</p><h2 id="shu-ru-ge-shi" id="输入格式">输入格式</h2><p>第一行包含整数 $n$。</p><p>接下来 $n$ 行，每行包含两个整数 $a_i, b_i$。</p><h2 id="shu-chu-ge-shi" id="输出格式">输出格式</h2><p>输出共 $n$ 行，对于每组 $a_i, b_i$，求出一组满足条件的 $x_i, y_i$，每组结果占一行。</p><p>本题答案不唯一，输出任意满足条件的 $x_i, y_i$ 均可。</p><h2 id="shu-ju-fan-wei" id="数据范围">数据范围</h2><p>$1\leq n\leq 10^5,$<br>$1\leq a_i, b_i\leq 2\times 10^9$</p><h2 id="shu-ru-yang-li" id="输入样例">输入样例</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">2<br>4 6<br>8 18<br></code></pre></td></tr></table></figure><h2 id="shu-chu-yang-li" id="输出样例">输出样例</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">-1 1<br>-2 1<br></code></pre></td></tr></table></figure><h1 id="qian-zhi-zhi-shi">前置知识</h1><p>1、<strong>裴蜀定理</strong>：设 $a, b$ 是不全为 $0$ 的整数，则存在整数 $x, y$，使得 $ax + by = \gcd (a, b)$。</p><p>2、<a href="https://walker-blog.top/algo_level1/f4a743f4/">欧几里得算法</a></p><h1 id="ti-mu-fen-xi">题目分析</h1><p>对欧几里得算法进行扩展：</p><p>在欧几里得算法中，我们已经证明了 $\gcd(a, b) = \gcd(b, a\bmod b)$，我们利用这一性质求出一组满足条件的 $x, y$。</p><p>$$ ax + by = \gcd(a, b) $$</p><p>当 $b = 0$ 时，$\gcd(a, 0) = a$，这时取 $x = 1, y = 0$。</p><p>由于 $\gcd(a, b) = \gcd(b, a\bmod b)$，$a\bmod b = a - \lfloor \dfrac{a}{b} \rfloor \cdot b$，故</p><p>$$\begin{cases} ax + by = \gcd(a, b) \\by + (a - \lfloor \dfrac{a}{b} \rfloor \cdot b)x = \gcd(b, a\bmod b) \\ax + b(y - \lfloor \dfrac{a}{b} \rfloor x) = \gcd(b, a\bmod b)\end{cases}$$</p><p>故我们再返回 $\gcd(a, b) = \gcd(b, a\bmod b)$ 时，将 $y$ 更新成 $y - \lfloor \dfrac{a}{b} \rfloor \cdot x$，这样递归结束得到的 $x, y$ 就是一组合法解。</p><h1 id="wan-zheng-dai-ma">完整代码</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">exgcd</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b, <span class="hljs-keyword">int</span> &amp;x, <span class="hljs-keyword">int</span> &amp;y)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span> (!b)<br>    &#123;<br>        x = <span class="hljs-number">1</span>, y = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">return</span> a;<br>    &#125;<br>    <br>    <span class="hljs-keyword">int</span> d = <span class="hljs-built_in">exgcd</span>(b, a % b, y, x);<br>    y -= a / b * x;<br>    <span class="hljs-keyword">return</span> d;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> n;<br>    cin &gt;&gt; n;<br>    <span class="hljs-keyword">while</span> (n -- )<br>    &#123;<br>        <span class="hljs-keyword">int</span> a, b;<br>        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d%d&quot;</span>, &amp;a, &amp;b);<br>        <span class="hljs-keyword">int</span> x, y;<br>        <span class="hljs-built_in">exgcd</span>(a, b, x, y);<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d %d\n&quot;</span>, x, y);<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 算法学习 </category>
+          
+          <category> 算法基础 </category>
+          
+          <category> 数学知识 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 数学问题 </tag>
+            
+            <tag> 扩展欧几里得算法 </tag>
+            
+            <tag> 裴蜀定理 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>快速幂求逆元</title>
       <link href="/algo_level1/db0bf279/"/>
       <url>/algo_level1/db0bf279/</url>
@@ -24,13 +166,13 @@
       
         <tags>
             
-            <tag> 数学知识 </tag>
+            <tag> 逆元 </tag>
             
             <tag> 快速幂 </tag>
             
-            <tag> 逆元 </tag>
-            
             <tag> 费马小定理 </tag>
+            
+            <tag> 数学知识 </tag>
             
         </tags>
       
@@ -59,9 +201,9 @@
       
         <tags>
             
-            <tag> 数学知识 </tag>
-            
             <tag> 快速幂 </tag>
+            
+            <tag> 数学知识 </tag>
             
         </tags>
       
@@ -138,7 +280,7 @@
       <link href="/algo_level1/f4a743f4/"/>
       <url>/algo_level1/f4a743f4/</url>
       
-        <content type="html"><![CDATA[<h1 id="qian-zhi-zhi-shi">前置知识</h1><ul><li><p>最大公约数（$\text{Greatest Common Divisor}$）</p></li><li><p>最小公倍数（$\text{Least Common multiple}$）</p></li><li><p>最大公约数和最小公倍数都是在自然数范围讨论的，因此都不可能为负数</p></li><li><p>$0$ 与 其他任何自然数的最大公约数为该自然数本身，并且约定 $\gcd (0, 0) = 0$</p></li></ul><h1 id="suan-fa-fen-xi">算法分析</h1><p>$$d\mid a,\ d\mid b \Rightarrow d\mid (a + b) \tag{1}$$</p><p>$$d\mid a,\ d\mid b \Rightarrow d\mid (ax + by) \tag{2}$$</p><p><strong>证明：</strong></p><p>$$\gcd(a, b) = \gcd(b, a\bmod b) \tag{*}$$</p><p>$\because a\bmod b = a - \lfloor {\dfrac{a}{b}} \rfloor \cdot b = a - c\cdot b$</p><p>$\therefore $ 即证明： $$\gcd(a, b) = \gcd(b, a - c\cdot b) \tag{**}$$</p><p>对于 $a$ 和 $b$ 的一个公约数 $d$，因为 $(2)$，所以 $d\mid (a - c\cdot b)$，$\therefore$ 等式左边 $\iff$ 等式右边。</p><p>由于 $(1)$，$\therefore d\mid b,\ d\mid (a - c\cdot b) \iff d\mid (a - c\cdot b + c\cdot b) = d\mid a$，$\therefore$ 等式右边 $\iff$ 等式左边。</p><p>得证。故：<br>$$\gcd(a, b) = \gcd(b, a\bmod b)$$</p><p>特例：若 $b = 0$，则 $\gcd(a, b) = \gcd(a, 0) = a$。</p><p>故我们不断地进行这样的递归调用，最终都能够到达边界 $b = 0$ 的情况，以此计算出最大公约数。</p><p><strong>时间复杂度分析：</strong></p><p>由于算法涉及到递归调用，详细证明过程比较繁琐，可参考算法导论。</p><p>这里直接给出：对于 <code>gcd(a, b)</code>，其中 $a &gt; b &gt; 0$，其时间复杂度为 $O(\log b)$。</p><h1 id="wan-zheng-dai-ma">完整代码</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">int</span> n;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">gcd</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">return</span> b ? <span class="hljs-built_in">gcd</span>(b, a % b) : a;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>, &amp;n);<br>    <span class="hljs-keyword">while</span>(n -- )<br>    &#123;<br>        <span class="hljs-keyword">int</span> a, b;<br>        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d%d&quot;</span>, &amp;a, &amp;b);<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, <span class="hljs-built_in">gcd</span>(a, b));<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+        <content type="html"><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-874-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/874/">原题链接</a></h1><h1 id="ti-mu-miao-shu">题目描述</h1><p>给定 $n$ 对正整数 $a_i, b_i$，请你求出每对数的最大公约数。</p><h2 id="shu-ru-ge-shi" id="输入格式">输入格式</h2><p>第一行包含整数 $n$。</p><p>接下来 $n$ 行，每行包含一个整数对 $a_i, b_i$。</p><h2 id="shu-chu-ge-shi" id="输出格式">输出格式</h2><p>输出共 $n$ 行，每行输出一个整数对的最大公约数。</p><h2 id="shu-ju-fan-wei" id="数据范围">数据范围</h2><p>$1\leq n\leq 10^5,$<br>$1\leq a_i, b_i\leq 2\times 10^9</p><h2 id="shu-ru-yang-li" id="输入样例">输入样例</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">2<br>3 6<br>4 6<br></code></pre></td></tr></table></figure><h2 id="shu-chu-yang-li" id="输出样例">输出样例</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">3<br>2<br></code></pre></td></tr></table></figure><h1 id="qian-zhi-zhi-shi">前置知识</h1><ul><li><p>最大公约数（$\text{Greatest Common Divisor}$）</p></li><li><p>最小公倍数（$\text{Least Common multiple}$）</p></li><li><p>最大公约数和最小公倍数都是在自然数范围讨论的，因此都不可能为负数</p></li><li><p>$0$ 与 其他任何自然数的最大公约数为该自然数本身，并且约定 $\gcd (0, 0) = 0$</p></li></ul><h1 id="suan-fa-fen-xi">算法分析</h1><p>$$d\mid a,\ d\mid b \Rightarrow d\mid (a + b) \tag{1}$$</p><p>$$d\mid a,\ d\mid b \Rightarrow d\mid (ax + by) \tag{2}$$</p><p><strong>证明：</strong></p><p>$$\gcd(a, b) = \gcd(b, a\bmod b) \tag{*}$$</p><p>$\because a\bmod b = a - \lfloor {\dfrac{a}{b}} \rfloor \cdot b = a - c\cdot b$</p><p>$\therefore $ 即证明： $$\gcd(a, b) = \gcd(b, a - c\cdot b) \tag{**}$$</p><p>对于 $a$ 和 $b$ 的一个公约数 $d$，因为 $(2)$，所以 $d\mid (a - c\cdot b)$，$\therefore$ 等式左边 $\iff$ 等式右边。</p><p>由于 $(1)$，$\therefore d\mid b,\ d\mid (a - c\cdot b) \iff d\mid (a - c\cdot b + c\cdot b) = d\mid a$，$\therefore$ 等式右边 $\iff$ 等式左边。</p><p>得证。故：<br>$$\gcd(a, b) = \gcd(b, a\bmod b)$$</p><p>特例：若 $b = 0$，则 $\gcd(a, b) = \gcd(a, 0) = a$。</p><p>故我们不断地进行这样的递归调用，最终都能够到达边界 $b = 0$ 的情况，以此计算出最大公约数。</p><p><strong>时间复杂度分析：</strong></p><p>由于算法涉及到递归调用，详细证明过程比较繁琐，可参考算法导论。</p><p>这里直接给出：对于 <code>gcd(a, b)</code>，其中 $a &gt; b &gt; 0$，其时间复杂度为 $O(\log b)$。</p><h1 id="wan-zheng-dai-ma">完整代码</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">int</span> n;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">gcd</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">return</span> b ? <span class="hljs-built_in">gcd</span>(b, a % b) : a;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>, &amp;n);<br>    <span class="hljs-keyword">while</span>(n -- )<br>    &#123;<br>        <span class="hljs-keyword">int</span> a, b;<br>        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d%d&quot;</span>, &amp;a, &amp;b);<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, <span class="hljs-built_in">gcd</span>(a, b));<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
       
       
       <categories>
@@ -189,13 +331,13 @@
       
         <tags>
             
+            <tag> 因式分解 </tag>
+            
             <tag> 数学知识 </tag>
             
             <tag> 试除法 </tag>
             
             <tag> 约数 </tag>
-            
-            <tag> 因式分解 </tag>
             
         </tags>
       
@@ -224,13 +366,13 @@
       
         <tags>
             
+            <tag> 因式分解 </tag>
+            
             <tag> 数学知识 </tag>
             
             <tag> 试除法 </tag>
             
             <tag> 约数 </tag>
-            
-            <tag> 因式分解 </tag>
             
         </tags>
       
@@ -292,11 +434,11 @@
       
         <tags>
             
+            <tag> 质数 </tag>
+            
             <tag> 数学知识 </tag>
             
             <tag> 线性筛法 </tag>
-            
-            <tag> 质数 </tag>
             
             <tag> 筛法求素数 </tag>
             
@@ -360,11 +502,11 @@
       
         <tags>
             
+            <tag> 质数 </tag>
+            
             <tag> 数学知识 </tag>
             
             <tag> 试除法 </tag>
-            
-            <tag> 质数 </tag>
             
         </tags>
       
@@ -422,9 +564,9 @@
       
         <tags>
             
-            <tag> 数学 </tag>
-            
             <tag> 组合计数 </tag>
+            
+            <tag> 数学 </tag>
             
         </tags>
       
@@ -468,11 +610,11 @@
       
         <tags>
             
+            <tag> 数学 </tag>
+            
             <tag> 质数 </tag>
             
             <tag> 因式分解 </tag>
-            
-            <tag> 数学 </tag>
             
         </tags>
       
@@ -1434,15 +1576,15 @@
       
         <tags>
             
-            <tag> 快速幂 </tag>
-            
-            <tag> 逆元 </tag>
-            
-            <tag> 费马小定理 </tag>
+            <tag> 组合数学 </tag>
             
             <tag> 组合计数 </tag>
             
-            <tag> 组合数学 </tag>
+            <tag> 逆元 </tag>
+            
+            <tag> 快速幂 </tag>
+            
+            <tag> 费马小定理 </tag>
             
             <tag> 卡特兰数 </tag>
             
@@ -1696,11 +1838,11 @@
       
         <tags>
             
+            <tag> 扩展欧几里得算法 </tag>
+            
             <tag> 数学知识 </tag>
             
             <tag> 同余 </tag>
-            
-            <tag> 扩展欧几里得算法 </tag>
             
         </tags>
       
@@ -3042,9 +3184,9 @@
       
         <tags>
             
-            <tag> 二分 </tag>
-            
             <tag> 递推 </tag>
+            
+            <tag> 二分 </tag>
             
         </tags>
       
@@ -3127,9 +3269,9 @@
       
         <tags>
             
-            <tag> 位运算 </tag>
-            
             <tag> 递推 </tag>
+            
+            <tag> 位运算 </tag>
             
         </tags>
       
@@ -4461,9 +4603,9 @@
       
         <tags>
             
-            <tag> 区间合并 </tag>
-            
             <tag> 贪心 </tag>
+            
+            <tag> 区间合并 </tag>
             
         </tags>
       
