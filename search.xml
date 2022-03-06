@@ -1898,9 +1898,9 @@
             
             <tag> 贪心 </tag>
             
-            <tag> 归并排序 </tag>
-            
             <tag> 树状数组 </tag>
+            
+            <tag> 归并排序 </tag>
             
         </tags>
       
@@ -1929,11 +1929,11 @@
       
         <tags>
             
-            <tag> 归并排序 </tag>
-            
             <tag> 树状数组 </tag>
             
             <tag> 逆序对 </tag>
+            
+            <tag> 归并排序 </tag>
             
         </tags>
       
@@ -4603,9 +4603,9 @@
       
         <tags>
             
-            <tag> 贪心 </tag>
-            
             <tag> 区间合并 </tag>
+            
+            <tag> 贪心 </tag>
             
         </tags>
       
