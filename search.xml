@@ -4,6 +4,190 @@
   
     
     <entry>
+      <title>地宫取宝</title>
+      <link href="/LanQiaoCup/80d5936c/"/>
+      <url>/LanQiaoCup/80d5936c/</url>
+      
+        <content type="html"><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-1214-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/1214/">原题链接</a></h1><h1 id="ti-mu-miao-shu">题目描述</h1><p>X 国王有一个地宫宝库，是 $n\times m$ 个格子的矩阵，每个格子放一件宝贝，每个宝贝贴着价值标签。</p><p>地宫的入口在左上角，出口在右下角。</p><p>小明被带到地宫的入口，国王要求他只能向右或向下行走。</p><p>走过某个格子时，如果那个格子中的宝贝价值比小明手中任意宝贝价值都大，小明就可以拿起它（当然，也可以不拿）。</p><p>当小明走到出口时，如果他手中的宝贝恰好是 $k$ 件，则这些宝贝就可以送给小明。</p><p>请你帮小明算一算，在给定的局面下，他有多少种不同的行动方案能获得这 $k$ 件宝贝。</p><h2 id="shu-ru-ge-shi" id="输入格式">输入格式</h2><p>第一行 $3$ 个整数，$n,m,k$，含义见题目描述。</p><p>接下来 $n$ 行，每行有 $m$ 个整数 $C_i$ 用来描述宝库矩阵每个格子的宝贝价值。</p><h2 id="shu-chu-ge-shi" id="输出格式">输出格式</h2><p>输出一个整数，表示正好取 $k$ 个宝贝的行动方案数。</p><p>该数字可能很大，输出它对 $1000000007$ 取模的结果。</p><h2 id="shu-ju-fan-wei" id="数据范围">数据范围</h2><p>$1\leq n,m\leq 50,$<br>$1\leq k\leq 12,$<br>$0\leq C_i\leq 12$</p><h2 id="shu-ru-yang-li-1" id="输入样例1">输入样例1</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">2 2 2<br>1 2<br>2 1<br></code></pre></td></tr></table></figure><h2 id="shu-chu-yang-li-1" id="输出样例1">输出样例1</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">2<br></code></pre></td></tr></table></figure><h2 id="shu-ru-yang-li-2" id="输入样例2">输入样例2</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">2 3 2<br>1 2 3<br>2 1 5<br></code></pre></td></tr></table></figure><h2 id="shu-chu-yang-li-2" id="输出样例2">输出样例2</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">14<br></code></pre></td></tr></table></figure><h1 id="ti-mu-fen-xi">题目分析</h1><p>本题可以采用记忆化搜索实现。</p><p>这里注意几个点，写记忆化搜索的时候，一定要牢记dp数组以及dfs中各个参数的含义，最好能注释上每个参数的含义，否则在进行状态转移计算的时候很容易出错。</p><p>另外，到目前为止，遇到的记忆化搜索的题目，因为要求的大多都是方案数量，或者是路径长度，由于dp数组存的值和dfs的返回值基本类似（有时候会有点小差异），这些返回值大都是非负数，因此，最好将dp数组初始化为-1而不是0或者其他正数。</p><p>而在本题中，dfs和dp数组的第四维变量，含义有所不同，dfs中的value，存的是计算下一个状态之前的，具有的最大物品价值是多少，而dp数组中的value是指，当前走到这个点时，具有的最大物品价值是多少。dp数组中的value是“先于”dfs中value的。</p><p>由于地面上的物品价值可能是0，因此如果初始位置(1, 1)上有一个价值为0的物品，如果要考虑拿还是不拿，就得与当前的手里的最大价值作比较，而这个时候是刚开始因此是肯定可以拿这个物品的，所以这时value要设为-1。也就是说，初始时dfs中的value要设为-1，并且dp数组里的value要设为0</p><p>还有，写记忆化搜索时，在记录答案时，尽量避免用 <code>auto&amp; v = dp[i][j]</code> 这种写法，用的不恰当容易出错。</p><h1 id="wan-zheng-dai-ma">完整代码</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> LL;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">60</span>, mod = <span class="hljs-number">1e9</span> + <span class="hljs-number">7</span>;<br><br><span class="hljs-keyword">int</span> n, m, k;<br><span class="hljs-comment">// w存每个格子宝贝价值</span><br><span class="hljs-comment">// 第一、二维表示当前坐标</span><br><span class="hljs-comment">// 第三维存宝贝数</span><br><span class="hljs-comment">// 第四维存宝贝最大价值</span><br><span class="hljs-comment">// dp存方案数</span><br><span class="hljs-keyword">int</span> w[N][N], dp[N][N][<span class="hljs-number">15</span>][<span class="hljs-number">15</span>];<br><span class="hljs-keyword">int</span> dx[] = &#123;<span class="hljs-number">0</span>, <span class="hljs-number">1</span>&#125;, dy[] = &#123;<span class="hljs-number">1</span>, <span class="hljs-number">0</span>&#125;;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y, <span class="hljs-keyword">int</span> cnt, <span class="hljs-keyword">int</span> value)</span> </span>&#123;<br>    <span class="hljs-keyword">if</span> (dp[x][y][cnt][value + <span class="hljs-number">1</span>] != <span class="hljs-number">-1</span>) <span class="hljs-keyword">return</span> dp[x][y][cnt][value + <span class="hljs-number">1</span>];<br>    <br>    <span class="hljs-keyword">if</span> (x == n &amp;&amp; y == m) &#123;<br>        <span class="hljs-keyword">if</span> (cnt == k) <br>            <span class="hljs-keyword">return</span> dp[x][y][cnt][value + <span class="hljs-number">1</span>] = <span class="hljs-number">1</span>;    <br>        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (cnt == k - <span class="hljs-number">1</span> &amp;&amp; w[x][y] &gt; value) <br>            <span class="hljs-keyword">return</span> dp[x][y][cnt][value + <span class="hljs-number">1</span>] = <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">else</span> <br>            <span class="hljs-keyword">return</span> dp[x][y][cnt][value + <span class="hljs-number">1</span>] = <span class="hljs-number">0</span>;<br>    &#125;<br><br>    LL res = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">2</span>; i ++ ) &#123;<br>        <span class="hljs-keyword">int</span> a = x + dx[i], b = y + dy[i];<br>        <span class="hljs-keyword">if</span> (a &gt; n || b &gt; m) <span class="hljs-keyword">continue</span>;  <span class="hljs-comment">// 不能越界</span><br>        <span class="hljs-keyword">if</span> (w[x][y] &gt; value) &#123;<br>            <span class="hljs-comment">// 如果当前格子的宝贝价值比手里大，可以选择拿，也可以不拿</span><br>            <br>            <span class="hljs-comment">// 选择拿</span><br>            res = (res + <span class="hljs-built_in">dfs</span>(a, b, cnt + <span class="hljs-number">1</span>, w[x][y])) % mod;<br>            <br>            <span class="hljs-comment">// 选择不拿</span><br>            res = (res + <span class="hljs-built_in">dfs</span>(a, b, cnt, value)) % mod;<br>        &#125; <span class="hljs-keyword">else</span> &#123;  <span class="hljs-comment">// 若当前格子的宝贝价值没有手里大，必须不拿</span><br>            res = (res + <span class="hljs-built_in">dfs</span>(a, b, cnt, value)) % mod;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> dp[x][y][cnt][value + <span class="hljs-number">1</span>] = res % mod;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    cin &gt;&gt; n &gt;&gt; m &gt;&gt; k;<br>    <span class="hljs-built_in">memset</span>(dp, <span class="hljs-number">-1</span>, <span class="hljs-keyword">sizeof</span> dp);<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++ ) <br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">1</span>; j &lt;= m; j ++ )<br>            <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>, &amp;w[i][j]);<br>    <br>    <span class="hljs-built_in">dfs</span>(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">-1</span>);  <span class="hljs-comment">// 由于地上物品有价值为0的，所以初始设为-1</span><br>    cout &lt;&lt; dp[<span class="hljs-number">1</span>][<span class="hljs-number">1</span>][<span class="hljs-number">0</span>][<span class="hljs-number">0</span>] &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 算法学习 </category>
+          
+          <category> 蓝桥杯刷题笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 动态规划 </tag>
+            
+            <tag> DP </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>数字三角形</title>
+      <link href="/algo_level1/60cd4659/"/>
+      <url>/algo_level1/60cd4659/</url>
+      
+        <content type="html"><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-900-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/900/">原题链接</a></h1><h1 id="ti-mu-miao-shu">题目描述</h1><p>给定一个如下图所示的数字三角形，从顶部出发，在每一结点可以选择移动至其左下方的结点或移动至其右下方的结点，一直走到底层，要求找出一条路径，使路径上的数字的和最大。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">        7<br>      3   8<br>    8   1   0<br>  2   7   4   4<br>4   5   2   6   5<br></code></pre></td></tr></table></figure><h2 id="shu-ru-ge-shi" id="输入格式">输入格式</h2><p>第一行包含整数 $n$，表示数字三角形的层数。</p><p>接下来 $n$ 行，每行包含若干整数，其中第 $i$ 行表示数字三角形第 $i$ 层包含的整数。</p><h2 id="shu-chu-ge-shi" id="输出格式">输出格式</h2><p>输出一个整数，表示最大的路径数字和。</p><h2 id="shu-ju-fan-wei" id="数据范围">数据范围</h2><p>$1\leq n\leq 500,$<br>$−10000\leq \text{三角形中的整数}\leq 10000$</p><h2 id="shu-ru-yang-li" id="输入样例">输入样例</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">5<br>7<br>3 8<br>8 1 0 <br>2 7 4 4<br>4 5 2 6 5<br></code></pre></td></tr></table></figure><h2 id="shu-chu-yang-li" id="输出样例">输出样例</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">30<br></code></pre></td></tr></table></figure><h1 id="suan-fa-fen-xi">算法分析</h1><p>状态转移方程：</p><p>$$<br>f(x, y) = \max \lbrace f(x-1, y), f(x-1, y-1) \rbrace<br>$$</p><h1 id="wan-zheng-dai-ma">完整代码</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">510</span>;<br><br><span class="hljs-keyword">int</span> w[N][N], f[N][N];<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">int</span> n;<br>    cin &gt;&gt; n;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++ ) <br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">1</span>; j &lt;= i; j ++ ) <br>            cin &gt;&gt; w[i][j];<br>    <br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++ )<br>        f[n][i] = w[n][i];  <span class="hljs-comment">// 初始化边界</span><br>    <br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = n - <span class="hljs-number">1</span>; i &gt; <span class="hljs-number">0</span>; i -- )  <span class="hljs-comment">// 倒序DP</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">1</span>; j &lt;= n; j ++ )<br>            f[i][j] = <span class="hljs-built_in">max</span>(f[i + <span class="hljs-number">1</span>][j], f[i + <span class="hljs-number">1</span>][j + <span class="hljs-number">1</span>]) + w[i][j];<br>    cout &lt;&lt; f[<span class="hljs-number">1</span>][<span class="hljs-number">1</span>] &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 算法学习 </category>
+          
+          <category> 算法基础 </category>
+          
+          <category> 动态规划 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 动态规划 </tag>
+            
+            <tag> 线性DP </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>滑雪</title>
+      <link href="/algo_level1/11b114f0/"/>
+      <url>/algo_level1/11b114f0/</url>
+      
+        <content type="html"><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-903-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/903/">原题链接</a></h1><h1 id="ti-mu-miao-shu">题目描述</h1><p>给定一个 $R$ 行 $C$ 列的矩阵，表示一个矩形网格滑雪场。</p><p>矩阵中第 $i$ 行第 $j$ 列的点表示滑雪场的第 $i$ 行第 $j$ 列区域的高度。</p><p>一个人从滑雪场中的某个区域内出发，每次可以向上下左右任意一个方向滑动一个单位距离。</p><p>当然，一个人能够滑动到某相邻区域的前提是该区域的高度低于自己目前所在区域的高度。</p><p>下面给出一个矩阵作为例子：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">1  2  3  4 5<br><br>16 17 18 19 6<br><br>15 24 25 20 7<br><br>14 23 22 21 8<br><br>13 12 11 10 9<br></code></pre></td></tr></table></figure><p>在给定矩阵中，一条可行的滑行轨迹为 $24−17−2−1$。</p><p>在给定矩阵中，最长的滑行轨迹为 $25−24−23−\ldots−3−2−1$，沿途共经过 $25$ 个区域。</p><p>现在给定你一个二维矩阵表示滑雪场各区域的高度，请你找出在该滑雪场中能够完成的最长滑雪轨迹，并输出其长度(可经过最大区域数)。</p><h2 id="shu-ru-ge-shi" id="输入格式">输入格式</h2><p>第一行包含两个整数 $R$ 和 $C$。</p><p>接下来 $R$ 行，每行包含 $C$ 个整数，表示完整的二维矩阵。</p><h2 id="shu-chu-ge-shi" id="输出格式">输出格式</h2><p>输出一个整数，表示可完成的最长滑雪长度。</p><h2 id="shu-ju-fan-wei" id="数据范围">数据范围</h2><p>$1\leq R,C\leq 300,$<br>$0\leq \text{矩阵中整数}\leq 10000$</p><h2 id="shu-ru-yang-li" id="输入样例">输入样例</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">5 5<br>1 2 3 4 5<br>16 17 18 19 6<br>15 24 25 20 7<br>14 23 22 21 8<br>13 12 11 10 9<br></code></pre></td></tr></table></figure><h2 id="shu-chu-yang-li" id="输出样例">输出样例</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">25<br></code></pre></td></tr></table></figure><p><strong>记忆化搜索适用场景：</strong></p><p>代码复杂度较低（相较于循环写法)。</p><h1 id="suan-fa-fen-xi">算法分析</h1><h1 id="ti-mu-fen-xi">题目分析</h1><p><strong>状态表示 $f(i, j)$</strong></p><p>集合：所有从点 $(i, j)$ 开始滑的路径</p><p>属性 (Max)：所有的路径中，所包含的最大路径长度</p><p><strong>状态计算（集合划分）</strong></p><ul><li><p>向右滑：$f(i, j) = f(i, j + 1) + 1$</p></li><li><p>向上滑：$f(i, j) = f(i - 1, j) + 1$</p></li><li><p>向左滑：$f(i, j) = f(i, j - 1) + 1$</p></li><li><p>向下滑：$f(i, j) = f(i + 1, j) + 1$</p></li></ul><p>以上四种情况并不一定都存在，存在的前提是：下一步的高度一定要小于当前这个点的高度，即需要满足拓扑序。</p><p>之所以采用递归写法，即记忆化搜索方式，参看代码，每一次进行状态计算的时候不能直接用 $f(i, j)$ 因为当前这个状态还没有被计算出来，必须先递归计算。</p><h1 id="wan-zheng-dai-ma">完整代码</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">310</span>;<br><span class="hljs-keyword">int</span> dp[N][N];<br><span class="hljs-keyword">int</span> h[N][N];<br><span class="hljs-keyword">int</span> n, m;<br><br><span class="hljs-keyword">int</span> dx[] = &#123;<span class="hljs-number">-1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>&#125;, dy[] = &#123;<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">-1</span>&#125;;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span> (dp[x][y] != <span class="hljs-number">-1</span>) <span class="hljs-keyword">return</span> dp[x][y]; <span class="hljs-comment">// 若状态已经被计算过了，直接返回</span><br>    dp[x][y] = <span class="hljs-number">1</span>; <span class="hljs-comment">// 初始化为1，无论何种情况，路径长度至少为1</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">4</span>; i ++ )<br>    &#123;<br>        <span class="hljs-keyword">int</span> a = x + dx[i], b = y + dy[i];<br>        <span class="hljs-keyword">if</span> (a &gt;= <span class="hljs-number">1</span> &amp;&amp; a &lt;= n &amp;&amp; b &gt;= <span class="hljs-number">1</span> &amp;&amp; b &lt;= m &amp;&amp; h[a][b] &lt; h[x][y])<br>        &#123;<br>            dp[x][y] = <span class="hljs-built_in">max</span>(dp[x][y], <span class="hljs-built_in">dfs</span>(a, b) + <span class="hljs-number">1</span>);<br>        &#125;<br>    &#125;    <br>    <span class="hljs-keyword">return</span> dp[x][y];<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n &gt;&gt; m;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++ )<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">1</span>; j &lt;= m; j ++ )<br>            <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>, &amp;h[i][j]);<br>    <span class="hljs-built_in">memset</span>(dp, <span class="hljs-number">-1</span>, <span class="hljs-keyword">sizeof</span> dp);<br>    <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++ )<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">1</span>; j &lt;= m; j ++ )<br>            res = <span class="hljs-built_in">max</span>(res, <span class="hljs-built_in">dfs</span>(i, j)); <span class="hljs-comment">// 递归处理所有状态</span><br>    cout &lt;&lt; res &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 算法学习 </category>
+          
+          <category> 算法基础 </category>
+          
+          <category> 动态规划 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 动态规划 </tag>
+            
+            <tag> 记忆化搜索 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>有向图的拓扑序列</title>
+      <link href="/algo_level1/92cd6b13/"/>
+      <url>/algo_level1/92cd6b13/</url>
+      
+        <content type="html"><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-850-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/850/">原题链接</a></h1><h1 id="ti-mu-miao-shu">题目描述</h1><p>给定一个 $n$ 个点 $m$ 条边的有向图，点的编号是 $1$ 到 $n$，图中可能存在重边和自环。</p><p>请输出任意一个该有向图的拓扑序列，如果拓扑序列不存在，则输出 $−1$。</p><p>若一个由图中所有点构成的序列 $A$ 满足：对于图中的每条边 $(x,y)$，$x$ 在 $A$ 中都出现在 $y$ 之前，则称 $A$ 是该图的一个拓扑序列。</p><h2 id="shu-ru-ge-shi" id="输入格式">输入格式</h2><p>第一行包含两个整数 $n$ 和 $m$。</p><p>接下来 $m$ 行，每行包含两个整数 $x$ 和 $y$，表示存在一条从点 $x$ 到点 $y$ 的有向边 $(x,y)$。</p><h2 id="shu-chu-ge-shi" id="输出格式">输出格式</h2><p>共一行，如果存在拓扑序列，则输出任意一个合法的拓扑序列即可。</p><p>否则输出 $−1$。</p><h2 id="shu-ju-fan-wei" id="数据范围">数据范围</h2><p>$1\leq n,m\leq 10^5$</p><h2 id="shu-ru-yang-li" id="输入样例">输入样例</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">3 3<br>1 2<br>2 3<br>1 3<br></code></pre></td></tr></table></figure><h2 id="shu-chu-yang-li" id="输出样例">输出样例</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">1 2 3<br></code></pre></td></tr></table></figure><h1 id="qian-zhi-zhi-shi">前置知识</h1><p>1、拓扑一词无实际含义，音译。</p><p>2、有向无环图（$\text{Directed Acyclic Graph}$），简称 DAG 图。</p><p>3、可以证明，<strong>有向无环图一定存在拓扑序列</strong>，故有向无环图也被称为<strong>拓扑图</strong>。</p><p>4、<strong>有向无环图</strong>中至少存在一个<strong>入度</strong>为 $0$ 的点。</p><p>5、本题中所涉及到的<strong>环</strong>指图中的<strong>回路</strong>和<strong>自环</strong>。</p><p>6、在图论中，拓扑排序是一个<strong>有向无环图的所有顶点的线性序列</strong>。且该序列必须满足下面两个条件：</p><ul><li>每个顶点出现且只出现一次</li><li>若存在一条从顶点 $A$ 到顶点 $B$ 的路径，那么在序列中顶点 $A$ 出现在顶点 $B$ 的前面</li></ul><p>7、拓扑排序仅针对有向图，无向图不存在拓扑序列</p><h1 id="suan-fa-fen-xi">算法分析</h1><p>若一个图中的所有点构成的序列 $A$，满足对于任意一条有向边 $(x, y)$，$x$ 在 $A$ 中都存在于 $y$ 的前面，则称 $A$ 是该图的一个拓扑序列。</p><p>例如对于一个图</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">1 -&gt; 2<br>2 -&gt; 3<br>1 -&gt; 3<br></code></pre></td></tr></table></figure><p>序列<code>1 2 3</code>就是一个拓扑序，<strong>并且只要有环，一定不存在拓扑序列。</strong></p><p><strong>如何求拓扑序列？</strong></p><p>所有入度为 $0$ 的点，都可以作为拓扑序列的起点</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">将所有入度为0的点入队<br><br>宽搜过程<br>t &lt;- 队头<br><br>枚举 t 的所有出边，t -&gt; j<br><br>删掉 t -&gt; j  这会影响 j 的入度，然后 j 的入度减 1<br><br>若 j 的入度为 0，说明前面所有点都排好了，就可以把 j 放在前面，再把 j 入队<br></code></pre></td></tr></table></figure><h1 id="wan-zheng-dai-ma">完整代码</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">100010</span>;<br><span class="hljs-keyword">int</span> n, m;<br><span class="hljs-keyword">int</span> e[N], ne[N], h[N], idx;<br><span class="hljs-keyword">int</span> q[N], d[N];<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)</span></span><br><span class="hljs-function"></span>&#123;<br>    e[idx] = b, ne[idx] = h[a], h[a] = idx ++ ;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">topsort</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> hh = <span class="hljs-number">0</span>, tt = <span class="hljs-number">-1</span>;<br>    <br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++ )<br>        <span class="hljs-keyword">if</span> (!d[i])<br>            q[ ++ tt] = i;<br>    <br>    <span class="hljs-keyword">while</span> (hh &lt;= tt)<br>    &#123;<br>        <span class="hljs-keyword">int</span> t = q[hh ++ ];<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = h[t]; i != <span class="hljs-number">-1</span>; i = ne[i])<br>        &#123;<br>           <span class="hljs-keyword">int</span> j = e[i];<br>           -- d[j]; <span class="hljs-comment">// 通常情况下，-- d[j] 要比 d[j] -- 效率更高，原因在于底层实现</span><br>           <span class="hljs-keyword">if</span> (d[j] == <span class="hljs-number">0</span>) q[ ++ tt] = j;<br>        &#125;<br>    &#125;<br>    <span class="hljs-comment">// 如果 tt = n - 1，说明队列中一共进入了n个点，说明所有点都进入过队列</span><br>    <span class="hljs-comment">// 说明是一个有向无环图</span><br>    <span class="hljs-comment">// 否则说明是存在一个环的图，不存在拓扑序</span><br>    <span class="hljs-keyword">return</span> tt == n - <span class="hljs-number">1</span>;<br>&#125;<br><br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n &gt;&gt; m;<br>    <span class="hljs-built_in">memset</span>(h, <span class="hljs-number">-1</span>, <span class="hljs-keyword">sizeof</span> h);<br>    <br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; m; i ++ ) <br>    &#123;<br>        <span class="hljs-keyword">int</span> a, b;<br>        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d%d&quot;</span>, &amp;a, &amp;b);<br>        <span class="hljs-built_in">add</span>(a, b);<br>        ++ d[b];<br>    &#125;<br>    <br>    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">topsort</span>())<br>    &#123;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i ++ )   <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d &quot;</span>, q[i]);<br>    &#125;<br>    <span class="hljs-keyword">else</span> <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;-1&quot;</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 算法学习 </category>
+          
+          <category> 算法基础 </category>
+          
+          <category> 搜索与图论 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 拓扑排序 </tag>
+            
+            <tag> BFS </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>spfa求负环</title>
+      <link href="/algo_level1/530a3ada/"/>
+      <url>/algo_level1/530a3ada/</url>
+      
+        <content type="html"><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-854-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/854/">原题链接</a></h1><h1 id="qian-zhi-zhi-shi">前置知识</h1><ul><li><p>抽屉原理：$n+1$ 个苹果放在 $n$ 个抽屉里，那么至少有一个抽屉中会放两个苹果。</p></li><li><p>负环：负环不是指<strong>包含负权边</strong>的环，而是指<strong>路径和为负数</strong>的环。</p></li></ul><h1 id="suan-fa-fen-xi">算法分析</h1><p><img src="x1.png" alt="xx"></p><p><code>dist[x]</code> 表示当前点 <code>x</code> 到起点 <code>1</code> 的最短路的长度，<code>cnt[x]</code> 表示点 <code>x</code> 的最短路的边数。</p><p>每次更新距离时，顺带更新当前路径的走过的边数。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">dist[x] = dist[t] + w[i];<br>cnt[x] = cnt[t] + 1<br></code></pre></td></tr></table></figure><p>1、如果在某一次过程中，<code>cnt[x] &gt;= n</code>，意味着从 $1$ 到 $x$ 经过了至少 $n$ 条边，则至少有 $n + 1$ 个点，由抽屉原理可知，一定有两个点的距离是相同的，说明存在一个环，因为负权边的存在，故有 <code>dist[x] &gt; dist[x] - w, dist[x] = dist[x] - w</code>，则这个自环肯定是负环。</p><p>2、维护一个 <code>cnt</code> 数组，只要某一次迭代中， <code>cnt[x] &gt;= n</code>，就表示有负环。</p><p>3、开始时，不能像 SPFA 求最短路那样只把 $1$ 号点加入队列了，因为有些负环是 $1$ 号点到不了的，我们将所有点都入队即可。</p><blockquote><p>将所有点都入队的原因是为了防止有向图不连通而建立的虚拟源点，而如果确定有向图<strong>强连通</strong>，则可以只将 $1$ 号点入队，<strong>否则都需要建立虚拟源点</strong>。</p></blockquote><p><strong>TIPS:</strong></p><p>有一种极端情况会卡掉不初始化 <code>dist[]</code> 的做法：</p><p><img src="x2.png" alt="无标题.png"></p><p>如果只考虑从 $1$ 号点除非能到达的负环，只将 $1$ 号点入队，这个图如果不进行初始化，在 $1$ 号点出队时算法就直接结束了。会判定错误的结果。</p><p>所以根据经验，最好还是要初始化一下<code>dist[]</code> 为正无穷。</p><p><strong>时间复杂度分析：</strong></p><p>SPFA 判断负环时间复杂度为 $O(n\cdot m)$</p><p>另外，本题可以手写队列，但要写成循环队列，另外 SPFA 求最短路若要手写队列也要写成循环队列写法，循环队列模板：</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// hh 表示队头，tt表示队尾的后一个位置</span><br><span class="hljs-keyword">int</span> q[N], hh = <span class="hljs-number">0</span>, tt = <span class="hljs-number">0</span>;<br><br><span class="hljs-comment">// 向队尾插入一个数</span><br>q[tt ++ ] = x;<br><span class="hljs-keyword">if</span> (tt == N) tt = <span class="hljs-number">0</span>;<br><br><span class="hljs-comment">// 从队头弹出一个数</span><br>hh ++ ;<br><span class="hljs-keyword">if</span> (hh == N) hh = <span class="hljs-number">0</span>;<br><br><span class="hljs-comment">// 队头的值</span><br>q[hh];<br><br><span class="hljs-comment">// 判断队列是否为空</span><br><span class="hljs-keyword">if</span> (hh != tt)<br>&#123;<br><br>&#125;<br></code></pre></td></tr></table></figure><p>注意数组的容量</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">2010</span>, M = <span class="hljs-number">10010</span>;<br><span class="hljs-keyword">int</span> e[M], h[N], ne[M], w[M], idx;<br></code></pre></td></tr></table></figure><h1 id="wan-zheng-dai-ma">完整代码</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;queue&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">2010</span>, M = <span class="hljs-number">10010</span>;<br><br><span class="hljs-keyword">int</span> n, m;<br><span class="hljs-keyword">int</span> e[M], h[N], ne[M], w[M], idx;<br><span class="hljs-keyword">int</span> dist[N], cnt[N];<br><span class="hljs-keyword">bool</span> st[N];<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b, <span class="hljs-keyword">int</span> c)</span></span><br><span class="hljs-function"></span>&#123;<br>    e[idx] = b, w[idx] = c, ne[idx] = h[a], h[a] = idx++;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">spfa</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    queue&lt;<span class="hljs-keyword">int</span>&gt; q;<br>    <span class="hljs-comment">// 为了防止图不连通，建立虚拟源点将所有点都入队。</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++ )<br>    &#123;<br>        st[i] = <span class="hljs-literal">true</span>;<br>        q.<span class="hljs-built_in">push</span>(i);<br>    &#125;<br>    <span class="hljs-keyword">while</span> (q.<span class="hljs-built_in">size</span>())<br>    &#123;<br>        <span class="hljs-keyword">int</span> t = q.<span class="hljs-built_in">front</span>();<br>        q.<span class="hljs-built_in">pop</span>();<br>        st[t] = <span class="hljs-literal">false</span>;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = h[t]; i != <span class="hljs-number">-1</span>; i = ne[i])<br>        &#123;<br>            <span class="hljs-keyword">int</span> j = e[i];<br>            <span class="hljs-keyword">if</span> (dist[j] &gt; dist[t] + w[i])<br>            &#123;<br>                dist[j] = dist[t] + w[i];<br>                cnt[j] = cnt[t] + <span class="hljs-number">1</span>; <span class="hljs-comment">// 维护cnt数组</span><br>                <span class="hljs-keyword">if</span> (cnt[j] &gt;= n) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>                <span class="hljs-keyword">if</span> (!st[j])<br>                &#123;<br>                    q.<span class="hljs-built_in">push</span>(j);<br>                    st[j] = <span class="hljs-literal">true</span>;<br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n &gt;&gt; m;<br>    <span class="hljs-built_in">memset</span>(h, <span class="hljs-number">-1</span>, <span class="hljs-keyword">sizeof</span> h);<br>    <span class="hljs-keyword">while</span> (m -- )<br>    &#123;<br>        <span class="hljs-keyword">int</span> a, b, c;<br>        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d%d%d&quot;</span>, &amp;a, &amp;b, &amp;c);<br>        <span class="hljs-built_in">add</span>(a, b, c);<br>    &#125;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">spfa</span>()) <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;Yes&quot;</span>);<br>    <span class="hljs-keyword">else</span> <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;No&quot;</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 算法学习 </category>
+          
+          <category> 算法基础 </category>
+          
+          <category> 搜索与图论 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> spfa </tag>
+            
+            <tag> 负环判定 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Floyd求最短路</title>
+      <link href="/algo_level1/fe7937da/"/>
+      <url>/algo_level1/fe7937da/</url>
+      
+        <content type="html"><![CDATA[<h1 id="a-href-https-www-acwing-com-problem-content-856-yuan-ti-lian-jie-a"><a href="https://www.acwing.com/problem/content/856/">原题链接</a></h1><h1 id="ti-mu-miao-shu">题目描述</h1><p>给定一个 $n$ 个点 $m$ 条边的有向图，图中可能存在重边和自环，边权可能为负数。</p><p>再给定 $k$ 个询问，每个询问包含两个整数 $x$ 和 $y$，表示查询从点 $x$ 到点 $y$ 的最短距离，如果路径不存在，则输出 <code>impossible</code>。</p><p>数据保证图中不存在负权回路。</p><h2 id="shu-ru-ge-shi" id="输入格式">输入格式</h2><p>第一行包含三个整数 $n,m,k$。</p><p>接下来 $m$ 行，每行包含三个整数 $x,y,z$，表示存在一条从点 $x$ 到点 $y$ 的有向边，边长为 $z$。</p><p>接下来 $k$ 行，每行包含两个整数 $x,y$，表示询问点 $x$ 到点 $y$ 的最短距离。</p><h2 id="shu-chu-ge-shi" id="输出格式">输出格式</h2><p>共 $k$ 行，每行输出一个整数，表示询问的结果，若询问两点间不存在路径，则输出 <code>impossible</code>。</p><h2 id="shu-ju-fan-wei" id="数据范围">数据范围</h2><p>$1\leq n\leq 200,$<br>$1\leq kleq n_2$<br>$1\leq m\leq 20000,$</p><p>图中涉及边长绝对值均不超过 <code>10000</code>。</p><h2 id="shu-ru-yang-li" id="输入样例">输入样例</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">3 3 2<br>1 2 1<br>2 3 2<br>1 3 1<br>2 1<br>1 3<br></code></pre></td></tr></table></figure><h2 id="shu-chu-yang-li" id="输出样例">输出样例</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">impossible<br>1<br></code></pre></td></tr></table></figure><h1 id="suan-fa-fen-xi">算法分析</h1><p><img src="x1.png" alt="xx"></p><p><strong>适用场景：</strong></p><p>多源汇最短路，可以有负权边，但是不能有负权回路。</p><p><strong>算法原理概述：</strong></p><p>基于动态规划。</p><p>状态表示</p><blockquote><p>$d(k,i,j)$：从点 $i$ 出发，只经过 $1\sim k$ 这些中间点到达 $j$ 的最短距离。</p></blockquote><p>状态计算</p><blockquote><p>$$d(k,i,j) = d(k-1,i,k) + d(k-1,k,j) \Rightarrow d(i,j) = d(i,k) + d(k,j)$$</p></blockquote><p><strong>时间复杂度分析：</strong></p><p>三重循环，故复杂度为 $O(n^3)$。</p><h1 id="wan-zheng-dai-ma">完整代码：</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">210</span>, INF = <span class="hljs-number">1e9</span>;<br><br><span class="hljs-keyword">int</span> n, m, Q;<br><span class="hljs-keyword">int</span> d[N][N];<span class="hljs-comment">// 邻接矩阵，也是floyd算法处理的距离</span><br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">floyd</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-comment">// 注：一定要先循环k，i和j的顺序可以任意颠倒</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> k = <span class="hljs-number">1</span>; k &lt;= n; k ++ )<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++ )<br>            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">1</span>; j &lt;= n; j ++ )<br>                d[i][j] = <span class="hljs-built_in">min</span>(d[i][j], d[i][k] + d[k][j]);<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d%d%d&quot;</span>, &amp;n, &amp;m, &amp;Q);<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i ++ )<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">1</span>; j &lt;= n; j ++ )<br>            <span class="hljs-keyword">if</span> (i == j) d[i][j] = <span class="hljs-number">0</span>; <span class="hljs-comment">// 去掉自环</span><br>            <span class="hljs-keyword">else</span> d[i][j] = INF;<br>    <span class="hljs-keyword">while</span> (m -- )<br>    &#123;<br>        <span class="hljs-keyword">int</span> a, b, w;<br>        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d%d%d&quot;</span>, &amp;a, &amp;b, &amp;w);<br>        d[a][b] = <span class="hljs-built_in">min</span>(d[a][b], w); <span class="hljs-comment">// 若有重边，则只保留最短的边</span><br>    &#125;<br>    <span class="hljs-built_in">floyd</span>();<br>    <span class="hljs-keyword">while</span> (Q -- )<br>    &#123;<br>        <span class="hljs-keyword">int</span> a, b;<br>        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d%d&quot;</span>, &amp;a, &amp;b);<br>        <span class="hljs-comment">// 和bellman ford类似，即使终点与起点不连通，也还是可能会被负权邻边更新，所以适当放宽条件</span><br>        <span class="hljs-keyword">if</span> (d[a][b] &gt; INF / <span class="hljs-number">2</span>) <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;impossible&quot;</span>); <br>        <span class="hljs-keyword">else</span> <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, d[a][b]);<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 算法学习 </category>
+          
+          <category> 算法基础 </category>
+          
+          <category> 搜索与图论 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 最短路 </tag>
+            
+            <tag> Floyd </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>二分图的最大匹配</title>
       <link href="/algo_level1/aadf4769/"/>
       <url>/algo_level1/aadf4769/</url>
@@ -950,9 +1134,9 @@
       
         <tags>
             
-            <tag> DFS </tag>
-            
             <tag> BFS </tag>
+            
+            <tag> DFS </tag>
             
             <tag> 树的遍历 </tag>
             
@@ -1170,11 +1354,11 @@
       
         <tags>
             
+            <tag> BFS </tag>
+            
             <tag> 图的遍历 </tag>
             
             <tag> DFS </tag>
-            
-            <tag> BFS </tag>
             
             <tag> 图论 </tag>
             
@@ -1203,9 +1387,9 @@
       
         <tags>
             
-            <tag> 哈希 </tag>
-            
             <tag> BFS </tag>
+            
+            <tag> 哈希 </tag>
             
             <tag> 树的遍历 </tag>
             
@@ -2138,9 +2322,9 @@
             
             <tag> 贪心 </tag>
             
-            <tag> 归并排序 </tag>
-            
             <tag> 树状数组 </tag>
+            
+            <tag> 归并排序 </tag>
             
         </tags>
       
@@ -2169,11 +2353,11 @@
       
         <tags>
             
-            <tag> 归并排序 </tag>
-            
             <tag> 树状数组 </tag>
             
             <tag> 逆序对 </tag>
+            
+            <tag> 归并排序 </tag>
             
         </tags>
       
@@ -3163,9 +3347,9 @@
       
         <tags>
             
-            <tag> 哈希 </tag>
-            
             <tag> 枚举 </tag>
+            
+            <tag> 哈希 </tag>
             
         </tags>
       
@@ -3192,6 +3376,8 @@
       
         <tags>
             
+            <tag> Floyd </tag>
+            
             <tag> 枚举 </tag>
             
             <tag> 图的遍历 </tag>
@@ -3199,8 +3385,6 @@
             <tag> 思维题 </tag>
             
             <tag> 传递闭包 </tag>
-            
-            <tag> Floyd </tag>
             
         </tags>
       
@@ -3704,11 +3888,11 @@
       
         <tags>
             
+            <tag> BFS </tag>
+            
             <tag> 枚举 </tag>
             
             <tag> 思维题 </tag>
-            
-            <tag> BFS </tag>
             
         </tags>
       
@@ -3853,9 +4037,9 @@
       
         <tags>
             
-            <tag> 递推 </tag>
-            
             <tag> DP </tag>
+            
+            <tag> 递推 </tag>
             
             <tag> 状态机 </tag>
             
@@ -4572,9 +4756,9 @@
       
         <tags>
             
-            <tag> DFS </tag>
-            
             <tag> BFS </tag>
+            
+            <tag> DFS </tag>
             
             <tag> Flood Fill </tag>
             
@@ -4630,11 +4814,11 @@
       
         <tags>
             
+            <tag> 枚举 </tag>
+            
             <tag> 进位制 </tag>
             
             <tag> 哈希 </tag>
-            
-            <tag> 枚举 </tag>
             
         </tags>
       
