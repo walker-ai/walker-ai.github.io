@@ -59,11 +59,29 @@
   color: #00b0e8;
 }
 
-
 .hljs-emphasis {
   font-style: italic;
 }
 
 .hljs-strong {
   font-weight: bold;
+}
+
+/* CSS */
+h1#site-title {
+  font-size: 8vh!important;
+  text-shadow:5px 2px 6px #000!important;
+}
+span#subtitle {
+  font-size: 3vh!important;
+  text-shadow:5px 2px 6px #000!important;
+}
+a#site-name {
+  text-shadow:5px 2px 6px #000!important;
+}
+
+#article-container pre, #article-container code {
+}
+.article-title {
+  font-weight: bolder;
 }
