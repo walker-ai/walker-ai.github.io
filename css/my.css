@@ -1,0 +1,8 @@
+@font-face{
+    font-family: 'FiraCode-Medium';
+    src: url('../diy-font/FiraCode-Medium.ttf');   
+}
+
+body {
+    font-family: 'FiraCode-Medium';
+}
