@@ -1,0 +1,23 @@
+---
+title: create_site
+date: 2025-03-22T23:03:35+08:00
+tags: 
+categories:
+slug: b487c0a
+---
+
+建站踩坑过程
+
+<!--more-->
+
+## 集成 latex
+
+1. [方法一](https://aikenh.cn/posts/%E5%88%9D%E5%A7%8B%E5%8C%96%E8%AE%BE%E7%BD%AEpapermod%E4%B8%BB%E9%A2%98%E7%9A%84%E5%9F%BA%E7%A1%80%E5%8A%9F%E8%83%BD/#render-latex-%e6%94%af%e6%8c%81%e6%b8%b2%e6%9f%93-latex)
+
+## 优秀参考
+
+https://github.com/shuzang/shuzang.github.io
+
+## content 目录位置
+
+移动到左边：https://blog.csdn.net/Xuyiming564445/article/details/122011603

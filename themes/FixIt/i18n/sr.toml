@@ -1,0 +1,220 @@
+# Translations for Serbian
+# Превод на Српски
+# https://gohugo.io/content-management/multilingual/#translation-of-strings
+
+# === init ===
+[init]
+configurationError = "Грешка у конфигурацији\nНисте правилно конфигурисали параметар верзије FixIt. Погледајте https://fixit.lruihao.cn/documentation/basics/#theme-configuration"
+compatibilityError = "Грешка у компатибилности ({{ .From }} -> {{ .To }}):\nИмате некомпатибилно ажурирање. Погледајте https://github.com/hugo-fixit/FixIt/releases"
+devVersionWarn = "Користите развојну верзију FixIt. Размотрите коришћење стабилне верзије.\nПогледајте https://github.com/hugo-fixit/FixIt/releases"
+devEnvWarn = "Тренутно окружење је \"развојно\". \"Систем коментара\", \"PWA\", \"CDN\", \"отисак прста\" и \"аналитика\" ће бити онемогућени."
+quicklyUpgrade = "Брзо ажурирање користите команду: "
+# === init ===
+
+# === baseof ===
+[baseof]
+backToTop = "Назад на Врх"
+viewComments = "Погледај Коментаре"
+noscript = "Овај сајт најбоље ради са омогућеним JavaScript-ом."
+# === baseof ===
+
+# === Taxonomy ===
+[archives]
+other = "Остало"
+
+[allSome]
+other = "Све {{ .Some }}"
+
+[category]
+other = "Категорија"
+
+[categories]
+other = "Категорије"
+
+[collection]
+other = "Collection"
+
+[collections]
+other = "Collections"
+
+[tag]
+other = "Таг"
+
+[tags]
+other = "Тагови"
+
+[posts]
+other = "Постови"
+# === Taxonomy ===
+
+# === Section ===
+[section]
+recentlyUpdated = "Недавно Ажурирано"
+
+[section.totalWordCount]
+one = "Једна реч"
+other = "Укупно {{ .Count }} речи"
+
+[section.archiveCounter]
+one = "Само један чланак"
+other = "{{ .Count }} чланака укупно"
+# === Section ===
+
+# === Pagination ===
+[pagination]
+more = "Више"
+# === Pagination ===
+
+# === partials/header.html ===
+[header]
+selectLanguage = "Изабери Језик"
+noMoretTranslations = "Нема више превода"
+switchTheme = "Промени Тему"
+# === partials/header.html ===
+
+# === partials/footer.html ===
+[footer]
+poweredBySome = "Покреће {{ .Hugo }} | Тема - {{ .Theme }}"
+siteUV = "Укупно посетилаца"
+sitePV = "Укупно посета"
+siteRunning = "Website running ..."
+# === partials/footer.html ===
+
+# === partials/comment.html ===
+[comment]
+valineLang = "sr" # Valine не подржава српски
+valinePlaceholder = "Ваш коментар ..."
+facebookLanguageCode = "sr_RS"
+# === partials/comment.html ===
+
+# === partials/assets.html ===
+[assets]
+search = "Претрага"
+searchPlaceholder = "Претражи наслове или садржај..."
+searchIn = "Претражи у {{ . }}"
+gotoResultsPage = "Иди на страницу резултата претраге ..."
+clear = "Очисти"
+cancel = "Поништи"
+noResultsFound = "Без резултата"
+copyToClipboard = "Копирај на радну таблу"
+editLockTitle = "Закључај блок кода који се може уређивати"
+editUnLockTitle = "Откључајте блок кода који се може уређивати"
+cookieconsentMessage = "Ова веб локација користи Cookies да би побољшала ваше искуство."
+cookieconsentDismiss = "Договорити се"
+cookieconsentLink = "Сазнајте више"
+# === partials/assets.html ===
+
+# === partials/plugin/share.html ===
+[shareOn]
+other = "Подели на"
+# === partials/plugin/share.html ===
+
+# === posts/single.html ===
+[single]
+contents = "Садржаји"
+pin = "Закачи"
+repost = "Поново објави"
+publishedOnDate = "објављено {{ .Date }}"
+views = "прегледа"
+comments = "коментари"
+author = "Аутор"
+updatedOnDate = "Ажурирано {{ .Date }}"
+readMarkdown = "Читај Markdown"
+viewSource = "Погледај извор"
+editThisPage = "Уреди ову страницу"
+reportIssue = "Пријави проблем"
+back = "Назад"
+home = "Почетна"
+readMore = "Прочитај више"
+expirationReminder = "Овај чланак је последњи пут ажуриран {{ .Date }}, садржај је можда застарео."
+encryptedAbstract = "Овај чланак је шифрован."
+encryptedMessage = "Унесите лозинку да бисте видели садржај."
+password = "Паролица"
+enterBtn = "Унеси"
+encryptyAgain = "Поново шифруј"
+relatedContent = "Повезани садржај"
+
+[single.includedIn]
+categories = "укључено {{ .Categories }}"
+collections = "укључено {{ .Collections }}"
+both = "укључено {{ .Categories }} и {{ .Collections }}"
+
+[single.wordCount]
+one = "Једна реч"
+other = "{{ .Count }} речи"
+
+[single.fuzzyWordCount]
+other = "Око {{ .Count }} речи"
+
+[single.readingTime]
+one = "Један минут"
+other = "{{ .Count }} минута"
+
+[single.reward]
+donate = "Донирај"
+wechatpay = "WeChat Pay"
+alipay = "Alipay"
+paypal = "PayPal"
+bitcoin = "Bitcoin"
+# === posts/single.html ===
+
+# === 404.html ===
+[pageNotFound]
+other = "Страница није пронађена"
+
+[pageNotFoundText]
+other = "Страница коју тражите не постоји. Жао нам је."
+# === 404.html ===
+
+# === offline ===
+[offlineTitle]
+other = "Оффлине"
+
+[offlineText]
+other = "Нисте повезани на Интернет, биће доступне само кеширане странице."
+# === offline ===
+
+# === GitHub Alert ===
+[alert]
+note = "Напомена"
+tip = "Савет"
+important = "Важно"
+warning = "Упозорење"
+caution = "Опрез"
+# === GitHub Alert ===
+
+# === Task lists ===
+[taskList]
+" " = "Непроверено"
+"x" = "Проверено"
+"/" = "У току"
+"-" = "Отказано"
+"<" = "Планирано"
+">" = "Преустановљено"
+"!" = "Важно"
+"?" = "Питање"
+# === Task lists ===
+
+# === shortcodes/admonition.html ===
+[admonition]
+note = "Напомена"
+abstract = "Сажетак"
+info = "Инфо"
+todo = "То-до"
+tip = "Савет"
+success = "Успех"
+question = "Питање"
+warning = "Упозорење"
+failure = "Неуспех"
+danger = "Опасност"
+bug = "Грешка"
+example = "Пример"
+quote = "Цитат"
+# === shortcodes/admonition.html ===
+
+# === shortcodes/version.html ===
+[version]
+new = "НОВО"
+changed = "ПРОМЕЊЕНО"
+deleted = "ОБРИСАНО"
+# === shortcodes/version.html ===

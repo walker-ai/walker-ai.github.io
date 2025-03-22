@@ -1,0 +1,219 @@
+# Translations for Vietnamese
+# https://gohugo.io/content-management/multilingual/#translation-of-strings
+
+# === init ===
+[init]
+configurationError = "Lỗi cấu hình\nBạn chưa cấu hình tham số phiên bản FixIt đúng cách. Xem https://fixit.lruihao.cn/documentation/basics/#theme-configuration"
+compatibilityError = "Lỗi tương thích ({{ .From }} -> {{ .To }}):\nBạn có một bản cập nhật không tương thích. Xem https://github.com/hugo-fixit/FixIt/releases"
+devVersionWarn = "Bạn đang sử dụng một phiên bản phát triển của FixIt. Vui lòng xem xét sử dụng một phiên bản ổn định.\nXem https://github.com/hugo-fixit/FixIt/releases"
+devEnvWarn = "Môi trường hiện tại là \"development\". \"Hệ thống bình luận\", \"PWA\", \"CDN\", \"vân tay\" và \"thống kê\" sẽ bị vô hiệu hóa."
+quicklyUpgrade = "Nâng cấp nhanh bằng lệnh: "
+# === init ===
+
+# === baseof ===
+[baseof]
+backToTop = "Lên trên"
+viewComments = "Xem bình luận"
+noscript = "Trang web này hoạt động tốt nhất khi JavaScript được kích hoạt."
+# === baseof ===
+
+# === Taxonomy ===
+[archives]
+other = "Bài viết cũ"
+
+[allSome]
+other = "Tất cả {{ .Some }}"
+
+[category]
+other = "Danh mục"
+
+[categories]
+other = "Danh mục"
+
+[collection]
+other = "Collection"
+
+[collections]
+other = "Collections"
+
+[tag]
+other = "Nhãn"
+
+[tags]
+other = "Nhãn"
+
+[posts]
+other = "Bài viết"
+# === Taxonomy ===
+
+# === Section ===
+[section]
+recentlyUpdated = "Mới nhất"
+
+[section.totalWordCount]
+one = "Chỉ một từ"
+other = "Tổng cộng {{ .Count }} từ"
+
+[section.archiveCounter]
+one = "Chỉ một bài viết"
+other = "{{ .Count }} bài viết"
+# === Section ===
+
+# === Pagination ===
+[pagination]
+more = "Thêm"
+# === Pagination ===
+
+# === partials/header.html ===
+[header]
+selectLanguage = "Chọn Ngôn ngữ"
+noMoretTranslations = "Không có nữa"
+switchTheme = "Đổi chủ đề"
+# === partials/header.html ===
+
+# === partials/footer.html ===
+[footer]
+poweredBySome = "Cung cấp bởi {{ .Hugo }} | Chủ đề - {{ .Theme }}"
+siteUV = "Tổng khách truy cập"
+sitePV = "Tổng lượt truy cập"
+siteRunning = "Trang web đang chạy ..."
+# === partials/footer.html ===
+
+# === partials/comment.html ===
+[comment]
+valineLang = "en" # Valine không hỗ trợ tiếng Việt
+valinePlaceholder = "Bình luận của bạn ..."
+facebookLanguageCode = "vi"
+# === partials/comment.html ===
+
+# === partials/assets.html ===
+[assets]
+search = "Tìm kiếm"
+searchPlaceholder = "Tìm tiêu đề hoặc nội dung..."
+searchIn = "Tìm kiếm trong {{ . }}"
+gotoResultsPage = "Đi đến trang kết quả tìm kiếm ..."
+clear = "Xoá"
+cancel = "Huỷ"
+noResultsFound = "Không tìm thấy"
+copyToClipboard = "Sao chép vào bộ nhớ tạm"
+editLockTitle = "Khóa khối mã có thể chỉnh sửa"
+editUnLockTitle = "Mở khóa khối mã có thể chỉnh sửa"
+cookieconsentMessage = "Trang web này sử dụng Cookies để cải thiện trải nghiệm của bạn."
+cookieconsentDismiss = "Đã hiểu!"
+cookieconsentLink = "Tìm hiểu thêm"
+# === partials/assets.html ===
+
+# === partials/plugin/share.html ===
+[shareOn]
+other = "Chia sẻ trên"
+# === partials/plugin/share.html ===
+
+# === posts/single.html ===
+[single]
+contents = "Nội dung"
+pin = "Ghim ở đầu trang"
+repost = "Đăng lại"
+publishedOnDate = "đăng ngày {{ .Date }}"
+views = "lượt xem"
+comments = "bình luận"
+author = "Tác giả"
+updatedOnDate = "Cập nhật ngày {{ .Date }}"
+readMarkdown = "Đọc với định dạng Markdown"
+viewSource = "Xem mã nguồn"
+editThisPage = "Chỉnh sửa trang này"
+reportIssue = "Báo cáo lỗi"
+back = "Quay lại"
+home = "Trang chủ"
+readMore = "Đọc thêm"
+expirationReminder = "Bài viết này được cập nhật lần cuối vào {{ .Date }}, nội dung có thể đã lỗi thời."
+encryptedAbstract = "Bài viết này đã được mã hóa, nên nội dung gốc không thể nhìn thấy!"
+encryptedMessage = "Vui lòng nhập mật khẩu"
+password = "Mật khẩu"
+enterBtn = "Nhập"
+encryptyAgain = "Mã hóa lại"
+relatedContent = "Nội dung liên quan"
+
+[single.includedIn]
+categories = "trong {{ .Categories }}"
+collections = "trong {{ .Collections }}"
+both = "trong {{ .Categories }} và {{ .Collections }}"
+
+[single.wordCount]
+one = "One word"
+other = "{{ .Count }} từ"
+
+[single.fuzzyWordCount]
+other = "Khoảng {{ .Count }} từ"
+
+[single.readingTime]
+one = "One minute"
+other = "{{ .Count }} phút"
+
+[single.reward]
+donate = "Ủng hộ"
+wechatpay = "WeChat Pay"
+alipay = "Alipay"
+paypal = "PayPal"
+bitcoin = "Bitcoin"
+# === posts/single.html ===
+
+# === 404.html ===
+[pageNotFound]
+other = "Không tìm thấy trang"
+
+[pageNotFoundText]
+other = "Trang bạn đang tìm kiếm không tồn tại. Xin lỗi."
+# === 404.html ===
+
+# === offline ===
+[offlineTitle]
+other = "ngoại tuyến"
+
+[offlineText]
+other = "Bạn chưa kết nối với Internet, chỉ các trang được lưu trong bộ nhớ cache sẽ khả dụng."
+# === offline ===
+
+# === GitHub Alert ===
+[alert]
+note = "Ghi chú"
+tip = "Mẹo"
+important = "Quan trọng"
+warning = "Cảnh báo"
+caution = "Chú ý"
+# === GitHub Alert ===
+
+# === Task lists ===
+[taskList]
+" " = "Chưa kiểm tra"
+"x" = "Đã kiểm tra"
+"/" = "Đang tiến hành"
+"-" = "Đã hủy"
+"<" = "Đã lên lịch"
+">" = "Đã lên lịch lại"
+"!" = "Quan trọng"
+"?" = "Câu hỏi"
+# === Task lists ===
+
+# === shortcodes/admonition.html ===
+[admonition]
+note = "Ghi chú"
+abstract = "Tóm tắt"
+info = "Thông tin"
+todo = "Cần làm"
+tip = "Mẹo"
+success = "Thành công"
+question = "Câu hỏi"
+warning = "Cảnh báo"
+failure = "Thất bại"
+danger = "Nguy hiểm"
+bug = "Lỗi"
+example = "Ví dụ"
+quote = "Trích dẫn"
+# === shortcodes/admonition.html ===
+
+# === shortcodes/version.html ===
+[version]
+new = "MỚI"
+changed = "THAY ĐỔI"
+deleted = "XOÁ"
+# === shortcodes/version.html ===

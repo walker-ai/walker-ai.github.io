@@ -1,0 +1,220 @@
+# Translations for Polish
+# Tłumaczenie na język polski
+# https://gohugo.io/content-management/multilingual/#translation-of-strings
+
+# === init ===
+[init]
+configurationError = "Błąd konfiguracji\nNie skonfigurowałeś jeszcze poprawnie parametru wersji FixIt. Zobacz https://fixit.lruihao.cn/documentation/basics/#theme-configuration"
+compatibilityError = "Błąd zgodności ({{ .From }} -> {{ .To }}):\nMasz niekompatybilną aktualizację. Zobacz https://github.com/hugo-fixit/FixIt/releases"
+devVersionWarn = "Używasz wersji deweloperskiej FixIt. Proszę rozważyć użycie stabilnej wersji.\nZobacz https://github.com/hugo-fixit/FixIt/releases"
+devEnvWarn = "Obecne środowisko to \"rozwój\". \"System komentarzy\", \"PWA\", \"CDN\", \"odcisk palca\" i \"analiza\" będą wyłączone."
+quicklyUpgrade = "Szybka aktualizacja użyj polecenia: "
+# === init ===
+
+# === baseof ===
+[baseof]
+backToTop = "Powrót do góry"
+viewComments = "Zobacz komentarze"
+noscript = "Ta strona działa najlepiej z włączonym JavaScriptem."
+# === baseof ===
+
+# === Taxonomy ===
+[archives]
+other = "Archiwum"
+
+[allSome]
+other = "Wszystkie {{ .Some }}"
+
+[category]
+other = "Kategoria"
+
+[categories]
+other = "Kategorie"
+
+[collection]
+other = "Collection"
+
+[collections]
+other = "Collections"
+
+[tag]
+other = "Tag"
+
+[tags]
+other = "Tagi"
+
+[posts]
+other = "Posty"
+# === Taxonomy ===
+
+# === Section ===
+[section]
+recentlyUpdated = "Ostatnio zaktualizowane"
+
+[section.totalWordCount]
+one = "Jedno słowo"
+other = "Łącznie {{ .Count }} słów"
+
+[section.archiveCounter]
+one = "Tylko jeden artykuł"
+other = "Łącznie {{ .Count }} artykułów"
+# === Section ===
+
+# === Pagination ===
+[pagination]
+more = "Więcej"
+# === Pagination ===
+
+# === partials/header.html ===
+[header]
+selectLanguage = "Wybierz język"
+noMoretTranslations = "Brak dalszych tłumaczeń"
+switchTheme = "Przełącz schemat"
+# === partials/header.html ===
+
+# === partials/footer.html ===
+[footer]
+poweredBySome = "Napędzany przez {{ .Hugo }} | Szablon - {{ .Theme }}"
+siteUV = "Całkowita odwiedzających"
+sitePV = "Łączna wizyt"
+siteRunning = "Website running ..."
+# === partials/footer.html ===
+
+# === partials/comment.html ===
+[comment]
+valineLang = "en" # Valine nie obsługuje języka polskiego
+valinePlaceholder = "Twój komentarz ..."
+facebookLanguageCode = "pl"
+# === partials/comment.html ===
+
+# === partials/assets.html ===
+[assets]
+search = "Szukaj"
+searchPlaceholder = "Wyszukaj tytuł lub treść artykułu ..."
+searchIn = "Szukaj w {{ . }}"
+gotoResultsPage = "Przejdź do strony wyników wyszukiwania ..."
+clear = "Pusty"
+cancel = "Anuluj"
+noResultsFound = "Nie znaleziono wyników"
+copyToClipboard = "Skopiuj do schowka"
+editLockTitle = "Zablokuj edytowalny blok kodu"
+editUnLockTitle = "Odblokuj edytowalny blok kodu"
+cookieconsentMessage = "Ta strona korzysta z plików Cookies, aby poprawić komfort użytkowania."
+cookieconsentDismiss = "Zgodzić się"
+cookieconsentLink = "Ucz się więcej"
+# === partials/assets.html ===
+
+# === partials/plugin/share.html ===
+[shareOn]
+other = "Udostępnij na"
+# === partials/plugin/share.html ===
+
+# === posts/single.html ===
+[single]
+contents = "Spis treści"
+pin = "Przypnij na górze"
+repost = "Prześlij ponownie"
+publishedOnDate = "opublikowano {{ .Date }}"
+views = "wyświetleń"
+comments = "komentarzy"
+author = "Autor"
+updatedOnDate = "Zaktualizowano {{ .Date }}"
+readMarkdown = "Zobacz Markdown"
+viewSource = "Zobacz źródło"
+editThisPage = "Edytuj tą stronę"
+reportIssue = "Zgłoś problem"
+back = "Wstecz"
+home = "Strona główna"
+readMore = "Czytaj więcej"
+expirationReminder = "Ten artykuł był ostatnio aktualizowany {{ .Date }}, jego treść może być nieaktualna."
+encryptedAbstract = "Ten artykuł został zaszyfrowany, więc jego surowa treść jest niewidoczna!"
+encryptedMessage = "Proszę wprowadzić hasło"
+password = "Hasło"
+enterBtn = "Wejdź"
+encryptyAgain = "Zaszyfruj ponownie"
+relatedContent = "Powiązane treści"
+
+[single.includedIn]
+categories = "zawarty w {{ .Categories }}"
+collections = "zawarty w {{ .Collections }}"
+both = "zawarty w {{ .Categories }} i {{ .Collections }}"
+
+[single.wordCount]
+one = "Jedno słowo"
+other = "{{ .Count }} słów"
+
+[single.fuzzyWordCount]
+other = "Około {{ .Count }} słów"
+
+[single.readingTime]
+one = "Jedna minuta"
+other = "{{ .Count }} minuty"
+
+[single.reward]
+donate = "Wesprzyj"
+wechatpay = "WeChat Pay"
+alipay = "Alipay"
+paypal = "PayPal"
+bitcoin = "Bitcoin"
+# === posts/single.html ===
+
+# === 404.html ===
+[pageNotFound]
+other = "Nie znaleziono strony"
+
+[pageNotFoundText]
+other = "Wybacz, chyba coś namieszaliśmy."
+# === 404.html ===
+
+# === offline ===
+[offlineTitle]
+other = "Offline"
+
+[offlineText]
+other = "Nie masz połączenia z Internetem, dostępne będą tylko strony z pamięci podręcznej."
+# === offline ===
+
+# === GitHub Alert ===
+[alert]
+note = "Notatka"
+tip = "Wskazówka"
+important = "Ważne"
+warning = "Ostrzeżenie"
+caution = "Ostrożność"
+# === GitHub Alert ===
+
+# === Task lists ===
+[taskList]
+" " = "Niezweryfikowane"
+"x" = "Zweryfikowane"
+"/" = "W toku"
+"-" = "Anulowane"
+"<" = "Zaplanowane"
+">" = "Przełożone"
+"!" = "Ważne"
+"?" = "Pytanie"
+# === Task lists ===
+
+# === shortcodes/admonition.html ===
+[admonition]
+note = "Notka"
+abstract = "Streszczenie"
+info = "Info"
+todo = "Do zrobienia"
+tip = "Wskazówka"
+success = "Sukces"
+question = "Pytanie"
+warning = "Ostrzeżenie"
+failure = "Błąd"
+danger = "Niebezpieczeństwo"
+bug = "Problem"
+example = "Przykład"
+quote = "Cytat"
+# === shortcodes/admonition.html ===
+
+# === shortcodes/version.html ===
+[version]
+new = "Dodano"
+changed = "Zmieniono"
+deleted = "Usunięte"
+# === shortcodes/version.html ===

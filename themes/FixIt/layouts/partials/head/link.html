@@ -1,0 +1,87 @@
+{{- $cdn := .Scratch.Get "cdn" | default dict -}}
+{{- $fingerprint := .Scratch.Get "fingerprint" -}}
+{{- $title := printf "%s %s %s" .Title .Site.Params.titleDelimiter .Site.Title -}}
+{{- if .IsHome -}}
+  {{- $title = site.Title -}}
+{{- end -}}
+
+{{- if not .Site.Params.app.noFavicon -}}
+  {{- with .Site.Params.app.svgFavicon -}}
+    <link rel="icon" href="{{ . }}">
+  {{- else -}}
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  {{- end -}}
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  {{- with .Site.Params.app.iconColor -}}
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="{{ . }}">
+  {{- end -}}
+  {{- if eq .Site.Params.enablePWA true -}}
+    <link rel="manifest" href="/site.webmanifest">
+  {{- end -}}
+{{- end -}}
+
+<link rel="canonical" type="text/html" href="{{ .Permalink }}" title="{{ $title }}" />
+{{- with .Prev -}}
+  <link rel="prev" type="text/html" href="{{ .Permalink }}" title="{{ .Title }}" />
+{{- end -}}
+{{- with .Next -}}
+  <link rel="next" type="text/html" href="{{ .Permalink }}" title="{{ .Title }}" />
+{{- end -}}
+{{- range .AlternativeOutputFormats -}}
+  {{- printf `<link rel=%q type=%q href=%q title=%q>` .Rel .MediaType.Type .Permalink $title | safeHTML -}}
+{{- end -}}
+{{- /* Compatible with https://github.com/hugo-fixit/hugo-json-feed */ -}}
+{{- with .OutputFormats.Get "jsonfeed" -}}
+  <link rel="alternate" type="application/feed+json" href="{{ .Permalink }}" title="{{ $title }}" />
+{{- end -}}
+
+{{- /* Mastodon Validation for the site */ -}}
+{{- with .Site.Params.social.Mastodon -}}
+  {{- $mastodonConfig := . -}}
+  {{- $id := "" -}}
+  {{- $prefix := "https://mastodon.social/" -}}
+
+  {{- /* Check if Mastodon is a string */ -}}
+  {{- if printf "%T" $mastodonConfig | eq "string" -}}
+    {{- $id = strings.TrimPrefix "@" $mastodonConfig -}}
+
+  {{- /* Check if Mastodon is a map/object */ -}}
+  {{- else if printf "%T" $mastodonConfig | eq "map[string]interface {}" -}}
+    {{- $id = .Id | default .id | default "" | strings.TrimPrefix "@" -}}
+    {{- $prefix = .Prefix | default .prefix | default $prefix -}}
+  
+  {{- /* If it's neither a string nor a map, do nothing */ -}}
+  {{- else -}}
+    {{- errorf "Invalid Mastodon configuration: %#v" $mastodonConfig -}}
+  {{- end -}}
+
+  {{- /* Remove trailing slash from prefix */ -}}
+  {{- $prefix = strings.TrimSuffix "/" $prefix -}}
+
+  {{- /* Construct profile URL */ -}}
+  {{- $profileUrl := printf "%s/@%s" $prefix $id -}}
+
+  {{- /* Only proceed if we have a valid ID */ -}}
+  {{- if $id -}}
+    <link rel="me" href="{{ $profileUrl }}" />
+    <meta name="fediverse:creator" content="{{ $id }}@{{ (urls.Parse $prefix).Host }}" />
+  {{- end -}}
+{{- end -}}
+
+{{- /* style.min.css */ -}}
+{{- $options := dict "Source" "css/style.scss" "Fingerprint" $fingerprint -}}
+{{- $toCSS := dict "targetPath" "css/style.min.css" "enableSourceMap" true -}}
+{{- $options = dict "Context" . "ToCSS" $toCSS | merge $options -}}
+{{- partial "plugin/style.html" $options -}}
+
+{{- /* Font Awesome */ -}}
+{{- $source := $cdn.fontawesomeFreeCSS | default "lib/fontawesome-free/all.min.css" -}}
+{{- $options := dict "Source" $source "Fingerprint" $fingerprint "Preload" true -}}
+{{- partial "plugin/style.html" $options -}}
+
+{{- /* Animate.css */ -}}
+{{- $source := $cdn.animateCSS | default "lib/animate/animate.min.css" -}}
+{{- $options := dict "Source" $source "Fingerprint" $fingerprint "Preload" true -}}
+{{- partial "plugin/style.html" $options -}}
