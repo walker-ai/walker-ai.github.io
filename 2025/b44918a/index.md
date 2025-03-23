@@ -1,4 +1,4 @@
-# RandX
+# 构造 RandX()
 
 
 由 `randA()` 实现 `randB()`：[万能构造法](https://leetcode.cn/problems/implement-rand10-using-rand7/solutions/979495/mo-neng-gou-zao-fa-du-li-sui-ji-shi-jian-9xpz/)
