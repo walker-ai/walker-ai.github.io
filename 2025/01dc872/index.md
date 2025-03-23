@@ -22,9 +22,6 @@ C&#43;&#43; 中，内存分布分为五块区域，分别是：==栈；堆；全
 
 &gt; [!NOTE] 这里我觉得这种虚拟地址空间划分方式粒度太粗，不足以说明具体情况
 
-
-
-
 ### 智能指针
 
 智能指针分为三类：`shared_ptr`，`unique_ptr`，`weak_ptr`（c98还引入了 `auto_ptr`，但已在 c&#43;&#43;11中被废弃）
@@ -87,7 +84,7 @@ void process() {
 ```cpp
 auto w = std::make_shared&lt;Widget&gt;();
 auto w2 = w;
-cout &lt;&lt; w.use_count() &lt;&lt; endl;  // g&#43;&#43; -std=c&#43;&#43;11 main main.cc  output-&gt;2 
+cout &lt;&lt; w.use_count() &lt;&lt; endl;  // g&#43;&#43; -std=c&#43;&#43;11 main main.cc  output-&gt;2
 ```
 
 同时，`shared_ptr `也支持移动。从语义上来看，移动指的是所有权的传递。如下：
@@ -104,7 +101,7 @@ auto w2 = std::move(w); // 此时 w 等于 nullptr，w2.use_count() 等于 1
 
 使用场景：通常用于指定，有可能多个对象同时管理一个内存的时候。
 
-#### `weak_ptr` 
+#### `weak_ptr`
 
 `weak_ptr` 是为了解决 `shared_ptr` 双向引用的问题。即：
 
@@ -266,12 +263,13 @@ private:
     }
 
     // 禁用拷贝构造
-    unique_ptr(const unique_ptr &amp;) = delete; 
+    unique_ptr(const unique_ptr &amp;) = delete;
 
     // 禁用拷贝赋值
     unique_ptr&amp; operator = (const unique_ptr &amp;) = delete;
 };
 ```
+
 
 ---
 

@@ -125,7 +125,7 @@
 &lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="line">&lt;span class="cl">&lt;span class="k">auto&lt;/span> &lt;span class="n">w&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">std&lt;/span>&lt;span class="o">::&lt;/span>&lt;span class="n">make_shared&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">Widget&lt;/span>&lt;span class="o">&amp;gt;&lt;/span>&lt;span class="p">();&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">auto&lt;/span> &lt;span class="n">w2&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">w&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">w&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">use_count&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">endl&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="c1">// g++ -std=c++11 main main.cc output-&amp;gt;2 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">cout&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">w&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">use_count&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="n">endl&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="c1">// g++ -std=c++11 main main.cc output-&amp;gt;2
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>同时，&lt;code>shared_ptr &lt;/code>也支持移动。从语义上来看，移动指的是所有权的传递。如下：&lt;/p>
@@ -451,7 +451,7 @@
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// 禁用拷贝构造
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="n">unique_ptr&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">const&lt;/span> &lt;span class="n">unique_ptr&lt;/span> &lt;span class="o">&amp;amp;&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">delete&lt;/span>&lt;span class="p">;&lt;/span> 
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="n">unique_ptr&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="k">const&lt;/span> &lt;span class="n">unique_ptr&lt;/span> &lt;span class="o">&amp;amp;&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">delete&lt;/span>&lt;span class="p">;&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">// 禁用拷贝赋值
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="n">unique_ptr&lt;/span>&lt;span class="o">&amp;amp;&lt;/span> &lt;span class="k">operator&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="k">const&lt;/span> &lt;span class="n">unique_ptr&lt;/span> &lt;span class="o">&amp;amp;&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">delete&lt;/span>&lt;span class="p">;&lt;/span>
@@ -1132,4 +1132,11 @@ $$[0, 4] + 1 \rightarrow [1, 5]$$&lt;/p>
  &lt;a href="#content-%e7%9b%ae%e5%bd%95%e4%bd%8d%e7%bd%ae" class="heading-mark">
  &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
  &lt;/a>
-&lt;/h2>&lt;p>移动到左边：https://blog.csdn.net/Xuyiming564445/article/details/122011603&lt;/p></description></item></channel></rss>
+&lt;/h2>&lt;p>移动到左边：https://blog.csdn.net/Xuyiming564445/article/details/122011603&lt;/p>
+&lt;h2 id="评论系统" class="heading-element">&lt;span>评论系统&lt;/span>
+ &lt;a href="#%e8%af%84%e8%ae%ba%e7%b3%bb%e7%bb%9f" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h2>&lt;p>使用 giscus，将 repo 的discussion 模块用于评论。详情见：&lt;/p>
+&lt;p>&lt;a href="http://www.icharm.me/hugo-loveit-using/index.zh_cn.html"target="_blank" rel="external nofollow noopener noreferrer">http://www.icharm.me/hugo-loveit-using/index.zh_cn.html&lt;/a>&lt;/p>
+&lt;p>&lt;a href="https://giscus.app/zh-CN"target="_blank" rel="external nofollow noopener noreferrer">https://giscus.app/zh-CN&lt;/a>&lt;/p></description></item></channel></rss>

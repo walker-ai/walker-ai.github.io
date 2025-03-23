@@ -17,6 +17,15 @@ https://github.com/shuzang/shuzang.github.io
 
 移动到左边：https://blog.csdn.net/Xuyiming564445/article/details/122011603
 
+## 评论系统
+
+使用 giscus，将 repo 的discussion 模块用于评论。详情见：
+
+http://www.icharm.me/hugo-loveit-using/index.zh_cn.html
+
+https://giscus.app/zh-CN
+
+
 ---
 
 > 作者:   
