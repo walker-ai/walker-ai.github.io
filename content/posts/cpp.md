@@ -1,0 +1,298 @@
+---
+title: Cpp
+subtitle:
+date: 2025-03-23T01:21:29+08:00
+slug: b97727d
+categories: [八股]
+tags: [C++]
+---
+
+C++多态的实现方法及原理
+
+<!--more-->
+
+
+
+
+
+## 虚函数
+> https://zhuanlan.zhihu.com/p/54145222
+
+> https://zhuanlan.zhihu.com/p/629281871
+
+### 概念解释
+
+用一个例子理解虚函数的作用：
+```cpp
+Animal* catAnimal = &cat
+Animal& dogAnimal = dog;
+
+catAnimal->speak()
+dogAnimal.speak()
+
+// 调用的还是基类 Animal 本身的方法
+
+// 为什么要用基类指针或引用来完成？基类能够动态确定其实际所指向的派生类对象，并调用合适版本的方法，
+// 那么一个函数就可以解决上面的问题
+
+// 用虚函数来完成上述功能
+
+class Animal {
+public:
+    // ... //
+    virtual string speak() const {
+        return "???";
+    }
+}
+
+class Cat {
+public:
+    // ... //
+    virtual string speak() const {
+        return "Meow";
+    }
+}
+
+class Dog {
+public:
+    // ... //
+    virtual string speak() const {
+        return "Woof";
+    }
+}
+```
+
+Animal 类被 Cat 和 Dog类继承并覆盖了 `speak` 函数以实现==不同==的行为。当使用 Animal的指针或引用来调用 `speak` 函数时，会根据==运行时==的对象类型来==动态==地决定调用哪个子类的函数，从而实现多态性。
+
+### 实现原理
+
+C++ 中，虚函数的实现原理基于两个概念：**虚函数表**和**虚函数指针**。
+
+#### 虚函数表
+每个包含虚函数的类，都会生成一个虚函数表（Virtual Table），存储着该类中所有的虚函数的地址。虚函数表是一个**由指针构成的数组**，每个指针指向一个虚函数的实现代码。
+
+#### 虚函数指针
+在对象内存布局中，编译器会添加一个额外的指针，称为虚函数指针或虚表指针（Virtual Table Pointer，a.k.a VTable指针）。这个指针指向该对象对应的虚函数表，从而让程序能够动态地调用正确的虚函数。
+> [!TIP] 虚函数指针可以类比操作系统中，虚拟内存映射中的==页表基址==，存储在页表基址寄存器（xv6 是 satp 寄存器）中，有了页表基址，就可以找到一级页表，从而找到二级页表，进而找到物理地址。
+
+1. 当一个基类指针或引用调用虚函数时，编译器会使用虚表指针来查找该对象对应的虚函数表，并根据函数在虚函数表中的位置来调用正确的虚函数。但同时由于虚函数表的存在，导致需要==额外的存储空间==来存储虚函数表及其指针，导致 C++ 在调用虚函数时比其他语言成本要高。
+
+2. 虚函数指针是实现多级继承的关键，在多级继承中，**每个子类都需要维护自己的虚函数表及其虚函数指针**
+
+#### 虚函数的调用过程
+
+1. 在编译期间，编译器会根据函数调用的类型和对象的类型确定要调用的函数。
+2. 在运行期间，程序会根据对象的实际类型来决定调用哪个函数。这个过程叫做动态绑定或者后期绑定。
+3. 程序通过虚函数表（vtable）来实现动态绑定。每个含有虚函数的类都有自己的虚函数表，存储了指向实际函数地址的指针。在对象被创建时，它的指针会指向所属类的虚函数表。
+4. 当调用虚函数时，在对象中存储的指针会被解引用，获取到虚函数表的地址。然后根据函数调用的类型，从虚函数表中获取相应的函数地址。
+5. 最后，程序跳转到函数地址处执行实际的代码。由于是动态绑定，所以调用的函数是根据对象实际类型来决定的。
+
+### 虚函数的使用
+
+在 C++ 中，派生类可以重写 (override) 它继承的虚函数，这被称为函数的覆盖 (overriding)。当然，子类也可以选择不重写基类的虚函数，那么它将默认继承基类的实现，这就是虚函数的重载 (overloading)。
+
+```cpp
+class Base {
+public:
+    virtual void foo() {
+        std::cout << "Base::foo()" << std::endl;
+    }
+};
+
+class Derived : public Base {
+public:
+    void foo() {
+        std::cout << "Derived::foo()" << std::endl;
+    }
+};
+
+int main() {
+    Derived obj;
+    Base* ptr = &obj;
+    ptr->foo(); // 输出：Derived::foo()
+    return 0;
+}
+```
+
+可以看到，不论是基类版本还是派生类版本，我们都在函数前面使用了 `virtual` 关键字，事实上，派生类中的 `virtual` 关键字并不是必要的。一旦基类中的方法打上了 `virtual` 标签，那么派生类中匹配的函数也是虚函数。但是，还是建议在后面的派生类中加上 `virtual` 关键字，作为虚函数的一种提醒，以便后面可能还会有更远的派生。
+
+> [!TIP] 子类中重写虚函数时，访问权限不能更严格（即不能由 public 变为 private 或 protected），否则编译器会报错；
+<!-- > [!NOTE] 注意这里的==重写==和==覆盖==的区别 -->
+
+虚函数的覆盖实际上是通过指定 `override` 关键字显示声明来实现的。例如：
+```cpp
+class Base {
+public:
+    virtual void foo() {
+        std::cout << "Base::foo()" << std::endl;
+    }
+};
+
+class Derived : public Base {
+public:
+    void foo() override {
+        std::cout << "Derived::foo()" << std::endl;
+    }
+};
+
+int main() {
+    Derived obj;
+    Base* ptr = &obj;
+    ptr->foo(); // 输出：Derived::foo()
+    return 0;
+}
+```
+
+进一步地，一般来说派生类需要重写基类的方法，以便于用基类指针动态调用不同派生类的成员方法，但是一旦函数签名不同，就会导致重写失败。为了避免可能发生的小错误导致重写失败无法调用派生类的成员方法，需要在派生类的成员方法后添加 `override`：
+
+```cpp
+class Super {
+public:
+    virtual string getName1(int x) {
+        return "Super";
+    }
+    
+    virtual string getName2(int x) {
+        return "Super";
+    }
+};
+
+class Sub: public Super{
+public:
+    virtual string getName1(double x) override {
+        return "Sub";
+    }
+    
+    virtual string getName2(int x) const override {
+        return "Sub";
+    }// 此时无法编译
+};
+```
+
+
+
+## 纯虚函数
+
+**纯虚函数是指在基类中定义的，没有实现的虚函数**。这里的 "=0" 表示该函数为虚函数。
+
+```cpp
+virtual void func() = 0;
+```
+
+- 纯虚函数的作用是让子类必须实现该函数，并且不能直接创建该类的对象（即该类为抽象类）。
+- 抽象类是包含纯虚函数的类，它们不能被实例化，只能被继承。
+- 抽象类只能用作其他类的基类。如果一个类继承了抽象类，则必须实现所有的纯虚函数，否则该类也会成为抽象类。
+
+示例代码：
+
+```cpp
+class Shape{
+public:
+    // 纯虚函数
+    virtual double getArea() = 0;
+};
+
+// 继承自抽象类Shape
+class Rectangle: public Shape {
+public:
+    double width;
+    double height;
+    double getArea() {return width * height;}
+};
+
+// 继承自抽象类Shape
+class Circle: public Shape {
+public:
+    double radius;
+    double getArea() {return 3.14*radius*radius;}
+};
+```
+
+## 动态绑定与静态绑定
+
+通过以上描述，我们可以得知虚函数可以用来进行动态绑定（区分于静态绑定）。
+
+```cpp
+// 静态绑定示例
+class Shape {
+public:
+    void draw() { cout << "Drawing a shape." << endl; }
+};
+
+class Circle : public Shape {
+public:
+    void draw() { cout << "Drawing a circle." << endl; }
+};
+
+int main() {
+    Shape* shapeObj = new Circle();
+    shapeObj->draw(); // 编译时期确定方法调用，输出 "Drawing a shape."
+}
+
+// 动态绑定示例
+class Shape {
+public:
+    virtual void draw() { cout << "Drawing a shape." << endl; }
+};
+
+class Circle : public Shape {
+public:
+    void draw() { cout << "Drawing a circle." << endl; }
+};
+
+int main() {
+    Shape* shapeObj = new Circle();
+    shapeObj->draw(); // 运行时期确定方法调用，输出 "Drawing a circle."
+}
+```
+
+## 静态多态与动态多态
+
+静态多态（也称为编译时多态）是指在编译时就能够确定函数或方法的调用对象，即函数或方法的重载。在静态多态中，函数或方法的重载是通过参数类型、参数数量或参数顺序来区分的。
+
+```cpp
+int add(int a, int b){
+    return a + b;
+}
+
+double add(double a, double b){
+    return a + b;
+}
+```
+
+当调用 `add()` 方法时，编译器会根据传递给方法的参数类型来决定使用哪个重载版本。
+
+动态多态（也称为运行时多态）是指在程序运行时才能确定函数或方法的调用对象，即虚函数或抽象类。在动态多态中，函数或方法的重载是通过继承和多态来实现的。见上面的虚函数代码样例。
+
+
+## 一些常见问题
+
+### 虚析构函数
+
+我们知道析构函数存在的必要性之一就是，如果类内有指针类型变量，需要在析构函数中进行手动释放（`delete ptr`）。但是如果用基类指针指向子类对象，当子类实例被删除时，只会调用基类的析构函数，而不会调用子类的析构函数，从而使得子类中动态分配的内存无法被释放造成内存泄漏。这个时候需要使用**虚析构函数来释放内存**。
+
+### 虚函数的性能影响
+
+根据上面所述，使用虚函数能够达到动态绑定的目的，这同时会增加一些开销，降低执行效率。但是现代编译器能够将开销优化至可以忽略不计。
+
+### 多重继承中的虚函数
+
+```cpp
+class Base1 {
+public:
+    virtual void func() { cout << "Base1::func()" << endl; }
+};
+
+class Base2 {
+public:
+    virtual void func() { cout << "Base2::func()" << endl; }
+};
+
+class Derived : public Base1, public Base2 {
+public:
+    virtual void func() { Base1::func(); Base2::func(); }
+};
+```
+
+一个类同时继承多个基类，并且这些基类中有多个同名虚函数，那么子类中必须对这些虚函数进行重写。
+> [!TIP]我理解是，如果是单继承，那么可以重写也可以不重写，不重写相当于就是继承基类的实现；而多继承中为了避免未知的错误，必须对每个基类虚函数进行重写。
