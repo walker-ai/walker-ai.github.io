@@ -499,10 +499,10 @@ enableEmoji = true
       # FixIt 0.2.18 | NEW display mode of QR code images, optional values: ["static", "fixed"], default: `static`
       mode = "static"
       [params.page.reward.ways]
-        wechatpay = "https://picped-1301226557.cos.ap-beijing.myqcloud.com/wechatpay.png"
-        alipay = "https://picped-1301226557.cos.ap-beijing.myqcloud.com/alipay.png"
-        # wechatpay = "/images/wechatpay.png"
-        # alipay = "/images/alipay.png"
+        wechatpay = "https://github.com/user-attachments/assets/2025a301-dc12-4b1b-b666-0c73c80c0857"
+        alipay = "https://github.com/user-attachments/assets/e3240f4f-18df-4633-8dfe-1b305fa324e2"
+        # wechatpay = "images/wechatpay.png"
+        # alipay = "images/alipay.png"
         # paypal = "/images/paypal.png"
         # bitcoin = "/images/bitcoin.png"
     # FixIt 0.2.0 | CHANGED social share links in post page

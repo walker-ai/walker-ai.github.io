@@ -1,5 +1,5 @@
 ---
-title: RandX
+title: 构造 RandX()
 date: 2025-03-22T23:15:08+08:00
 tags: [构造]
 categories: [算法] 
