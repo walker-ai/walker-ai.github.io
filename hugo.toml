@@ -537,7 +537,7 @@ enableEmoji = true
       Mix = false
     # FixIt 0.2.15 | CHANGED Comment config
     [params.page.comment]
-      enable = false
+      enable = true
       # FixIt 0.2.13 | NEW Artalk comment config (https://artalk.js.org/)
       [params.page.comment.artalk]
         enable = false
@@ -658,17 +658,17 @@ enableEmoji = true
         katex = false
       # FixIt 0.2.14 | NEW Giscus comments config
       [params.page.comment.giscus]
-        enable = false
-        repo = ""
-        repoId = ""
-        category = ""
-        categoryId = ""
-        mapping = ""
+        enable = true
+        repo = "walker-ai/walker-ai.github.io"
+        repoId = "R_kgDOOM9c8w"
+        category = "Announcements"
+        categoryId = "DIC_kwDOOM9c884CoX_P"
+        mapping = "pathname"
         strict = "0" # FixIt NEW | 0.2.18
         term = ""
         reactionsEnabled = "1"
         emitMetadata = "0"
-        inputPosition = "bottom" # ["top", "bottom"]
+        inputPosition = "top" # ["top", "bottom"]
         lightTheme = "light"
         darkTheme = "dark"
         lazyLoad = true
@@ -834,7 +834,7 @@ enableEmoji = true
     light = ""
     dark = ""
     height = "2px"
-  
+
   # FixIt 0.2.17 | NEW Progress bar in the top during page loading.
   # For more information: https://github.com/CodeByZach/pace
   [params.pace]
@@ -846,7 +846,7 @@ enableEmoji = true
     # ["barber-shop", "big-counter", "bounce", "center-atom", "center-circle", "center-radar", "center-simple",
     # "corner-indicator", "fill-left", "flash", "flat-top", "loading-bar", "mac-osx", "material", "minimal"]
     theme = "minimal"
-  
+
   # FixIt 0.2.17 | NEW Define custom file paths
   # Create your custom files in site directory `layouts/partials/custom` and uncomment needed files below
   [params.customFilePath]
