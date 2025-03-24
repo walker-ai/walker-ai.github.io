@@ -182,7 +182,8 @@ int main() {
 
 ```cpp
 void f() {
-    std::cout &lt;&lt; std::this_thread::get_id() &lt;&lt; &#39;\n&#39;;
+    // this_thread::get_id() 表示获取当前线程的唯一标识符，以便在多线程程序中区分不同的线程。
+    std::cout &lt;&lt; std::this_thread::get_id() &lt;&lt; &#39;\n&#39;;  
 }
 
 int main() {
@@ -473,7 +474,7 @@ void swap(X&amp; lhs, X&amp; rhs) {
 
 ## 读写锁
 
-如果需要多线程读取写（多线程读不存在数据竞争；而写和读共存时存在竞争），使用 `std::mutex` 开销较大。这时可以用专门的读写锁，即 `std::shared_timed_mutex` (C&#43;&#43;14)，`std::shared_mutex` (C&#43;&#43;17)。示例代码：
+如果需要多线程读取写（多线程读不存在数据竞争；而写和读共存时存在竞争），使用 `std::mutex` 开销较大。这时可以用专门的读写锁，即 `std::shared_timed_mutex` (C&#43;&#43; 14)，`std::shared_mutex` (C&#43;&#43; 17)。示例代码：
 
 ```cpp
 class Settings {
