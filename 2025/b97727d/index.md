@@ -145,7 +145,7 @@ public:
     virtual string getName1(int x) {
         return &#34;Super&#34;;
     }
-    
+
     virtual string getName2(int x) {
         return &#34;Super&#34;;
     }
@@ -156,7 +156,7 @@ public:
     virtual string getName1(double x) override {
         return &#34;Sub&#34;;
     }
-    
+
     virtual string getName2(int x) const override {
         return &#34;Sub&#34;;
     }// 此时无法编译
@@ -291,8 +291,9 @@ public:
 一个类同时继承多个基类，并且这些基类中有多个同名虚函数，那么子类中必须对这些虚函数进行重写。
 &gt; [!TIP]我理解是，如果是单继承，那么可以重写也可以不重写，不重写相当于就是继承基类的实现；而多继承中为了避免未知的错误，必须对每个基类虚函数进行重写。
 
+
 ---
 
-> 作者:   
+> 作者: yitao  
 > URL: https://yitaonote.com/2025/b97727d/  
 
