@@ -274,5 +274,5 @@ private:
 ---
 
 > 作者:   
-> URL: https://walker-ai.github.io/2025/01dc872/  
+> URL: https://yitaonote.com/2025/01dc872/  
 

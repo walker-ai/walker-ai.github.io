@@ -110,5 +110,5 @@ int rand10() {
 ---
 
 > 作者:   
-> URL: https://walker-ai.github.io/2025/b44918a/  
+> URL: https://yitaonote.com/2025/b44918a/  
 

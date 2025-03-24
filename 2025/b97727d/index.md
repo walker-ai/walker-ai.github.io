@@ -294,5 +294,5 @@ public:
 ---
 
 > 作者:   
-> URL: https://walker-ai.github.io/2025/b97727d/  
+> URL: https://yitaonote.com/2025/b97727d/  
 

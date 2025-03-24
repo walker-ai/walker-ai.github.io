@@ -499,5 +499,5 @@ public:
 ---
 
 > 作者:   
-> URL: https://walker-ai.github.io/2025/acc27a1/  
+> URL: https://yitaonote.com/2025/acc27a1/  
 

@@ -29,5 +29,5 @@ https://giscus.app/zh-CN
 ---
 
 > 作者:   
-> URL: https://walker-ai.github.io/2025/b487c0a/  
+> URL: https://yitaonote.com/2025/b487c0a/  
 

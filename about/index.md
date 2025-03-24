@@ -8,5 +8,5 @@ MLSys 入门小菜鸡
 ---
 
 > 作者:   
-> URL: https://walker-ai.github.io/about/  
+> URL: https://yitaonote.com/about/  
 
