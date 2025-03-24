@@ -2,8 +2,10 @@
 title: 构造 RandX()
 date: 2025-03-22T23:15:08+08:00
 tags: [构造]
-categories: [算法] 
+categories: [算法]
 slug: b44918a
+author:
+  name: "yitao"
 
 
 # See details front matter: https://fixit.lruihao.cn/documentation/content-management/introduction/#front-matter
@@ -19,7 +21,7 @@ slug: b44918a
 
 ## 确定采样参数
 
-- 步骤 1：选择一个合适的数 n 
+- 步骤 1：选择一个合适的数 n
 
 我们选择 `n = 30`，因为它大于或等于 10，并且它的最大质因子是 5，不超过 7。
 
