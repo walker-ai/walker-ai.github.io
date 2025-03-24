@@ -5,7 +5,13 @@
 
 &lt;!--more--&gt;
 
-&gt; 原子操作待补充
+## 原子操作
+
+这里只简单介绍 `std::atomic&lt;bool&gt;`（包含在 `&lt;atomic&gt;` 中），最基本的整数原子类型。虽然同样不可复制不可移动，但可以使用非原子的 `bool` 类型进行构造，初始化为 `true` 或 `false`，并且能从非原子的 `bool` 对象赋值给 `std::atomic&lt;bool&gt;`：
+```cpp
+std::atomic&lt;bool&gt; b{ true };
+b = false;
+```
 
 ## 线程池
 
