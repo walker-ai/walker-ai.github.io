@@ -465,7 +465,7 @@ enableEmoji = true
       # FixIt 0.2.13 | NEW whether to show the edit button of the code block
       edit = false
       # the maximum number of lines of displayed code by default
-      maxShownLines = 40
+      maxShownLines = 100
     # FixIt 0.2.14 | NEW Post edit
     [params.page.edit]
       enable = false
