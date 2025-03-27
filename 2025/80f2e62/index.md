@@ -104,6 +104,14 @@ inline std::size_t default_thread_pool_size()noexcept {
 }
 
 class ThreadPool {
+private:
+    std::mutex                mutex_;
+    std::condition_variable   cv_;
+    std::atomic&lt;bool&gt;         stop_;
+    std::atomic&lt;std::size_t&gt;  num_threads_;
+    std::queue&lt;Task&gt;          tasks_;
+    std::vector&lt;std::thread&gt;  pool_;
+
 public:
     using Task = std::packaged_task&lt;void()&gt;;
 
@@ -167,14 +175,6 @@ public:
             });
         }
     }
-
-private:
-    std::mutex                mutex_;
-    std::condition_variable   cv_;
-    std::atomic&lt;bool&gt;         stop_;
-    std::atomic&lt;std::size_t&gt;  num_threads_;
-    std::queue&lt;Task&gt;          tasks_;
-    std::vector&lt;std::thread&gt;  pool_;
 };
 ```
 
