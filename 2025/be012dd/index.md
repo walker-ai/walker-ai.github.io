@@ -461,7 +461,7 @@ public:
 
 &gt; 给定 `n` 个非负整数表示每个宽度为 `1` 的柱子的高度图，计算按此排列的柱子，下雨之后能接多少雨水。
 
-![123](https://tvax4.sinaimg.cn/large/005wRZF3ly1i428m5hjijj30bg04hmx7.jpg)
+![123](https://cdn.ipfsscan.io/weibo/large/005wRZF3ly1i428m5hjijj30bg04hmx7.jpg)
 
 ```cpp
 class Solution {
@@ -488,6 +488,72 @@ public:
 };
 ```
 
+### 13.罗马数字转整数
+
+&gt;给你一个罗马数字，将其转换为整数
+
+```cpp
+unordered_map&lt;char, int&gt; ROMAN = {
+    {&#39;I&#39;, 1},
+    {&#39;V&#39;, 5},
+    {&#39;X&#39;, 10},
+    {&#39;L&#39;, 50},
+    {&#39;C&#39;, 100},
+    {&#39;D&#39;, 500},
+    {&#39;M&#39;, 1000},
+};
+
+class Solution {
+public:
+    int romanToInt(string s) {
+        int ans = 0;
+        for (int i = 0; i &#43; 1 &lt; s.size(); i &#43;&#43; ) {
+            int x = ROMAN[s[i]], y = ROMAN[s[i &#43; 1]];
+            ans &#43;= x &lt; y ? -x : x;
+        }
+        return ans &#43; ROMAN[s.back()];
+    }
+};
+```
+
+### 12.整数转罗马数字
+
+&gt;给你一个整数，将其转为罗马数字
+
+```cpp
+class Solution {
+    static constexpr string R[4][10] = {
+        {&#34;&#34;, &#34;I&#34;, &#34;II&#34;, &#34;III&#34;, &#34;IV&#34;, &#34;V&#34;, &#34;VI&#34;, &#34;VII&#34;, &#34;VIII&#34;, &#34;IX&#34;}, // 个位
+        {&#34;&#34;, &#34;X&#34;, &#34;XX&#34;, &#34;XXX&#34;, &#34;XL&#34;, &#34;L&#34;, &#34;LX&#34;, &#34;LXX&#34;, &#34;LXXX&#34;, &#34;XC&#34;}, // 十位
+        {&#34;&#34;, &#34;C&#34;, &#34;CC&#34;, &#34;CCC&#34;, &#34;CD&#34;, &#34;D&#34;, &#34;DC&#34;, &#34;DCC&#34;, &#34;DCCC&#34;, &#34;CM&#34;}, // 百位
+        {&#34;&#34;, &#34;M&#34;, &#34;MM&#34;, &#34;MMM&#34;}, // 千位
+    };
+
+public:
+    string intToRoman(int num) {
+        return R[3][num / 1000] &#43; R[2][num / 100 % 10] &#43; R[1][num / 10 % 10] &#43; R[0][num % 10];
+    }
+};
+```
+
+### 58.最后一个单词的长度
+
+&gt;给你一个字符串 s，由若干单词组成，单词前后用一些空格字符隔开。返回字符串中 最后一个 单词的长度。
+单词 是指仅由字母组成、不包含任何空格字符的最大子字符串。
+
+```cpp
+class Solution {
+public:
+    int lengthOfLastWord(string s) {
+        int i = s.length() - 1;
+        while (s[i] == &#39; &#39; &amp;&amp; i &gt; 0) i -- ;
+        int j = i - 1;
+        while (j &gt;= 0 &amp;&amp; s[j] != &#39; &#39;) j -- ;
+        return i - j;
+    }
+};
+```
+
 ### 14.最长公共前缀
 
 &gt; 编写一个函数来查找字符串数组中的最长公共前缀。&lt;br&gt;
@@ -510,14 +576,6 @@ public:
 };
 ```
 
-
-
-
-
-
-
-
-
 ### 151.反转字符串中的单词
 
 &gt; 给你一个字符串 `s` ，请你反转字符串中 单词 的顺序。&lt;br&gt;
@@ -525,41 +583,25 @@ public:
 &gt; 返回 单词 顺序颠倒且 单词 之间用单个空格连接的结果字符串。&lt;br&gt;
 &gt; 注意：输入字符串 `s` 中可能会存在前导空格、尾随空格或者单词间的多个空格。返回的结果字符串中，单词间应当仅用单个空格分隔，且不包含任何额外的空格。
 
-```cpp
+```java
 class Solution {
-public:
-    string reverseWords(string s) {
-        vector&lt;string&gt; res;
-        int n = s.size();
-
-        // 分割 &#43; 倒序，处理前导后缀空格
-        string word = &#34;&#34;;
-        for (int i = 0; i &lt; n; i &#43;&#43; ) {
-            if (s[i] != &#39; &#39;) {
-                word &#43;= s[i];
-                if (i == n - 1) res.push_back(word);   
-            } else if (word.size() &gt; 0) {  // 处理前导空格
-                res.push_back(word);
-                word = &#34;&#34;;
-            }
+    public String reverseWords(String s) {
+        s = s.trim();                                    // 删除首尾空格
+        int j = s.length() - 1, i = j;
+        StringBuilder res = new StringBuilder();
+        while (i &gt;= 0) {
+            while (i &gt;= 0 &amp;&amp; s.charAt(i) != &#39; &#39;) i--;     // 搜索首个空格
+            res.append(s.substring(i &#43; 1, j &#43; 1) &#43; &#34; &#34;); // 添加单词
+            while (i &gt;= 0 &amp;&amp; s.charAt(i) == &#39; &#39;) i--;     // 跳过单词间空格
+            j = i;                                       // j 指向下个单词的尾字符
         }
-
-        reverse(res.begin(), res.end());
-        string ans;
-        for (int i = 0; i &lt; res.size() - 1; i &#43;&#43; ) {
-            if (res[i].size() == 0) continue;  // 处理后缀空格
-            ans &#43;= res[i];
-            ans &#43;= &#34; &#34;;
-        }
-        if (res.back().size() != 0) ans &#43;= res.back();
-        return ans;
+        return res.toString().trim();                    // 转化为字符串并返回
     }
-};
+}
 ```
 
 ### 28.找出字符串中第一个匹配项的下标
 
-&gt; [🔗](https://leetcode.cn/problems/find-the-index-of-the-first-occurrence-in-a-string/description/?envType=study-plan-v2&amp;envId=top-interview-150)
 &gt; 给你两个字符串 `haystack` 和 `needle` ，请你在 `haystack` 字符串中找出 `needle` 字符串的第一个匹配项的下标（下标从 `0` 开始）。如果 `needle` 不是 `haystack` 的一部分，则返回  `-1` 。
 
 ```cpp
@@ -587,7 +629,7 @@ public:
 &gt; 返回容器可以储存的最大水量。
 &gt; 说明：你不能倾斜容器。
 
-![123](https://tvax1.sinaimg.cn/large/005wRZF3ly1i428wopgwqj30m90an3yr.jpg)
+![123](https://cdn.ipfsscan.io/weibo/large/005wRZF3ly1i428wopgwqj30m90an3yr.jpg)
 
 
 
@@ -755,7 +797,7 @@ public:
 
 &gt; 给你一个 `m` 行 `n` 列的矩阵 `matrix` ，请按照 顺时针螺旋顺序 ，返回矩阵中的所有元素。
 
-![image](https://tvax2.sinaimg.cn/large/005wRZF3ly1i429ce4gbyj306q06qweh.jpg)
+![image](https://cdn.ipfsscan.io/weibo/large/005wRZF3ly1i429ce4gbyj306q06qweh.jpg)
 
 ```cpp
 class Solution {
@@ -806,7 +848,7 @@ public:
 &gt; 给定一个 `n × n` 的二维矩阵 `matrix` 表示一个图像。请你将图像顺时针旋转 `90` 度。&lt;br&gt;
 &gt; 你必须在 原地 旋转图像，这意味着你需要直接修改输入的二维矩阵。请不要 使用另一个矩阵来旋转图像。
 
-![image](https://tvax1.sinaimg.cn/large/005wRZF3ly1i429d0n6zyj30hu06qaa8.jpg)
+![image](https://cdn.ipfsscan.io/weibo/005wRZF3ly1i429d0n6zyj30hu06qaa8.jpg)
 
 ```cpp
 class Solution {
@@ -867,7 +909,7 @@ public:
 
 &gt; 给你单链表的头指针 `head` 和两个整数 `left` 和 `right` ，其中 `left &lt;= right` 。请你反转从位置 `left` 到位置 `right` 的链表节点，返回 反转后的链表 。
 
-![image](https://tvax3.sinaimg.cn/large/005wRZF3ly1i429nsf7nij30f2066dg3.jpg)
+![image](https://cdn.ipfsscan.io/weibo/005wRZF3ly1i429nsf7nij30f2066dg3.jpg)
 
 ```cpp
 /**
