@@ -3,7 +3,7 @@ title: CUDA 常用算子案例
 subtitle:
 date: 2025-08-07T00:18:46+08:00
 slug: ebaa040
-draft: true
+draft: false
 author:
     name: "yitao"
 emoji: true
