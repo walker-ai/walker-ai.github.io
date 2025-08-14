@@ -514,7 +514,7 @@ public:
 
 &gt; [!TIP] 所以我们期望在多个线程试图读取共享变量的时候，它们可以立刻获取因为读而加的锁，而不是需要等待前一个线程释放。当然，如果一个线程用写锁锁住了临界区，那么其他线程无论是读还是写都会发生阻塞。
 
-![Image](https://github.com/user-attachments/assets/6e5ce148-7456-457b-b1d1-c26f11c82ad5)
+![image](https://cdn.ipfsscan.io/weibo/large/005wRZF3ly1i4dwymyrnkj310g0etk48.jpg)
 
 ```cpp
 #include &lt;iostream&gt;

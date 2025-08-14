@@ -516,18 +516,28 @@ private:
 - ==虚拟内存机制：物理和虚拟地址空间、TLB 页表、内存映射==
 - ==动态内存管理：内存管理、分配方式、内存回收、GC等等==
 
-&gt; [!NOTE]
-&gt; 1. malloc() 分配的是==虚拟内存==
 
 主要通过两种方式：
 
 1. step1：从内存池中分配。若所需要内存 &lt; 128KB，则从内存池中尝试分配。若无，则进行 `brk` 系统调用，从堆上申请内存。
 
-![image](https://tvax2.sinaimg.cn/large/005wRZF3ly1i4dvbpdeq7j30zr0n90xc.jpg)
+![image](https://cdn.ipfsscan.io/weibo/large/005wRZF3ly1i4dvbpdeq7j30zr0n90xc.jpg)
 
 2. step2：若 &gt; 128KB，不看内存池，直接使用 `mmap` 系统调用，从文件映射区（同时还存放动态库）中获得内存。
 
-![image](https://tvax4.sinaimg.cn/large/005wRZF3ly1i4dvbqe053j31150n9q7y.jpg)
+![image](https://cdn.ipfsscan.io/weibo/large/005wRZF3ly1i4dvbqe053j31150n9q7y.jpg)
+
+### malloc() 分配的是物理内存吗？（重点）
+
+不是的，==malloc() 分配的是虚拟内存。==
+
+如果分配后的虚拟内存没有被访问的话，虚拟内存是不会映射到物理内存的，这样就不会占用物理内存了。
+
+只有在访问已分配的虚拟地址空间的时候，操作系统通过查找页表，发现虚拟内存对应的页没有在物理内存中，就会触发缺页中断，然后操作系统会建立虚拟内存和物理内存之间的映射关系。
+
+### malloc(1) 会分配多大的虚拟内存？
+
+malloc() 在分配内存的时候，并不是老老实实按用户预期申请的字节数来分配内存空间大小，而是会预分配更大的空间作为内存池。
 
 ### free 释放内存，会归还给操作系统吗？
 
@@ -550,7 +560,7 @@ private:
 
 如果我们连续申请了 10k，20k，30k 这三片内存，如果 10k 和 20k 这两片释放了，变为了空闲内存空间（不会归还给操作系统），如果下次申请的内存小于 30k，那么就可以重用这个空闲内存空间。
 
-![image](https://tvax4.sinaimg.cn/large/005wRZF3ly1i4dvk3jc99j30mc0j8778.jpg)
+![image](https://cdn.ipfsscan.io/weibo/large/005wRZF3ly1i4dvk3jc99j30mc0j8778.jpg)
 
 但是如果下次申请的内存大于 30k，没有可用的空闲内存空间，必须向 OS 申请，实际使用内存继续增大。
 
@@ -562,7 +572,7 @@ private:
 
 malloc 返回给用户态的内存起始地址比进程的堆空间起始地址多了 16 字节，这样当执行 free() 函数时，free 会对传入进来的内存地址向左偏移 16 字节，然后从这个 16 字节的分析出当前的内存块的大小，自然就知道要释放多大的内存了。
 
-![image](https://tvax1.sinaimg.cn/large/005wRZF3ly1i4dvl5ly61j30en07kmxv.jpg)
+![image](https://cdn.ipfsscan.io/weibo/large/005wRZF3ly1i4dvl5ly61j30en07kmxv.jpg)
 
 
 
