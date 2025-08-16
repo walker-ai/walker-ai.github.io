@@ -12,10 +12,9 @@ author:
 description:
 keywords:
 license:
-comment: false
+comment: true
 weight: 0
 tags:
-  - draft
 categories: [算法]
 hiddenFromHomePage: false
 hiddenFromSearch: false
@@ -33,7 +32,7 @@ lightgallery: false
 password:
 message:
 repost:
-  enable: true
+  enable: false
   url:
 
 # See details front matter: https://fixit.lruihao.cn/documentation/content-management/introduction/#front-matter
