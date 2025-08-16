@@ -44,6 +44,274 @@
 2. 结构体对齐：结构体内部的每个成员都根据其自然对齐边界进行对齐。也就是可能在成员之间插入填充字节。结构体本身的总大小也会根据其最大对齐边界的成员进行对齐（比如结构体成员包含的最长类型为int类型，那么整个结构体要按照4的倍数对齐），以便在数组中正确对齐。
 3. 可以使用编译器指令（如 `#pragma pack`）更改默认的对齐规则。这个命令是全局生效的。这可以用于减小数据结构的大小，但可能会降低访问性能。
 
+### C&#43;&#43;中class和struct区别
+
+C&#43;&#43; 中为了兼容 C 语言而保留了 C 语言的 struct 关键字，并且加以扩充了含义。
+
+在 C 语言中，struct 只能包含成员变量，不能包含成员函数。
+
+而在 C&#43;&#43; 中，struct 类似于 class，既可以包含成员变量，又可以包含成员函数。
+
+#### 不同点
+
+- class 中类中的成员默认都是 private 属性的。
+
+- 而在 struct 中结构体中的成员默认都是 public 属性的。
+
+- class 继承默认是 private 继承，而 struct 继承默认是 public 继承。
+
+- class 可以用于定义模板参数，struct 不能用于定义模板参数。
+
+这样写是正确的：
+
+```cpp
+template &lt;class T&gt;
+struct  Person {
+public:
+    T age;
+};
+```
+
+而这样写是错误的：
+
+```cpp
+template &lt;struct T&gt;
+struct  Person {
+public:
+    T age;
+};
+```
+
+#### 使用习惯
+
+实际使用中，struct 我们通常用来定义一些 POD(plain old data)
+
+在 C&#43;&#43;11 及之后的标准中，POD 类型需要同时满足两个独立条件：
+
+- ​​平凡（Trivial）​​：类型具有默认的构造/拷贝/移动/析构函数（可自动生成且非虚）
+- ​​标准布局（Standard Layout）​​：内存布局与 C 兼容，成员排列顺序符合特定规则
+
+同时满足平凡性和标准布局的类型称为 POD 类型，这类数据可以安全使用 memcpy 等底层内存操作，因为它们的内存布局与 C 完全兼容且没有特殊处理需求。
+
+
+### C&#43;&#43;四种强制类型转换
+
+&gt; [!NOTE] B站一面面试题
+
+#### static_cast
+
+用法：`static_cast&lt;new_type&gt;(expression)`
+
+其实static_cast 和 C 语言 () 做强制类型转换基本是等价的。
+
+主要用于以下场景:
+
+1. 基本类型之间的转换
+
+将一个基本类型转换为另一个基本类型，例如将整数转换为浮点数或将字符转换为整数。
+
+```cpp
+int a = 42;
+double b = static_cast&lt;double&gt;(a); // 将整数a转换为双精度浮点数b
+```
+
+2. 指针类型之间的转换
+
+将一个指针类型转换为另一个指针类型，尤其是在类层次结构中从基类指针转换为派生类指针。这种转换不执行运行时类型检查，可能不安全，要自己保证指针确实可以互相转换。
+
+```cpp
+class Base {};
+class Derived : public Base {};
+
+Base* base_ptr = new Derived();
+Derived* derived_ptr = static_cast&lt;Derived*&gt;(base_ptr); // 将基类指针base_ptr转换为派生类指针derived_ptr
+```
+
+3. 引用类型之间的转换
+
+类似于指针类型之间的转换，可以将一个引用类型转换为另一个引用类型。在这种情况下，也应注意安全性。
+
+```cpp
+Derived derived_obj;
+Base&amp; base_ref = derived_obj;
+Derived&amp; derived_ref = static_cast&lt;Derived&amp;&gt;(base_ref); // 将基类引用base_ref转换为派生类引用derived_ref
+```
+
+static_cast在编译时执行类型转换，在进行指针或引用类型转换时，需要自己保证合法性。
+
+如果想要运行时类型检查，可以使用dynamic_cast进行安全的向下类型转换。
+
+#### dynamic_cast
+
+用法: `dynamic_cast&lt;new_type&gt;(expression)`
+
+dynamic_cast在C&#43;&#43;中主要应用于父子类层次结构中的安全类型转换。它在运行时执行类型检查，因此相比于static_cast，它更加安全。dynamic_cast的主要应用场景：
+
+1. 向下类型转换
+
+当需要将基类指针或引用转换为派生类指针或引用时，dynamic_cast可以确保类型兼容性。
+
+如果转换失败，dynamic_cast将返回空指针（对于指针类型）或抛出异常（对于引用类型）。
+
+```cpp
+class Base { virtual void dummy() {} };
+class Derived : public Base { int a; };
+
+Base* base_ptr = new Derived();
+Derived* derived_ptr = dynamic_cast&lt;Derived*&gt;(base_ptr); // 将基类指针base_ptr转换为派生类指针derived_ptr，如果类型兼容，则成功
+```
+
+2. 用于多态类型检查
+
+处理多态对象时，dynamic_cast可以用来确定对象的实际类型，例如：
+
+```cpp
+class Animal { public: virtual ~Animal() {} };
+class Dog : public Animal { public: void bark() { /* ... */ } };
+class Cat : public Animal { public: void meow() { /* ... */ } };
+
+Animal* animal_ptr = /* ... */;
+
+// 尝试将Animal指针转换为Dog指针
+Dog* dog_ptr = dynamic_cast&lt;Dog*&gt;(animal_ptr);
+if (dog_ptr) {
+    dog_ptr-&gt;bark();
+}
+
+// 尝试将Animal指针转换为Cat指针
+Cat* cat_ptr = dynamic_cast&lt;Cat*&gt;(animal_ptr);
+if (cat_ptr) {
+    cat_ptr-&gt;meow();
+}
+```
+
+另外，要使用dynamic_cast有效，基类至少需要一个虚拟函数。
+
+因为，dynamic_cast只有在基类存在虚函数(虚函数表)的情况下才有可能将基类指针转化为子类。
+
+3. dynamic_cast 底层原理
+
+dynamic_cast的底层原理依赖于运行时类型信息（RTTI, Runtime Type Information）。
+
+C&#43;&#43;编译器在编译时为支持多态的类生成RTTI，它包含了类的类型信息和类层次结构。
+
+我们都知道当使用虚函数时，编译器会为每个类生成一个虚函数表（vtable），并在其中存储指向虚函数的指针。
+
+伴随虚函数表的还有 RTTI(运行时类型信息)，这些辅助的信息可以用来帮助我们运行时识别对象的类型信息。
+
+《深度探索C&#43;&#43;对象模型》中有个例子：
+
+```cpp
+class Point
+{
+public:
+	Point(float xval);
+	virtual ~Point();
+
+	float x() const;
+	static int PointCount();
+
+protected:
+	virtual ostream&amp; print(ostream&amp; os) const;
+
+	float _x;
+	static int _point_count;
+};
+```
+
+
+![image](https://cdn.ipfsscan.io/weibo/large/005wRZF3ly1i4g7emk7ybj30xn0i0ad4.jpg)
+
+首先，每个多态对象都有一个指向其vtable的指针，称为vptr。
+
+RTTI（就是上面图中的 type_info 结构)通常与vtable关联。
+
+dynamic_cast就是利用RTTI来执行运行时类型检查和安全类型转换。
+
+以下是dynamic_cast的工作原理的简化描述：
+
+1. 首先，dynamic_cast通过查询对象的 vptr 来获取其RTTI（这也是为什么 dynamic_cast 要求对象有虚函数）
+
+2. 然后，dynamic_cast比较请求的目标类型与从RTTI获得的实际类型。如果目标类型是实际类型或其基类，则转换成功。
+
+3. 如果目标类型是派生类，dynamic_cast会检查类层次结构，以确定转换是否合法。如果在类层次结构中找到了目标类型，则转换成功；否则，转换失败。
+
+4. 当转换成功时，dynamic_cast返回转换后的指针或引用。
+
+5. 如果转换失败，对于指针类型，dynamic_cast返回空指针；对于引用类型，它会抛出一个std::bad_cast异常。
+
+因为dynamic_cast依赖于运行时类型信息，它的性能可能低于其他类型转换操作（如static_cast），static 是编译器静态转换，编译时期就完成了。
+
+#### const_cast
+
+用法: `const_cast&lt;new_type&gt;(expression)`
+
+new_type 必须是一个指针、引用或者指向对象类型成员的指针。
+
+1. 修改const对象
+
+当需要修改const对象时，可以使用const_cast来删除const属性。
+
+```cpp
+const int a = 42;
+int* mutable_ptr = const_cast&lt;int*&gt;(&amp;a); // 删除const属性，使得可以修改a的值
+*mutable_ptr = 43; // 修改a的值
+```
+
+2. const对象调用非const成员函数
+
+当需要使用const对象调用非const成员函数时，可以使用const_cast删除对象的const属性。
+
+```cpp
+class MyClass {
+public:
+    void non_const_function() { /* ... */ }
+};
+
+const MyClass my_const_obj;
+MyClass* mutable_obj_ptr = const_cast&lt;MyClass*&gt;(&amp;my_const_obj); // 删除const属性，使得可以调用非const成员函数
+mutable_obj_ptr-&gt;non_const_function(); // 调用非const成员函数
+```
+
+不过上述行为都不是很安全，可能导致未定义的行为，因此应谨慎使用。
+
+#### reinterpret_cast
+
+用法: `reinterpret_cast&lt;new_type&gt;(expression)`
+
+reinterpret_cast用于在不同类型之间进行低级别的转换。
+
+首先从英文字面的意思理解，interpret是“解释，诠释”的意思，加上前缀“re”，就是“重新诠释”的意思；
+
+cast 在这里可以翻译成“转型”（在侯捷大大翻译的《深度探索C&#43;&#43;对象模型》、《Effective C&#43;&#43;（第三版）》中，cast都被翻译成了转型），这样整个词顺下来就是“重新诠释的转型”。
+
+它仅仅是重新解释底层比特（也就是对指针所指针的那片比特位换个类型做解释），而不进行任何类型检查。
+
+因此，reinterpret_cast可能导致未定义的行为，应谨慎使用。
+
+reinterpret_cast的一些典型应用场景：
+
+1. 指针类型之间的转换
+
+在某些情况下，需要在不同指针类型之间进行转换，如将一个int指针转换为char指针。
+
+这在 C 语言中用的非常多，C语言中就是直接使用 () 进行强制类型转换
+
+```cpp
+int a = 42;
+int* int_ptr = &amp;a;
+char* char_ptr = reinterpret_cast&lt;char*&gt;(int_ptr); // 将int指针转换为char指针
+```
+
+&gt; [!TIP] 其实在 CUDA 中能经常见到 reinterpret_cast 的使用，例如这里的向量化加载：
+&gt; ```CUDA
+&gt; #define INT4(value) (reinterpret_cast&lt;int4 *&gt;(&amp;(value))[0])
+&gt; #define FLOAT4(value) (reinterpret_cast&lt;float4 *&gt;(&amp;(value))[0])
+&gt; #define HALF2(value) (reinterpret_cast&lt;half2 *&gt;(&amp;(value))[0])
+&gt; #define BFLOAT2(value) (reinterpret_cast&lt;__nv_bfloat162 *&gt;(&amp;(value))[0])
+&gt; #define LDST128BITS(value) (reinterpret_cast&lt;float4 *&gt;(&amp;(value))[0])
+&gt; ```
+
 ### 面向对象特性
 
 #### 封装
