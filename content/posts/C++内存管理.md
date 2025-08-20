@@ -5,7 +5,7 @@ date: 2025-03-23T11:51:02+08:00
 slug: 01dc872
 draft: false
 tags: [C++]
-categories: [八股]
+categories: [找工作]
 math: true
 author:
   name: "yitao"

@@ -15,8 +15,7 @@ license:
 comment: true
 weight: 0
 tags:
-  - draft
-categories: [算法]
+categories: [推理优化]
 hiddenFromHomePage: false
 hiddenFromSearch: false
 hiddenFromRelated: false
