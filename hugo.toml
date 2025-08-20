@@ -448,6 +448,8 @@ enableEmoji = true
     # FixIt 0.2.16 | CHANGED KaTeX mathematical formulas (https://katex.org)
     [params.page.math]
       enable = true
+      type = "mathjax"
+
       # default inline delimiter is $ ... $ and \( ... \)
       inlineLeftDelimiter = ""
       inlineRightDelimiter = ""
@@ -458,6 +460,22 @@ enableEmoji = true
       copyTex = true
       # KaTeX extension mhchem
       mhchem = true
+      [params.page.math.mathjax]
+        cdn = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+        [params.page.math.mathjax.packages]
+          # '[+]' = ['configmacros']
+        # custom macros map
+        # syntax: <macro> = <definition>
+        [params.page.math.mathjax.macros]
+          # "bold" = ["{\\bf #1}", 1]   # usage: $\bold{math}$
+        [params.page.math.mathjax.loader]
+          load = ['ui/safe']
+          [params.page.math.mathjax.loader.paths]
+            # custom = "https://cdn.jsdelivr.net/gh/sonoisa/XyJax-v3@3.0.1/build/"
+          # more loader config e.g source, dependencies, provides etc.
+        [params.page.math.mathjax.options]
+          enableMenu = true
+          # more options e.g. skipHtmlTags, ignoreHtmlClass etc.
     # FixIt 0.2.0 | NEW Code config
     [params.page.code]
       # whether to show the copy button of the code block
@@ -901,6 +919,13 @@ enableEmoji = true
           enable = true
         [markup.goldmark.extensions.extras.superscript]
           enable = true
+
+      [markup.goldmark.extensions.passthrough]
+          enable = true
+          [markup.goldmark.extensions.passthrough.delimiters]
+            block = [['\[', '\]'], ['$$', '$$']]
+            inline = [['\(', '\)'], ['$', '$']]
+
     [markup.goldmark.renderer]
       # 是否在文档中直接使用 HTML 标签
       unsafe = true

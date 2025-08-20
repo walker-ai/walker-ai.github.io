@@ -328,3 +328,66 @@ __global__ void transpose_naive(float *input, float *output, int M, int N) {
     }
 }
 ```
+
+### 合并写入
+
+```CUDA
+__global__ void transpose(float* input, float* output, int M, int N) {
+    // output的row和col
+    int row = blockDim.y * blockIdx.y + threadIdx.y;
+    int col = blockDim.x * blockIdx.x + threadIdx.x;
+​
+    if (row < N && col < M) {
+        output[row * M + col] = __ldg(&input[col * N + row]);  // 合并写入，读取使用__ldg进行缓存
+    }
+}
+```
+
+### 使用共享内存中转，同时合并读取和写入
+
+```cuda
+// 输入矩阵是M行N列，输出矩阵是N行M列
+ dim3 block(32, 32);
+ dim3 grid(CEIL(N,32), CEIL(M,32));  // 根据input的形状(M行N列)进行切块
+ transpose<32><<<grid, block>>>(input, output, M, N);
+ ​
+ template <const int BLOCK_SIZE>
+ __global__ void transpose(float* input, float* output, int M, int N) {
+     __shared__ float s_mem[BLOCK_SIZE][BLOCK_SIZE + 1];  // 避免bank conflict
+     int bx = blockIdx.x * BLOCK_SIZE;
+     int by = blockIdx.y * BLOCK_SIZE;
+     int x1 = bx + threadIdx.x;
+     int y1 = by + threadIdx.y;
+
+     if (x1 < N && y1 < M) {
+         s_mem[threadIdx.y][threadIdx.x] = input[y1 * N + x1];
+     }
+     __syncthreads();
+ ​
+     int x2 = by + threadIdx.x;
+     int y2 = bx + threadIdx.y;
+     if (x2 < M && y2 < N) {
+         output[y2 * M + x2] = s_mem[threadIdx.x][threadIdx.y];  // padding后，不存在bank conflict
+     }
+ }
+```
+
+### cuda example 补充
+
+> https://zhuanlan.zhihu.com/p/12661298743
+
+主要是 transpose 优化、gemv、softmax_matrix，cuda前缀和，topk
+
+### Memory Coalescing 和 Bank Conflict
+
+
+内存合并访问：
+
+> 参考文献：[https://zhuanlan.zhihu.com/p/300785893](https://zhuanlan.zhihu.com/p/300785893)
+
+Bank Conflict：
+
+> 参考文献：
+
+1. [https://zhuanlan.zhihu.com/p/4746910252](https://zhuanlan.zhihu.com/p/4746910252)
+2. [https://zhuanlan.zhihu.com/p/659142274](https://zhuanlan.zhihu.com/p/659142274)
