@@ -1,7 +1,243 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>yitao's Blog</title><link>https://yitaonote.com/</link><description>yitao的学习笔记</description><generator>Hugo 0.145.0 &amp; FixIt v0.3.17-8212d6fd</generator><language>zh-CN</language><lastBuildDate>Sat, 16 Aug 2025 17:33:59 +0800</lastBuildDate><atom:link href="https://yitaonote.com/index.xml" rel="self" type="application/rss+xml"/><item><title>Kruskal算法求最小生成树</title><link>https://yitaonote.com/2025/acc2381/</link><pubDate>Sat, 16 Aug 2025 17:33:59 +0800</pubDate><guid>https://yitaonote.com/2025/acc2381/</guid><category domain="https://yitaonote.com/categories/%E7%AE%97%E6%B3%95/">算法</category><description>&lt;blockquote>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>yitao's Blog</title><link>https://yitaonote.com/</link><description>yitao的学习笔记</description><generator>Hugo 0.145.0 &amp; FixIt v0.3.17-8212d6fd</generator><language>zh-CN</language><lastBuildDate>Tue, 19 Aug 2025 23:07:32 +0800</lastBuildDate><atom:link href="https://yitaonote.com/index.xml" rel="self" type="application/rss+xml"/><item><title>分布式推理优化技术</title><link>https://yitaonote.com/2025/7ae2a3f/</link><pubDate>Tue, 19 Aug 2025 23:07:32 +0800</pubDate><guid>https://yitaonote.com/2025/7ae2a3f/</guid><category domain="https://yitaonote.com/categories/draft/">Draft</category><description>&lt;h3 id="为什么不缓存q而要缓存kv" class="heading-element">&lt;span>为什么不缓存Q，而要缓存KV？&lt;/span>
+ &lt;a href="#%e4%b8%ba%e4%bb%80%e4%b9%88%e4%b8%8d%e7%bc%93%e5%ad%98q%e8%80%8c%e8%a6%81%e7%bc%93%e5%ad%98kv" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h3>&lt;blockquote>
+&lt;p>参考文献：&lt;a href="https://www.zhihu.com/question/653658936"target="_blank" rel="external nofollow noopener noreferrer">https://www.zhihu.com/question/653658936&lt;/a>&lt;/p>&lt;/blockquote>
+&lt;p>因为分析attention计算可以知道，预测下一个token只用到了当前的query信息，而没有用到之前的query信息，所以不用缓存Q；
+在序列的t位置，Q只有当前位置的，参与了计算，而K和V多个位置参与了计算，所以需要KV Cache，而不需要Q Cache。&lt;/p>
+&lt;h3 id="为什么-deepseek-使用-fp8-而-qwen-使用-bf16" class="heading-element">&lt;span>为什么 DeepSeek 使用 FP8 而 Qwen 使用 BF16&lt;/span>
+ &lt;a href="#%e4%b8%ba%e4%bb%80%e4%b9%88-deepseek-%e4%bd%bf%e7%94%a8-fp8-%e8%80%8c-qwen-%e4%bd%bf%e7%94%a8-bf16" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h3>&lt;h3 id="为什么-cpu-需要三层-cache-而-gpu-只需要两层" class="heading-element">&lt;span>为什么 CPU 需要三层 Cache 而 GPU 只需要两层；&lt;/span>
+ &lt;a href="#%e4%b8%ba%e4%bb%80%e4%b9%88-cpu-%e9%9c%80%e8%a6%81%e4%b8%89%e5%b1%82-cache-%e8%80%8c-gpu-%e5%8f%aa%e9%9c%80%e8%a6%81%e4%b8%a4%e5%b1%82" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h3>&lt;p>CPU三级缓存介绍：https://blog.csdn.net/weixin_43719763/article/details/128602160&lt;/p>
+&lt;p>CPU三级缓存主要为了用于不同级别的数据访问，L1/L2是私有的，而L3是共享的，这样可以减少核心之间的数据竞争，降低数据访问延迟。而GPU由于线程数量较多，每个线程对缓存的压力较小，无需为单个线程进行优化缓存层级。而且GPU数据重用集中在相邻线程（如卷积核滑动窗口），L1/L2 缓存+共享内存即可满足。&lt;/p>
+&lt;h3 id="分布式并行方法" class="heading-element">&lt;span>分布式并行方法&lt;/span>
+ &lt;a href="#%e5%88%86%e5%b8%83%e5%bc%8f%e5%b9%b6%e8%a1%8c%e6%96%b9%e6%b3%95" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h3>&lt;blockquote>
+&lt;p>数据并行（DP）、张量并行（TP）、流水线并行（PP）、上下文并行（CP）、专家并行（EP）以及序列并行（SP）。&lt;/p>&lt;/blockquote>
+&lt;p>&lt;strong>为什么分布式并行很重要？&lt;/strong>&lt;/p>
+&lt;p>一个70B参数的FP16模型，仅模型权重就需要约140GB的存储空间，远超任何单张主流GPU的显存容量。此外，训练过程中产生的优化器状态、梯度和中间激活值，更是将内存需求推向了TB级别&lt;/p>
+&lt;p>训练如此大规模的模型需要巨大的计算资源，单一设备的计算能力根本无法满足需求。通过分布式并行，可以将计算任务分解到多个设备上，实现高效的并行计算。&lt;/p>
+&lt;h4 id="基础并行策略dptppp" class="heading-element">&lt;span>基础并行策略（DP、TP、PP）&lt;/span>
+ &lt;a href="#%e5%9f%ba%e7%a1%80%e5%b9%b6%e8%a1%8c%e7%ad%96%e7%95%a5dptppp" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h4>&lt;h5 id="dp-data-parallelism-dp" class="heading-element">&lt;span>DP (Data Parallelism, DP)&lt;/span>
+ &lt;a href="#dp-data-parallelism-dp" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h5>&lt;p>核心原理：数据并行是最直观、最常用的并行方式。其核心思想是“模型复制，数据分片”。即将完整的模型副本放置在每一个计算设备（如GPU）上，然后将一个大的训练批次（mini-batch）分割成多个更小的微批次（micro-batch），每个设备独立处理一个微批次的数据。&lt;/p>
+&lt;p>工作流程：&lt;/p>
+&lt;ul>
+&lt;li>分发： 将一个全局批次的数据切分，分发给各个GPU。&lt;/li>
+&lt;li>前向传播： 每个GPU使用其上的模型副本独立计算其微批次数据的前向传播，得到损失。&lt;/li>
+&lt;li>反向传播： 每个GPU独立计算梯度。梯度同步： 这是DP的关键步骤。所有GPU上的梯度需要通过一个集合通信操作（通常是All-Reduce）进行聚合（如求和或求平均），以确保每个GPU最终都得到全局梯度 。&lt;/li>
+&lt;li>权重更新： 每个GPU使用同步后的全局梯度独立更新其本地的模型副本，从而保证所有副本在下一步开始前保持一致。&lt;/li>
+&lt;/ul>
+&lt;blockquote>
+&lt;p>这里涉及到本文的第一个“分布式通信”原语，全归约（All-Reduce），它处理 GPU 实例和节点之间的同步和通信。其实很好理解：就是每一个GPU把数据发送给其余GPU，每一个GPU对于接收到的数据进行求和。 Reduce（归约）：将多个GPU的数据发送到指定的GPU然后求和。&lt;/p>&lt;/blockquote>
+&lt;p>DP方法的优缺点：&lt;/p>
+&lt;p>优点：&lt;/p>
+&lt;ul>
+&lt;li>实现简单，易于集成到现有训练框架中&lt;/li>
+&lt;li>适用于大多数标准模型架构&lt;/li>
+&lt;li>扩展性较好，可轻松扩展到多GPU集群&lt;/li>
+&lt;/ul>
+&lt;p>缺点：&lt;/p>
+&lt;ul>
+&lt;li>内存瓶颈显著，无法解决&amp;quot;模型太大，单卡放不下&amp;quot;的问题&lt;/li>
+&lt;li>随着GPU数量增加，All-Reduce操作的通信开销成为主要瓶颈&lt;/li>
+&lt;li>扩展效率受限于通信带宽和延迟&lt;/li>
+&lt;/ul>
+&lt;p>关键优化：ZeRO (Zero Redundancy Optimizer)&lt;/p>
+&lt;p>为了克服DP的内存冗余问题，ZeRO[1]技术应运而生。它通过在不同设备间分割和管理模型状态（而不仅仅是数据）来极大地优化内存使用。&lt;/p>
+&lt;p>&lt;img loading="lazy" src='https://cdn.ipfsscan.io/weibo/large/005wRZF3gy1i4j6cnz3zdj314007xwfc.jpg' alt="image">&lt;/p>
+&lt;p>ZeRO-DP使得数据并行也能用于训练单卡无法容纳的大模型，是当前大规模训练框架（如DeepSpeed[2]）的核心技术之一。&lt;/p>
+&lt;h5 id="tp-tensor-parallelism-tp" class="heading-element">&lt;span>TP (Tensor Parallelism, TP)&lt;/span>
+ &lt;a href="#tp-tensor-parallelism-tp" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h5>&lt;p>在使用 ZeRO 对模型的参数、梯度和优化器状态进行了分片，但当激活内存超过内存预算时，遇到了瓶颈。张量并行（TP），这是一种分片权重、梯度和优化器状态以及激活的方法——而且无需在计算之前将它们全部收集起来。&lt;/p>
+&lt;p>张量并行利用了矩阵乘法的数学特性，A×B 。&lt;/p>
+$$
+\begin{aligned}
+ A\cdot B &amp;= A\cdot [B_{1}, B_{2} \cdots] = [AB_{1}, AB_{2} \cdots] \\\\
+ A\cdot B &amp;= [A_{1}, A_{2} \cdots] \begin{bmatrix}
+B_{1} \\
+B_{2} \\
+\vdots
+\end{bmatrix}
+= \sum_{i=1}^{n}A_{i}B_{i}
+\end{aligned}
+$$&lt;p>这意味着可以通过单独计算 B 的每一列或单独计算每一行并将结果组合起来来进行矩阵乘法。示例如下：&lt;/p>
+&lt;p>&lt;img loading="lazy" src='https://cdn.ipfsscan.io/weibo/large/005wRZF3gy1i4j6tem6ujj30fa0bndg5.jpg' alt="image">&lt;/p>
+&lt;p>在张量并行中，张量会沿着特定维度被分割成 N 个片段，并分布到 N 个 GPU 上。矩阵可以在列或行上进行分割，从而实现行或列并行。&lt;/p>
+&lt;p>&lt;strong>第一个选项是使用按列（也称为按列线性）分片&lt;/strong>：将完整输入矩阵复制到每个工作节点，需要一种称为广播（broadcast）的操作，并将权重矩阵按列拆分。然后输入与部分权重矩阵相乘，最后使用全聚合（all-gather）操作合并结果。&lt;/p>
+&lt;p>&lt;img loading="lazy" src='https://cdn.ipfsscan.io/weibo/large/005wRZF3gy1i4j6uhusssj31400pdtap.jpg' alt="image">&lt;/p>
+&lt;blockquote>
+&lt;p>“分布式通信”原语：
+广播（broadcast）：将一个GPU上的数据同时发送到所有其他GPU。
+全聚合（all-gather）：每一个GPU把数据发送到其余所有GPU，每个GPU对于接受到的数据拼接为完整数据。&lt;/p>&lt;/blockquote>
+&lt;p>&lt;strong>第二种选项称为按行（或行线性）分片&lt;/strong>：行线性意味着将权重矩阵按行分割成块。因此，需要使用散播（scatter）操作（第四种分布式通信原语！）而不是列线性分片中所使用的广播操作。每个工作节点上的结果已经处于正确的形状，但需要求和以得到最终结果，因此这种场景也需要一个全归约操作：&lt;/p>
+&lt;p>&lt;img loading="lazy" src='https://cdn.ipfsscan.io/weibo/large/005wRZF3gy1i4j6vkskdvj31400ocac0.jpg' alt="image">&lt;/p>
+&lt;blockquote>
+&lt;p>“分布式通信”原语：
+散播（scatter）：把一个GPU上的数据切分为多块，按照顺序向其他GPU发送数据块。&lt;/p>&lt;/blockquote>
+&lt;p>核心原理： 张量并行，又称模型内部并行（Intra-layer Model Parallelism），旨在解决单层网络计算量过大或参数过多无法在单个设备上处理的问题。它将模型中的单个张量（如权重矩阵）沿特定维度切分到多个GPU上，并在这些GPU上协同完成运算。&lt;/p>
+&lt;p>工作流程（以Transformer中的MLP层为例）：&lt;/p>
+&lt;p>一个标准的MLP层包含两次线性变换。假设我们将模型并行到N个GPU上：&lt;/p>
+&lt;ol>
+&lt;li>第一个线性层的权重矩阵A可以按列切分成 [A1, A2, &amp;hellip;, AN]。输入X与每个Ai相乘得到Xi * Ai。这是一个并行的矩阵乘法，无需通信。&lt;/li>
+&lt;li>第二个线性层的权重矩阵B可以按行切分成 [B1; B2; &amp;hellip;, BN]。在进行第二次矩阵乘法前，需要将第一步的输出结果 [Y1, Y2, &amp;hellip;, YN] 通过All-Gather操作在所有GPU间聚合，得到完整的Y。然后每个GPU计算Y * Bi。&lt;/li>
+&lt;li>最后，将各个GPU上的结果通过Reduce-Scatter或简单的加和操作得到最终输出。&lt;/li>
+&lt;/ol>
+&lt;p>Megatron-LM[3]框架是张量并行的杰出代表，它巧妙地设计了Transformer中注意力层和MLP层的并行计算方式，将通信操作与计算有效结合。&lt;/p>
+&lt;p>优缺点分析&lt;/p>
+&lt;table>
+ &lt;thead>
+ &lt;tr>
+ &lt;th style="text-align: center">优点&lt;/th>
+ &lt;th style="text-align: center">缺点&lt;/th>
+ &lt;/tr>
+ &lt;/thead>
+ &lt;tbody>
+ &lt;tr>
+ &lt;td style="text-align: center">（1）直接减少了单个GPU上的内存占用（包括模型参数和激活值）（2）使得训练远超单卡内存限制的模型成为可能（3）计算粒度细，可以更好地利用GPU的并行计算能力&lt;/td>
+ &lt;td style="text-align: center">（1）通信开销巨大且频繁，通常仅限于在单个计算节点内部进行高效扩展（2）对设备间的通信带宽要求极高（3）实现复杂度较高，需要仔细设计通信模式&lt;/td>
+ &lt;/tr>
+ &lt;/tbody>
+&lt;/table>
+&lt;h5 id="流水线并行-pipeline-parallelism-pp" class="heading-element">&lt;span>流水线并行 (Pipeline Parallelism, PP)&lt;/span>
+ &lt;a href="#%e6%b5%81%e6%b0%b4%e7%ba%bf%e5%b9%b6%e8%a1%8c-pipeline-parallelism-pp" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h5>&lt;p>核心原理：流水线并行，又称层间模型并行（Inter-layer Model Parallelism），将模型的不同层（或层块）分配到不同的GPU上，形成一个计算&amp;quot;流水线&amp;quot;。数据在一个设备上完成部分层的计算后，其输出（即激活值）被传递到下一个设备，继续后续层的计算。&lt;/p>
+&lt;p>工作流程：&lt;/p>
+&lt;ol>
+&lt;li>朴素流水线： 最简单的方式是将一个批次的数据依次通过所有GPU。但这会导致严重的“流水线气泡”（pipeline bubble），即在任何时刻，只有一个GPU在工作，其他GPU都在等待，利用率极低。&lt;/li>
+&lt;li>微批次流水线 (Micro-batching)： 为了解决气泡问题，GPipe[4]等框架引入了微批次的概念 。它将一个大的批次（mini-batch）再切分成多个微批次（micro-batches），并将这些微批次依次送入流水线。这样，当第一个微批次在第二个GPU上计算时，第二个微批次就可以在第一个GPU上开始计算，实现了计算的重叠，从而显著减少了GPU的空闲时间。&lt;/li>
+&lt;/ol>
+&lt;p>优缺点分析&lt;/p>
+&lt;table>
+ &lt;thead>
+ &lt;tr>
+ &lt;th style="text-align: center">优点&lt;/th>
+ &lt;th style="text-align: center">缺点&lt;/th>
+ &lt;/tr>
+ &lt;/thead>
+ &lt;tbody>
+ &lt;tr>
+ &lt;td style="text-align: center">（1）同样能有效降低单个GPU的内存占用（2）通信开销相对较低，因为通信只发生在流水线中相邻的两个阶段之间（3）通信内容主要是激活值，而非整个模型参数（4）实现相对简单，易于调试&lt;/td>
+ &lt;td style="text-align: center">（1）仍然存在无法完全消除的&amp;quot;气泡&amp;quot;问题，特别是在流水线的启动和排空阶段（2）要求对模型进行合理的切分，以实现各阶段的负载均衡（3）&amp;ldquo;木桶效应&amp;quot;会限制整体性能，最慢的阶段决定整体吞吐量（4）流水线深度增加会导致额外的启动和结束延迟&lt;/td>
+ &lt;/tr>
+ &lt;/tbody>
+&lt;/table>
+&lt;h4 id="长序列并行策略序列上下文并行" class="heading-element">&lt;span>长序列并行策略：序列、上下文并行&lt;/span>
+ &lt;a href="#%e9%95%bf%e5%ba%8f%e5%88%97%e5%b9%b6%e8%a1%8c%e7%ad%96%e7%95%a5%e5%ba%8f%e5%88%97%e4%b8%8a%e4%b8%8b%e6%96%87%e5%b9%b6%e8%a1%8c" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h4>&lt;p>随着模型对长文本处理能力的需求日益增长，输入序列长度成为新的内存瓶颈。传统的TP和PP主要解决参数存储问题，而SP和CP则专注于解决因序列过长导致的激活值内存爆炸问题。&lt;/p>
+&lt;h5 id="序列并行-sequence-parallelism-sp" class="heading-element">&lt;span>序列并行 (Sequence Parallelism, SP)&lt;/span>
+ &lt;a href="#%e5%ba%8f%e5%88%97%e5%b9%b6%e8%a1%8c-sequence-parallelism-sp" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h5>&lt;p>核心原理： Transformer架构中的自注意力机制（Self-Attention）需要在序列维度上进行全局计算，这使得沿序列维度进行并行化变得困难。序列并行巧妙地绕过了这一点，它选择性地对那些在序列维度上计算独立的模块（如LayerNorm、Dropout和MLP中的逐点操作）的输入激活进行切分。[5]&lt;/p>
+&lt;p>&lt;img loading="lazy" src='https://cdn.ipfsscan.io/weibo/large/005wRZF3gy1i4j774cbv8j30ti0am75e.jpg' alt="image">&lt;/p>
+&lt;p>工作流程：&lt;/p>
+&lt;p>在进入非并行化的模块（如自注意力）之前，被切分的激活需要通过All-Gather操作在序列维度上拼接回完整的张量。
+在完成该模块的计算后，输出的激活可以再次被切分，或者通过Reduce-Scatter操作将计算（如梯度累加）分散到各个设备上。&lt;/p>
+&lt;p>价值与定位&lt;/p>
+&lt;p>SP是TP的一个重要补充。TP虽然切分了权重，但每个GPU上仍然需要存储完整的激活张量，这在长序列场景下会成为内存瓶颈。SP通过切分激活，进一步降低了内存占用，使得在有限的显存下能够训练更长的序列或使用更大的批次大小。截至2024年的研究表明：将SP与PP结合（如Mnemosyne 2D并行化[6]）可以在长上下文预填充处理中达到80%以上的扩展效率。&lt;/p>
+&lt;p>应用场景&lt;/p>
+&lt;ol>
+&lt;li>长文本处理：对于需要长文档、代码或对话的历史记录等场景，SP可以显著降低内存占用，支持更长的上下文窗口&lt;/li>
+&lt;li>批量处理：在需要同时处理多个独立任务时，SP可以提高GPU利用率，减少空闲时间&lt;/li>
+&lt;/ol>
+&lt;blockquote>
+&lt;p>“分布式通信”原语： 散播归约（Reduce-Scatter）：先做Scatter再做Reduce，先将GPU的数据分割为多个数据块，然后每一块数据按GPU序列进行散播Scatter。对所有的GPU都进行散射之后，当前GPU所接受到的所有数据块进行求和，也就是Reduce归约。&lt;/p>&lt;/blockquote>
+&lt;h5 id="上下文并行-context-parallelism-cp" class="heading-element">&lt;span>上下文并行 (Context Parallelism, CP)&lt;/span>
+ &lt;a href="#%e4%b8%8a%e4%b8%8b%e6%96%87%e5%b9%b6%e8%a1%8c-context-parallelism-cp" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h5>&lt;p>核心原理： 上下文并行[7]是处理超长序列的一种更激进的策略。与SP只切分部分激活不同，CP将网络输入和所有中间激活都沿序列维度进行划分。&lt;/p>
+&lt;p>&lt;img loading="lazy" src='https://cdn.ipfsscan.io/weibo/large/005wRZF3gy1i4j7bok2gij31400hvjtc.jpg' alt="image">&lt;/p>
+&lt;p>工作流程（以注意力机制为例）：&lt;/p>
+&lt;p>CP的实现方式如下：&lt;/p>
+&lt;ol>
+&lt;li>输入切分： 将长度为S的输入序列切分为N份，每个GPU处理长度为S/N的子序列。&lt;/li>
+&lt;li>本地Q, K, V计算： 每个GPU根据自己的子序列计算出局部的Q, K, V张量。&lt;/li>
+&lt;li>全局K, V同步： 在进行注意力计算之前，所有GPU需要通过一次All-Gather通信，将其本地的K和V张量广播给所有其他GPU。这样，每个GPU就拥有了完整的K和V张量，但只拥有局部的Q张量。&lt;/li>
+&lt;li>注意力计算： 每个GPU使用其局部的Q和全局的K, V来计算注意力得分和输出，这部分计算是并行的。&lt;/li>
+&lt;li>反向传播： 梯度计算也遵循类似的通信模式，通常涉及Reduce-Scatter操作。&lt;/li>
+&lt;/ol>
+&lt;p>价值与定位：&lt;/p>
+&lt;p>CP的主要目标是最大程度地减少激活值内存占用，从而支持数万甚至数十万长度的上下文窗口。Amazon SageMaker 和 Megatron Core 等框架已经集成了CP功能 。其代价是在注意力层内部引入了额外的通信开销，但对于那些因激活内存而无法运行的超长序列场景，CP是必不可少的解决方案。&lt;/p>
+&lt;table>
+ &lt;thead>
+ &lt;tr>
+ &lt;th style="text-align: center">优点&lt;/th>
+ &lt;th style="text-align: center">缺点&lt;/th>
+ &lt;/tr>
+ &lt;/thead>
+ &lt;tbody>
+ &lt;tr>
+ &lt;td style="text-align: center">（1）极大降低内存占用（2）适用于需要处理数十万tokens的场景（3）可以与其他并行策略结合使用&lt;/td>
+ &lt;td style="text-align: center">（1）引入额外的通信开销，尤其在注意力层（2）实现复杂度高，需要特殊硬件支持（3）可能影响计算效率，增加延迟&lt;/td>
+ &lt;/tr>
+ &lt;/tbody>
+&lt;/table>
+&lt;h5 id="专家并行-expert-parallelism-ep" class="heading-element">&lt;span>专家并行 (Expert Parallelism, EP)&lt;/span>
+ &lt;a href="#%e4%b8%93%e5%ae%b6%e5%b9%b6%e8%a1%8c-expert-parallelism-ep" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h5>&lt;p>核心原理： MoE架构用一组稀疏激活的“专家”网络（通常是FFN层）替换了传统Transformer中的密集FFN层。对于每个输入的token，一个可学习的“门控网络”（Gating Network）或“路由器”（Router）会动态地选择一小部分（如Top-2）专家来处理它 。这样，模型的总参数量可以非常巨大（所有专家参数之和），但每个token的实际计算量（FLOPs）却保持不变或仅少量增加。&lt;/p>
+&lt;p>专家并行 (EP) 实现：&lt;/p>
+&lt;p>EP是为MoE模型量身定制的并行策略。其核心思想是将不同的专家分配到不同的GPU上。&lt;/p>
+&lt;ol>
+&lt;li>专家分发： 将E个专家平均分配到N个GPU上，每个GPU拥有E/N个专家。&lt;/li>
+&lt;li>路由计算： 所有GPU上的token首先通过门控网络，计算出各自应该被发送到哪些专家。&lt;/li>
+&lt;li>全局通信 (All-to-All)： 这是EP中最关键也最昂贵的步骤。所有GPU参与一次All-to-All通信，将每个token发送到其目标专家所在的GPU。&lt;/li>
+&lt;li>专家计算： 每个GPU用其本地的专家处理接收到的token。&lt;/li>
+&lt;li>结果返回 (第二次All-to-All)： 计算完成后，再次通过All-to-All通信将处理结果发送回token原始的GPU。&lt;/li>
+&lt;/ol>
+&lt;p>优缺点分析&lt;/p>
+&lt;table>
+ &lt;thead>
+ &lt;tr>
+ &lt;th style="text-align: center">优点&lt;/th>
+ &lt;th style="text-align: center">缺点&lt;/th>
+ &lt;/tr>
+ &lt;/thead>
+ &lt;tbody>
+ &lt;tr>
+ &lt;td style="text-align: center">（1）实现计算成本与模型参数量的解耦（2）是目前扩展模型至万亿参数规模的最有效路径（3）支持模型参数量与计算量分离扩展（4）可以通过增加专家数量而非计算量来扩展模型&lt;/td>
+ &lt;td style="text-align: center">（1）高通信开销：两次All-to-All通信对网络带宽要求极高（2）负载不均：路由策略可能导致某些专家过载而另一些空闲（3）训练不稳定：路由器的学习过程可能很脆弱，导致训练崩溃（4）实现复杂度高，需要特殊硬件和软件支持&lt;/td>
+ &lt;/tr>
+ &lt;/tbody>
+&lt;/table>
+&lt;h4 id="综合策略与性能基准" class="heading-element">&lt;span>综合策略与性能基准&lt;/span>
+ &lt;a href="#%e7%bb%bc%e5%90%88%e7%ad%96%e7%95%a5%e4%b8%8e%e6%80%a7%e8%83%bd%e5%9f%ba%e5%87%86" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h4>&lt;p>在实践中，训练一个顶尖的大模型（如70B以上）绝不会只使用一种并行策略，而是将多种策略组合起来，形成所谓的3D或4D并行。&lt;/p>
+&lt;p>常见组合范式：&lt;/p>
+&lt;p>一个典型的4D并行配置可能是：&lt;/p>
+&lt;ul>
+&lt;li>张量并行 (TP)： 在单台服务器内部的GPU之间使用，以利用高速的NVLink互联。&lt;/li>
+&lt;li>流水线并行 (PP)： 在多台服务器之间使用，以切分模型的深度。&lt;/li>
+&lt;li>数据并行 (DP)： 在整个集群的所有设备上应用，以扩大总批次大小，加速收敛。&lt;/li>
+&lt;li>专家/序列/上下文并行 (EP/SP/CP)： 根据模型架构（是否为MoE）和应用场景（是否为长上下文）选择性地加入，作为第四个维度。&lt;/li>
+&lt;/ul></description></item><item><title>Kruskal算法求最小生成树</title><link>https://yitaonote.com/2025/acc2381/</link><pubDate>Sat, 16 Aug 2025 17:33:59 +0800</pubDate><guid>https://yitaonote.com/2025/acc2381/</guid><category domain="https://yitaonote.com/categories/%E7%AE%97%E6%B3%95/">算法</category><description>&lt;blockquote>
 &lt;p>Kruskal 算法原理及证明见&lt;a href="https://www.acwing.com/activity/content/code/content/1745411/"target="_blank" rel="external nofollow noopener noreferrer">提高课&lt;/a>。&lt;/p>&lt;/blockquote>
-&lt;h2 id="kruskal算法求最小生成树-omlog-m" class="heading-element">&lt;span>Kruskal算法求最小生成树 $O(m\log m)$&lt;/span>
- &lt;a href="#kruskal%e7%ae%97%e6%b3%95%e6%b1%82%e6%9c%80%e5%b0%8f%e7%94%9f%e6%88%90%e6%a0%91-omlog-m" class="heading-mark">
+&lt;h2 id="kruskal算法求最小生成树" class="heading-element">&lt;span>Kruskal算法求最小生成树 $O(m\log m)$&lt;/span>
+ &lt;a href="#kruskal%e7%ae%97%e6%b3%95%e6%b1%82%e6%9c%80%e5%b0%8f%e7%94%9f%e6%88%90%e6%a0%91" class="heading-mark">
  &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
  &lt;/a>
 &lt;/h2>&lt;p>&lt;img loading="lazy" src='https://cdn.acwing.com/media/article/image/2021/06/29/94631_ff56a31cd8-IMG_20210629_141909_edit_223503600585686.jpg' alt="IMG_20210629_141909_edit_223503600585686.jpg">&lt;/p>
@@ -1101,15 +1337,14 @@
 &lt;p>传递性：若 $a, b$ 和 $c$ 是整数，且 $a\equiv b\pmod m$ 和 $b\equiv c\pmod m$，则 $a\equiv c\pmod m$&lt;/p>
 &lt;/li>
 &lt;/ul>
-&lt;p>4、若 $a, b, c$ 和 $m$ 是整数，$m &amp;gt; 0$，且 $a\equiv b\pmod m$，则有：&lt;/p>
-&lt;p>$$
+&lt;p>4、若 $a, b, c$ 和 $m$ 是整数，$m > 0$，且 $a\equiv b\pmod m$，则有：&lt;/p>
+$$
 \begin{align}
-a + c &amp;amp;\equiv b + c\pmod m \\
-a - c &amp;amp;\equiv b - c\pmod m \\
-ac &amp;amp;\equiv bc\pmod m
+a + c &amp;\equiv b + c\pmod m \\\
+a - c &amp;\equiv b - c\pmod m \\\
+ac &amp;\equiv bc\pmod m
 \end{align}
-$$&lt;/p>
-&lt;p>5、乘法逆元：若整数 $b$ 与 $m$ 互质，并且 $b\mid a$，则存在一个整数 $x$，使得 $\dfrac{a}{b} \equiv a\cdot x\pmod m$，则称 $x$ 为 $b$ 的模 $m$ 乘法逆元，记为 $b^{-1}\pmod m$ $\Rightarrow$ $\dfrac{a}{b} \equiv a\cdot b^{-1}\pmod m \Rightarrow bb^{-1}\equiv 1\pmod m$，其中 $b^{-1}$ 是 $b$ 的逆元。&lt;/p>
+$$&lt;p>5、乘法逆元：若整数 $b$ 与 $m$ 互质，并且 $b\mid a$，则存在一个整数 $x$，使得 $\dfrac{a}{b} \equiv a\cdot x\pmod m$，则称 $x$ 为 $b$ 的模 $m$ 乘法逆元，记为 $b^{-1}\pmod m$ $\Rightarrow$ $\dfrac{a}{b} \equiv a\cdot b^{-1}\pmod m \Rightarrow bb^{-1}\equiv 1\pmod m$，其中 $b^{-1}$ 是 $b$ 的逆元。&lt;/p>
 &lt;p>6、费马小定理：如果 $p$ 是一个质数，并且 $a$ 与 $p$ 互质，则有 $a^{p-1}\equiv 1\pmod p$&lt;/p>
 &lt;p>7、&lt;a href="https://www.acwing.com/activity/content/code/content/1259683/"target="_blank" rel="external nofollow noopener noreferrer">快速幂&lt;/a>&lt;/p>
 &lt;p>8、&lt;a href="https://www.acwing.com/activity/content/code/content/1261566/"target="_blank" rel="external nofollow noopener noreferrer">扩展欧几里得算法&lt;/a>&lt;/p>
@@ -1126,14 +1361,12 @@ $$&lt;/p>
 &lt;/h3>&lt;p>根据前置知识中的内容，当模数 $p$ 为质数时：&lt;/p>
 &lt;p>&lt;strong>1、快速幂求逆元：&lt;/strong>&lt;/p>
 &lt;p>若 $b$ 与 $p$ 互质，根据费马小定理，有：&lt;/p>
-&lt;p>$$b^{p-1}\equiv 1\pmod p \iff b\cdot b^{p - 2}\equiv 1\pmod p$$&lt;/p>
-&lt;p>此时 $b^{p - 2}$ 为 $b$ 的逆元，这时即可用快速幂来求解逆元。&lt;/p>
+$$b^{p-1}\equiv 1\pmod p \iff b\cdot b^{p - 2}\equiv 1\pmod p$$&lt;p>此时 $b^{p - 2}$ 为 $b$ 的逆元，这时即可用快速幂来求解逆元。&lt;/p>
 &lt;p>若 $b$ 与 $p$ 不互质，则 $b$ 的乘法逆元不存在。&lt;/p>
 &lt;p>&lt;strong>2、扩展欧几里得求逆元：&lt;/strong>&lt;/p>
 &lt;p>上面已经证明了，对于一个整数 $a$ 来说，若存在乘法逆元 $x = a^{-1}$，则有 $a\cdot a^{-1}\equiv 1\pmod p$，即存在整数 $y$ 使得 $ax = 1 + yp$，整理得 $ax + py = 1$。&lt;/p>
 &lt;p>而存在乘法逆元 $x = a^{-1}$ 的充要条件为 $a$ 与模数 $p$ 互质，即 $\gcd(a, p) = 1$，故原式转化为：&lt;/p>
-&lt;p>$$ ax + py = 1 = \gcd(a, p)$$&lt;/p>
-&lt;p>符合&lt;strong>裴蜀定理&lt;/strong>的表达式，因此我们可以用扩展欧几里得算法求解逆元 $x = a^{-1}$。&lt;/p>
+$$ ax + py = 1 = \gcd(a, p)$$&lt;p>符合&lt;strong>裴蜀定理&lt;/strong>的表达式，因此我们可以用扩展欧几里得算法求解逆元 $x = a^{-1}$。&lt;/p>
 &lt;h3 id="完整代码" class="heading-element">&lt;span>完整代码&lt;/span>
  &lt;a href="#%e5%ae%8c%e6%95%b4%e4%bb%a3%e7%a0%81" class="heading-mark">
  &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
@@ -1300,11 +1533,9 @@ $$&lt;/p>
  &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
  &lt;/a>
 &lt;/h3>&lt;p>快速幂原理是基于二进制枚举的思想。&lt;/p>
-&lt;p>对于整数 $a$ 的任意幂数 $k$，$k$ 都可以用二进制进行拆分，并且只会由 $\left [2&lt;sup>0, 2&lt;/sup>{\lfloor \log k \rfloor} \right]$ 中的部分数组合而成。&lt;/p>
-&lt;p>例如 $k_1 = 4 = (100)_2, k_2 = 7 = (111)_2$，均为三位二进制数，只由 $2&lt;sup>0、2&lt;/sup>1、2^2$ 中的部分数构成。这样原式就可转化为：&lt;/p>
-&lt;p>$$a^{k_1} = a^{4} = a^{0\times 2^{0} + 0\times 2^{1} + 1\times 2^{2}}$$&lt;/p>
-&lt;p>$$a^{k_2} = a^{7} = a^{1\times 2^{0} + 1\times 2^{1} + 1\times 2^{2}} = a^{2^{0}}\cdot a^{2^{1}}\cdot a^{2^{2}}$$&lt;/p>
-&lt;p>因此，对于给定的幂数 $k$，我们可以先预处理出 $\left[ a^{2^{0}},\ a^{2^{\lfloor \log k \rfloor}} \right]$ 中的所有数。时间复杂度为 $O(\log k)$&lt;/p>
+&lt;p>对于整数 $a$ 的任意幂数 $k$，$k$ 都可以用二进制进行拆分，并且只会由 $\left [2^0, 2^{\lfloor \log k \rfloor} \right]$ 中的部分数组合而成。&lt;/p>
+&lt;p>例如 $k_1 = 4 = (100)_2, k_2 = 7 = (111)_2$，均为三位二进制数，只由 $2^0、2^1、2^2$ 中的部分数构成。这样原式就可转化为：&lt;/p>
+$$a^{k_1} = a^{4} = a^{0\times 2^{0} + 0\times 2^{1} + 1\times 2^{2}}$$$$a^{k_2} = a^{7} = a^{1\times 2^{0} + 1\times 2^{1} + 1\times 2^{2}} = a^{2^{0}}\cdot a^{2^{1}}\cdot a^{2^{2}}$$&lt;p>因此，对于给定的幂数 $k$，我们可以先预处理出 $\left[ a^{2^{0}},\ a^{2^{\lfloor \log k \rfloor}} \right]$ 中的所有数。时间复杂度为 $O(\log k)$&lt;/p>
 &lt;p>然后依次枚举 $k$ 的二进制表示的每一位，每次枚举时 $a$ 都需要自我累乘一次：&lt;/p>
 &lt;p>&lt;code>a = (LL)a * a % p&lt;/code>；如果该位为 $1$，就将当前累乘的 $a$ 计入答案：&lt;code>res = (LL)res * a % p&lt;/code>，如果该位为 $0$，就不予计入，枚举下一位。&lt;/p>
 &lt;p>注：这里 $a, k, p$ 满足 $1\leq a, k, p\leq 2\times 10^9$，所以在自我累乘和答案计入时可能会溢出整数范围，需要开 &lt;code>long long&lt;/code>。&lt;/p>
@@ -1534,187 +1765,5 @@ $$&lt;/p>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div></description></item><item><title>归并排序</title><link>https://yitaonote.com/2025/f751a18/</link><pubDate>Sat, 16 Aug 2025 13:16:16 +0800</pubDate><guid>https://yitaonote.com/2025/f751a18/</guid><category domain="https://yitaonote.com/categories/%E7%AE%97%E6%B3%95/">算法</category><description>&lt;h3 id="算法思路" class="heading-element">&lt;span>算法思路&lt;/span>
- &lt;a href="#%e7%ae%97%e6%b3%95%e6%80%9d%e8%b7%af" class="heading-mark">
- &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
- &lt;/a>
-&lt;/h3>&lt;p>&lt;img loading="lazy" src='https://cdn.acwing.com/media/article/image/2021/07/02/94631_7fb6b17cdb-IMG_20210702_174626.jpg' alt="IMG_20210702_174626.jpg">&lt;/p>
-&lt;p>稳定 $O(n\log n)$&lt;/p>
-&lt;h3 id="完整代码" class="heading-element">&lt;span>完整代码&lt;/span>
- &lt;a href="#%e5%ae%8c%e6%95%b4%e4%bb%a3%e7%a0%81" class="heading-mark">
- &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
- &lt;/a>
-&lt;/h3>&lt;h4 id="c" class="heading-element">&lt;span>C++&lt;/span>
- &lt;a href="#c" class="heading-mark">
- &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
- &lt;/a>
-&lt;/h4>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;span class="lnt">12
-&lt;/span>&lt;span class="lnt">13
-&lt;/span>&lt;span class="lnt">14
-&lt;/span>&lt;span class="lnt">15
-&lt;/span>&lt;span class="lnt">16
-&lt;/span>&lt;span class="lnt">17
-&lt;/span>&lt;span class="lnt">18
-&lt;/span>&lt;span class="lnt">19
-&lt;/span>&lt;span class="lnt">20
-&lt;/span>&lt;span class="lnt">21
-&lt;/span>&lt;span class="lnt">22
-&lt;/span>&lt;span class="lnt">23
-&lt;/span>&lt;span class="lnt">24
-&lt;/span>&lt;span class="lnt">25
-&lt;/span>&lt;span class="lnt">26
-&lt;/span>&lt;span class="lnt">27
-&lt;/span>&lt;span class="lnt">28
-&lt;/span>&lt;span class="lnt">29
-&lt;/span>&lt;span class="lnt">30
-&lt;/span>&lt;span class="lnt">31
-&lt;/span>&lt;span class="lnt">32
-&lt;/span>&lt;span class="lnt">33
-&lt;/span>&lt;span class="lnt">34
-&lt;/span>&lt;span class="lnt">35
-&lt;/span>&lt;span class="lnt">36
-&lt;/span>&lt;span class="lnt">37
-&lt;/span>&lt;span class="lnt">38
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;iostream&amp;gt;&lt;/span>&lt;span class="cp">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">using&lt;/span> &lt;span class="k">namespace&lt;/span> &lt;span class="n">std&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">const&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">N&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mf">1e5&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="mi">10&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span> &lt;span class="n">q&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">N&lt;/span>&lt;span class="p">],&lt;/span> &lt;span class="n">tmp&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">N&lt;/span>&lt;span class="p">];&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">void&lt;/span> &lt;span class="nf">merge_sort&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">q&lt;/span>&lt;span class="p">[],&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">l&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">r&lt;/span>&lt;span class="p">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">l&lt;/span> &lt;span class="o">&amp;gt;=&lt;/span> &lt;span class="n">r&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="k">return&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">int&lt;/span> &lt;span class="n">mid&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">l&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">r&lt;/span> &lt;span class="o">&amp;gt;&amp;gt;&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">merge_sort&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">q&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">l&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">mid&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="n">merge_sort&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">q&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">mid&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">r&lt;/span>&lt;span class="p">);&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">int&lt;/span> &lt;span class="n">k&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">l&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">j&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">mid&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">while&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">i&lt;/span> &lt;span class="o">&amp;lt;=&lt;/span> &lt;span class="n">mid&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="n">j&lt;/span> &lt;span class="o">&amp;lt;=&lt;/span> &lt;span class="n">r&lt;/span>&lt;span class="p">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">q&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">&amp;lt;=&lt;/span> &lt;span class="n">q&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="p">])&lt;/span> &lt;span class="n">tmp&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">k&lt;/span> &lt;span class="o">++&lt;/span> &lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">q&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">i&lt;/span> &lt;span class="o">++&lt;/span> &lt;span class="p">];&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">else&lt;/span> &lt;span class="n">tmp&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">k&lt;/span> &lt;span class="o">++&lt;/span> &lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">q&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">j&lt;/span> &lt;span class="o">++&lt;/span> &lt;span class="p">];&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">while&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">i&lt;/span> &lt;span class="o">&amp;lt;=&lt;/span> &lt;span class="n">mid&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="n">tmp&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">k&lt;/span> &lt;span class="o">++&lt;/span> &lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">q&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">i&lt;/span> &lt;span class="o">++&lt;/span> &lt;span class="p">];&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">while&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">j&lt;/span> &lt;span class="o">&amp;lt;=&lt;/span> &lt;span class="n">r&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="n">tmp&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">k&lt;/span> &lt;span class="o">++&lt;/span> &lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">q&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">j&lt;/span> &lt;span class="o">++&lt;/span> &lt;span class="p">];&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">i&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">l&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">j&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="o">&amp;lt;=&lt;/span> &lt;span class="n">r&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="o">++&lt;/span> &lt;span class="p">,&lt;/span> &lt;span class="n">j&lt;/span> &lt;span class="o">++&lt;/span> &lt;span class="p">)&lt;/span> &lt;span class="n">q&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">tmp&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="p">];&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">()&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">int&lt;/span> &lt;span class="n">n&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">cin&lt;/span> &lt;span class="o">&amp;gt;&amp;gt;&lt;/span> &lt;span class="n">n&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="n">n&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="o">++&lt;/span> &lt;span class="p">)&lt;/span> &lt;span class="n">scanf&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;%d&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="o">&amp;amp;&lt;/span>&lt;span class="n">q&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">]);&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">merge_sort&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">q&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">n&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">);&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="n">n&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="o">++&lt;/span> &lt;span class="p">)&lt;/span> &lt;span class="n">printf&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;%d &amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">q&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">]);&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h4 id="python3" class="heading-element">&lt;span>Python3&lt;/span>
- &lt;a href="#python3" class="heading-mark">
- &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
- &lt;/a>
-&lt;/h4>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;span class="lnt">12
-&lt;/span>&lt;span class="lnt">13
-&lt;/span>&lt;span class="lnt">14
-&lt;/span>&lt;span class="lnt">15
-&lt;/span>&lt;span class="lnt">16
-&lt;/span>&lt;span class="lnt">17
-&lt;/span>&lt;span class="lnt">18
-&lt;/span>&lt;span class="lnt">19
-&lt;/span>&lt;span class="lnt">20
-&lt;/span>&lt;span class="lnt">21
-&lt;/span>&lt;span class="lnt">22
-&lt;/span>&lt;span class="lnt">23
-&lt;/span>&lt;span class="lnt">24
-&lt;/span>&lt;span class="lnt">25
-&lt;/span>&lt;span class="lnt">26
-&lt;/span>&lt;span class="lnt">27
-&lt;/span>&lt;span class="lnt">28
-&lt;/span>&lt;span class="lnt">29
-&lt;/span>&lt;span class="lnt">30
-&lt;/span>&lt;span class="lnt">31
-&lt;/span>&lt;span class="lnt">32
-&lt;/span>&lt;span class="lnt">33
-&lt;/span>&lt;span class="lnt">34
-&lt;/span>&lt;span class="lnt">35
-&lt;/span>&lt;span class="lnt">36
-&lt;/span>&lt;span class="lnt">37
-&lt;/span>&lt;span class="lnt">38
-&lt;/span>&lt;span class="lnt">39
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-python3" data-lang="python3">&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">merge_sort&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">q&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">l&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">r&lt;/span>&lt;span class="p">):&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="n">l&lt;/span> &lt;span class="o">&amp;gt;=&lt;/span> &lt;span class="n">r&lt;/span>&lt;span class="p">:&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">mid&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">l&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">r&lt;/span> &lt;span class="o">&amp;gt;&amp;gt;&lt;/span> &lt;span class="mi">1&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">merge_sort&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">q&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">l&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">mid&lt;/span>&lt;span class="p">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">merge_sort&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">q&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">mid&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">r&lt;/span>&lt;span class="p">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">i&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">j&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">k&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">l&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">mid&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">0&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">while&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="o">&amp;lt;=&lt;/span> &lt;span class="n">mid&lt;/span> &lt;span class="ow">and&lt;/span> &lt;span class="n">j&lt;/span> &lt;span class="o">&amp;lt;=&lt;/span> &lt;span class="n">r&lt;/span>&lt;span class="p">:&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="n">q&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="n">q&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="p">]:&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">tmp&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">k&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">q&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">]&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">i&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="mi">1&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">else&lt;/span>&lt;span class="p">:&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">tmp&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">k&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">q&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="p">]&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">j&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="mi">1&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">k&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="mi">1&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">while&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="o">&amp;lt;=&lt;/span> &lt;span class="n">mid&lt;/span>&lt;span class="p">:&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">tmp&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">k&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">q&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">]&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">i&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="mi">1&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">k&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="mi">1&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">while&lt;/span> &lt;span class="n">j&lt;/span> &lt;span class="o">&amp;lt;=&lt;/span> &lt;span class="n">r&lt;/span>&lt;span class="p">:&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">tmp&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">k&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">q&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="p">]&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">j&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="mi">1&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">k&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="mi">1&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">j&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="nb">range&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">l&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">r&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">):&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">q&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">tmp&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">j&lt;/span>&lt;span class="p">]&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">j&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="mi">1&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="vm">__name__&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="s2">&amp;#34;__main__&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">n&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">int&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nb">input&lt;/span>&lt;span class="p">())&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">q&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">list&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nb">map&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nb">int&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nb">input&lt;/span>&lt;span class="p">()&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">split&lt;/span>&lt;span class="p">()))&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">tmp&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="n">n&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">merge_sort&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">q&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">n&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="nb">range&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nb">len&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">q&lt;/span>&lt;span class="p">)):&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">q&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="p">],&lt;/span> &lt;span class="n">end&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39; &amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div></description></item></channel></rss>
