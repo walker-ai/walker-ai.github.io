@@ -120,8 +120,8 @@ repost:
       "content": "投递"
     },
     {
-      "timestamp": "2025-08-20",
-      "content": "一面：8.28 15:00"
+      "timestamp": "2025-08-28",
+      "content": "一面"
     }
   ]
 }
