@@ -103,7 +103,9 @@ j=1，遍历i:
 
 ![image](https://cdn.ipfsscan.io/weibo/large/005wRZF3gy1i4llfdnsjyj30zk0ebgmh.jpg)
 
-这里 $O$ 的更新可以看Ye推导公式。
+这里 $O$ 的更新可以看Ye推导公式，更新方式：
+
+![image](https://cdn.ipfsscan.io/weibo/large/005wRZF3ly1i4lr2ngb42j31890h10tx.jpg)
 
 总体来看，不需要将 $S = QK^T$ 写入 HBM 再取回做 $Softmax$ 得到 $P$，然后再取回 $P$ 与 $V$ 做 $PV$ 得到结果。
 
