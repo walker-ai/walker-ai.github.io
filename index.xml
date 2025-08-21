@@ -1,4 +1,76 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>yitao's Blog</title><link>https://yitaonote.com/</link><description>yitao的学习笔记</description><generator>Hugo 0.145.0 &amp; FixIt v0.3.17-8212d6fd</generator><language>zh-CN</language><lastBuildDate>Tue, 19 Aug 2025 23:07:32 +0800</lastBuildDate><atom:link href="https://yitaonote.com/index.xml" rel="self" type="application/rss+xml"/><item><title>分布式推理优化技术</title><link>https://yitaonote.com/2025/7ae2a3f/</link><pubDate>Tue, 19 Aug 2025 23:07:32 +0800</pubDate><guid>https://yitaonote.com/2025/7ae2a3f/</guid><category domain="https://yitaonote.com/categories/%E6%8E%A8%E7%90%86%E4%BC%98%E5%8C%96/">推理优化</category><description>&lt;h3 id="为什么不缓存q而要缓存kv" class="heading-element">&lt;span>为什么不缓存Q，而要缓存KV？&lt;/span>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>yitao's Blog</title><link>https://yitaonote.com/</link><description>yitao的学习笔记</description><generator>Hugo 0.145.0 &amp; FixIt v0.3.17-8212d6fd</generator><language>zh-CN</language><lastBuildDate>Tue, 19 Aug 2025 23:07:32 +0800</lastBuildDate><atom:link href="https://yitaonote.com/index.xml" rel="self" type="application/rss+xml"/><item><title>分布式推理优化技术</title><link>https://yitaonote.com/2025/7ae2a3f/</link><pubDate>Tue, 19 Aug 2025 23:07:32 +0800</pubDate><guid>https://yitaonote.com/2025/7ae2a3f/</guid><category domain="https://yitaonote.com/categories/%E6%8E%A8%E7%90%86%E4%BC%98%E5%8C%96/">推理优化</category><description>&lt;h2 id="分布式通信原语" class="heading-element">&lt;span>分布式通信原语&lt;/span>
+ &lt;a href="#%e5%88%86%e5%b8%83%e5%bc%8f%e9%80%9a%e4%bf%a1%e5%8e%9f%e8%af%ad" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h2>&lt;p>在大模型分布式训练或推理时，常用到一些分布式通信原语，这里做一个简单总结&lt;/p>
+&lt;blockquote>
+&lt;p>参考文献：&lt;a href="https://zhuanlan.zhihu.com/p/717814079"target="_blank" rel="external nofollow noopener noreferrer">https://zhuanlan.zhihu.com/p/717814079&lt;/a>&lt;/p>&lt;/blockquote>
+&lt;h3 id="broadcast一对多" class="heading-element">&lt;span>Broadcast(一对多)&lt;/span>
+ &lt;a href="#broadcast%e4%b8%80%e5%af%b9%e5%a4%9a" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h3>&lt;p>在集合通信中，如果某个节点想把自身的数据发送到集群中的其他节点，那么就可以使用广播 Broadcast 的操作。Broadcast 代表广播行为，执行 Broadcast 时，数据从主节点 2 广播至其他各个指定的节点（0~3）。 Broadcast 操作是将某节点的输入广播到其他节点上，分布式机器学习中常用于网络参数的初始化。&lt;/p>
+&lt;p>如图中，从单个 sender 数据发送到其他节点上，将 2 卡大小为 1xN 的 Tensor 进行广播， 最终每张卡输出均为[1xN]的矩阵。操作过后，所有的进程上数据一致。&lt;/p>
+&lt;p>&lt;img loading="lazy" src='https://cdn.ipfsscan.io/weibo/large/005wRZF3gy1i4lgroafcdj30fy049jrt.jpg' alt="image">&lt;/p>
+&lt;p>&lt;strong>应用场景&lt;/strong>&lt;/p>
+&lt;p>Broadcast 将一张 GPU 卡上的数据同步到其他所有的 GPU 卡上，其应用场景有： 数据并行的初始化：1）确保每张卡上的初始参数是一致的；2）确保每张卡上模型相同。&lt;/p>
+&lt;h3 id="scatter一对多" class="heading-element">&lt;span>Scatter(一对多)&lt;/span>
+ &lt;a href="#scatter%e4%b8%80%e5%af%b9%e5%a4%9a" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h3>&lt;p>Scatter 操作表示一种散播行为，将主节点的数据进行划分并散布至其他指定的节点。Scatter 与 Broadcast 非常相似，都是一对多的通信方式，不同的是 Broadcast 的2号进程将相同的信息发送给所有的进程，而 Scatter 则是将数据的不同部分，按需发送给所有的进程。在分布式场景下，一般是将源进程上数据列表中的N个值按顺序分散到通讯组中的N个进程中。&lt;/p>
+&lt;p>&lt;img loading="lazy" src='https://cdn.ipfsscan.io/weibo/large/005wRZF3gy1i4lgu2h7e9j30g604s74q.jpg' alt="image">&lt;/p>
+&lt;p>&lt;strong>应用场景&lt;/strong>&lt;/p>
+&lt;p>模型并行里初始化时将模型 scatter 到不同的 GPU 上；数据并行，将数据按卡数分发到不同的 GPU 上。&lt;/p>
+&lt;h3 id="gather多对一" class="heading-element">&lt;span>Gather(多对一)&lt;/span>
+ &lt;a href="#gather%e5%a4%9a%e5%af%b9%e4%b8%80" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h3>&lt;p>Gather 操作将多个 sender 上的数据收集到单个节点上，Gather 可以理解为反向的 Scatter。 Gather 操作会从多个进程里面收集数据到一个进程上面。&lt;/p>
+&lt;p>&lt;img loading="lazy" src='https://cdn.ipfsscan.io/weibo/large/005wRZF3gy1i4lgv7r740j30g204v74v.jpg' alt="image">&lt;/p>
+&lt;h3 id="reduce多对一" class="heading-element">&lt;span>Reduce(多对一)&lt;/span>
+ &lt;a href="#reduce%e5%a4%9a%e5%af%b9%e4%b8%80" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h3>&lt;p>Reuduce 称为规约运算，是一系列简单运算操作的统称，细分可以包括：SUM、MIN、 MAX、PROD、LOR 等类型的规约操作。Reduce 从多个 sender 那里接收数据，最终 combine 到一个节点上。相比与all_reduce操作，不同点在于reduce在执行时需要指定目标进程，只有目标进程会收到最终的归约向量。&lt;/p>
+&lt;p>&lt;img loading="lazy" src='https://cdn.ipfsscan.io/weibo/large/005wRZF3gy1i4lgxb4wnrj30g805h3z4.jpg' alt="image">&lt;/p>
+&lt;p>&lt;strong>应用场景&lt;/strong>&lt;/p>
+&lt;p>如数据并行时的梯度规约&lt;/p>
+&lt;h3 id="all-gather多对多" class="heading-element">&lt;span>All Gather(多对多)&lt;/span>
+ &lt;a href="#all-gather%e5%a4%9a%e5%af%b9%e5%a4%9a" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h3>&lt;p>All Gather 会收集所有进程上的数据，并同步给所有进程。从最基础的角度来看，All Gather 相当于一个 Gather 操作之后跟着一个 Broadcast 操作。&lt;/p>
+&lt;p>&lt;img loading="lazy" src='https://cdn.ipfsscan.io/weibo/large/005wRZF3gy1i4lgy7565xj30fy04cdge.jpg' alt="image">&lt;/p>
+&lt;h3 id="allreduce多对多" class="heading-element">&lt;span>AllReduce(多对多)&lt;/span>
+ &lt;a href="#allreduce%e5%a4%9a%e5%af%b9%e5%a4%9a" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h3>&lt;p>Reduce 是一系列简单运算操作的统称，All Reduce 则是在所有的进程上都应用同样的 Reduce 操作。All Reduce 操作可通过单节点上 Reduce + Broadcast 操作完成。在 NCCL 中的 All Reduce 中，则是从多个 sender 那里接收数据，最终合并和分发到每一个节点上。&lt;/p>
+&lt;p>&lt;img loading="lazy" src='https://cdn.ipfsscan.io/weibo/large/005wRZF3gy1i4lgyec03oj30gd04yq3l.jpg' alt="image">&lt;/p>
+&lt;h3 id="reducescatter多对多" class="heading-element">&lt;span>ReduceScatter(多对多)&lt;/span>
+ &lt;a href="#reducescatter%e5%a4%9a%e5%af%b9%e5%a4%9a" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h3>&lt;p>归约分散操作，该操作行为上可以理解为在一个通信组内依次执行一个reduce操作和一个scatter操作，其示意图如下：&lt;/p>
+&lt;p>&lt;img loading="lazy" src='https://cdn.ipfsscan.io/weibo/large/005wRZF3gy1i4lgyhpqy5j30g804974y.jpg' alt="image">&lt;/p>
+&lt;p>首先，执行一个reduce操作（比如在0卡上），将每张卡上的1、2、3、4收集，那么0卡上得到4、8、12、16。然后执行一个scatter操作，将数据分割到不同卡上，每张卡的数据依次为：4、8、12、16。&lt;/p>
+&lt;p>在大模型训练过程中，常常会执行all_reduce操作，确保每张卡的parameter相同，为了是实现并行化，一般会将all_reduce操作进行拆分，一般由一个reduce_scatter和一个all_gather组成。如下所示：&lt;/p>
+&lt;p>&lt;img loading="lazy" src='https://cdn.ipfsscan.io/weibo/large/005wRZF3gy1i4lgz5710kj30z10j6474.jpg' alt="image">&lt;/p>
+&lt;h3 id="alltoall多对多" class="heading-element">&lt;span>AllToAll(多对多)&lt;/span>
+ &lt;a href="#alltoall%e5%a4%9a%e5%af%b9%e5%a4%9a" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h3>&lt;p>All to All 作为全交换操作，每个进程的接收缓冲区和发送缓冲区都是一个分为若干个数据块的数组。All to All 的具体操作是：将进程 i 的发送缓冲区中的第 j 块数据发送给进程 j，进程 j 将接收到的来 自进程 i 的数据块放在自身接收缓冲区的第 i 块位置。&lt;/p>
+&lt;p>&lt;img loading="lazy" src='https://cdn.ipfsscan.io/weibo/large/005wRZF3gy1i4lgzgm619j30g3045aaq.jpg' alt="image">&lt;/p>
+&lt;p>All to All 与 All Gather 区别：All Gather 操作中，不同进程向某一进程收集到的数据是完全 相同的，而在 All to All 中，不同的进程向某一进程收集到的数据是不同的。在每个进程的发送 缓冲区中，为每个进程都单独准备了一块数据。&lt;/p>
+&lt;p>全体到全体操作，该操作需要一个通信组中的N个进程各自提供一个含有N个元素的列表，对N个元素分别执行一次all_gather和scatter操作，如下所示：&lt;/p>
+&lt;p>&lt;img loading="lazy" src='https://cdn.ipfsscan.io/weibo/large/005wRZF3gy1i4lgzn4ekjj30v80boq6o.jpg' alt="image">&lt;/p>
+&lt;h2 id="一些常见问题" class="heading-element">&lt;span>一些常见问题&lt;/span>
+ &lt;a href="#%e4%b8%80%e4%ba%9b%e5%b8%b8%e8%a7%81%e9%97%ae%e9%a2%98" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h2>&lt;h3 id="为什么不缓存q而要缓存kv" class="heading-element">&lt;span>为什么不缓存Q，而要缓存KV？&lt;/span>
  &lt;a href="#%e4%b8%ba%e4%bb%80%e4%b9%88%e4%b8%8d%e7%bc%93%e5%ad%98q%e8%80%8c%e8%a6%81%e7%bc%93%e5%ad%98kv" class="heading-mark">
  &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
  &lt;/a>
