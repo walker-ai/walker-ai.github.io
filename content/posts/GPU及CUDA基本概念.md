@@ -112,7 +112,9 @@ Warp有如下几种状态：
 
 注意一个Warp中线程的同步性仅仅体现在调度上，即一个Warp中的所有线程是同时被Scheduler选中的，但是在指令发射和执行上则不一定了，至少可以从几个方面去看：
 
-Instruction replay：同一条指令发射多次称为instruction replay。CUDA指令可以分为不同类型，不同类型指令使用不同类型的执行单元执行，例如memory的读写指令是通过LD/ST units执行，特殊函数如sin，cos是通过SFU执行，即并非所有指令都是通过CUDA core执行。而对于某种类型执行单元来说，一个SM上可能都没有32个，例如Fermi中一个SM上只有4个SFU，那么一个Warp执行cos指令时，就需要发射和执行8次。
+- Instruction replay：同一条指令发射多次称为instruction replay。CUDA指令可以分为不同类型，不同类型指令使用不同类型的执行单元执行，例如memory的读写指令是通过LD/ST units执行，特殊函数如sin，cos是通过SFU执行，即并非所有指令都是通过CUDA core执行。而对于某种类型执行单元来说，一个SM上可能都没有32个，例如Fermi中一个SM上只有4个SFU，那么一个Warp执行cos指令时，就需要发射和执行8次。
+
+- Warp divergence：当一个Warp中的线程因为分支条件(如if else)不同而走到不同的路径时会造成warp divergence，此时不同分支的线程会形成不同分组，这些分组串行在不同的cycle执行
 
 ### 延迟隐藏
 
