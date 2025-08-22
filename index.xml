@@ -1,4 +1,776 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>yitao's Blog</title><link>https://yitaonote.com/</link><description>yitao的学习笔记</description><generator>Hugo 0.145.0 &amp; FixIt v0.3.17-8212d6fd</generator><language>zh-CN</language><lastBuildDate>Thu, 21 Aug 2025 21:44:59 +0800</lastBuildDate><atom:link href="https://yitaonote.com/index.xml" rel="self" type="application/rss+xml"/><item><title>秋招timeline</title><link>https://yitaonote.com/2025/adc4087/</link><pubDate>Thu, 21 Aug 2025 21:44:59 +0800</pubDate><guid>https://yitaonote.com/2025/adc4087/</guid><category domain="https://yitaonote.com/categories/%E6%89%BE%E5%B7%A5%E4%BD%9C/">找工作</category><description>&lt;p>记录秋招找工作的投递 timeline&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>yitao's Blog</title><link>https://yitaonote.com/</link><description>yitao的学习笔记</description><generator>Hugo 0.145.0 &amp; FixIt v0.3.17-8212d6fd</generator><language>zh-CN</language><lastBuildDate>Fri, 22 Aug 2025 01:02:38 +0800</lastBuildDate><atom:link href="https://yitaonote.com/index.xml" rel="self" type="application/rss+xml"/><item><title>GPU及CUDA基本概念</title><link>https://yitaonote.com/2025/34980c2/</link><pubDate>Fri, 22 Aug 2025 01:02:38 +0800</pubDate><guid>https://yitaonote.com/2025/34980c2/</guid><category domain="https://yitaonote.com/categories/%E6%89%BE%E5%B7%A5%E4%BD%9C/">找工作</category><description>&lt;h2 id="gpu-架构" class="heading-element">&lt;span>GPU 架构&lt;/span>
+ &lt;a href="#gpu-%e6%9e%b6%e6%9e%84" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h2>&lt;blockquote>
+&lt;p>参考文献：&lt;a href="https://zhuanlan.zhihu.com/p/12083951223"target="_blank" rel="external nofollow noopener noreferrer">https://zhuanlan.zhihu.com/p/12083951223&lt;/a>&lt;/p>&lt;/blockquote>
+&lt;h3 id="smstreaming-multiprocessor结构" class="heading-element">&lt;span>SM（Streaming Multiprocessor）结构&lt;/span>
+ &lt;a href="#smstreaming-multiprocessor%e7%bb%93%e6%9e%84" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h3>&lt;p>&lt;img loading="lazy" src='https://cdn.ipfsscan.io/weibo/large/005wRZF3gy1i4mhy3ink1j31401t6tff.jpg' alt="image">&lt;/p>
+&lt;p>其中包含一些核心组件：&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>CUDA core&lt;/strong>（即&lt;strong>Streaming Processor，SP&lt;/strong>）：其中包含整数处理单元和单精度浮点数处理单元，用于执行基本的数值运算。不同架构中CUDA core数量不同，这个数量在一定程度上体现了GPU的计算能力（并不是完全决定，还有如时钟频率，内存带宽，指令集等其他影响因素）&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img loading="lazy" src='https://cdn.ipfsscan.io/weibo/large/005wRZF3gy1i4mi3cr005j30ki0d7q3n.jpg' alt="image">&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;strong>Register File&lt;/strong>：寄存器文件。存放指令操作数；也有一些特殊寄存器用于存放系统变量，例如grid维度，thread blcok维度，线程id等等。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>Loca/Store Units（LD/ST）&lt;/strong>：执行内存（显存、shared memory）读写数据命令。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>Special Function Units（SFU）&lt;/strong>：执行一些特殊函数，如sqrt，sin，cos等。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>Warp Scheduler&lt;/strong>：GPU线程调度执行时是以一组线程（warp）为单位的，Warp Scheduler从驻留在SM上的warp中选
+择合适的warp用于执行。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>Dispatch Unit&lt;/strong>：负责从Warp Scheduler选中的线程中取出要执行的指令发射到CUDA core去执行。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>Shared Memory/L1 Cache&lt;/strong>：shared memory可以用于同一个thread block中的线程间互相通信，是可以通过编程读写的。L1 Cache则不能被编程，由GPU决定存放和淘汰内容。这里把Shared Memory和L1 Cache放在一起是因为它们在物理存储上是共用的，&lt;strong>可以通过API控制两者的配比。&lt;/strong>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>常量、纹理缓存与全局内存缓存&lt;/strong>：有的gpu架构这三类内存结构也同样存在于一个SM中：&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;div class="details admonition tip open disabled">
+ &lt;div class="details-summary admonition-title">&lt;i class="icon fa-fw fa-regular fa-lightbulb" aria-hidden="true">&lt;/i>以上以 Fermi 架构举例，后续的新架构都是在其基础上的进一步发展，例如更多的CUDA core数量，更大的内存容量，更高的IO带宽，以及增加一些新的组件如Tensor Core，RT Core等&lt;/div>
+ &lt;div class="details-content">
+ &lt;div class="admonition-content">&lt;/div>
+ &lt;/div>
+&lt;/div>&lt;h2 id="hopper架构" class="heading-element">&lt;span>Hopper架构&lt;/span>
+ &lt;a href="#hopper%e6%9e%b6%e6%9e%84" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h2>&lt;blockquote>
+&lt;p>参考文献：&lt;a href="https://zhuanlan.zhihu.com/p/1900569635532800833"target="_blank" rel="external nofollow noopener noreferrer">https://zhuanlan.zhihu.com/p/1900569635532800833&lt;/a>&lt;/p>&lt;/blockquote>
+&lt;p>由于实习期间使用的都是 H20 集群，因此学习一下 Hopper 架构的特点&lt;/p>
+&lt;p>&lt;img loading="lazy" src='https://cdn.ipfsscan.io/weibo/large/005wRZF3gy1i4mng9yb41j31400lvn2c.jpg' alt="image">&lt;/p>
+&lt;h2 id="gpu线程调度" class="heading-element">&lt;span>GPU线程调度&lt;/span>
+ &lt;a href="#gpu%e7%ba%bf%e7%a8%8b%e8%b0%83%e5%ba%a6" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h2>&lt;p>一个CUDA kernel对应一个grid，一个grid分成若干个thread block，每个thread block中包含若干线程。那么从硬件角度看，GPU在调度Kernel时，粗粒度看分成两个阶段，即&lt;strong>SM分配&lt;/strong>和&lt;strong>线程调度执行&lt;/strong>。&lt;/p>
+&lt;h3 id="sm分配" class="heading-element">&lt;span>SM分配&lt;/span>
+ &lt;a href="#sm%e5%88%86%e9%85%8d" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h3>&lt;p>GPU会根据SM资源情况来进行block的分配，只有当SM上剩余资源足够满足一个block的总资源需求时，SM才有可能被分配给当前block。这里的资源主要指&lt;mark class="mark-default">共享内存&lt;/mark>和&lt;mark class="mark-default">寄存器&lt;/mark>，即SM上的Shared Memory及寄存器是不能超额分配的；但CUDA core，SFU等指令执行单元则是可以超额分配的。&lt;/p>
+&lt;p>例如Fermi架构中每个SM上CUDA core只有32个，但是一个SM最大可以支持1536个线程，因为虽然不能同时执行这1536个线程的指令，但是可以对CUDA core进行时分复用，执行不同线程时进行上下文切换即可，GPU上的线程上下文切换效率远高于CPU上的线程切换，因为线程的寄存器已经事先分配好，切换时并不需要像CPU上那样把寄存器状态在主机内存上进行换入换出操作。&lt;/p>
+&lt;p>当然一个SM上最多能够支持多少个线程还是有硬性限制的，具体限制数值取决于具体架构。一个thread block分配到一个SM上之后就会驻留下来直到执行完毕，同一个grid中的thread block可能分配到不同的SM上，反过来同一个SM也可能被分配给来自不同grid的多个thread block；一个thread blcok分配到一个SM上之后，则称为Active thread block，一个SM被分配thread block之后则称为Active SM。&lt;/p>
+&lt;h3 id="线程调度执行" class="heading-element">&lt;span>线程调度执行&lt;/span>
+ &lt;a href="#%e7%ba%bf%e7%a8%8b%e8%b0%83%e5%ba%a6%e6%89%a7%e8%a1%8c" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h3>&lt;p>在调度执行时，GPU并不会针对单个线程去调度，而是把一个thread block进一步划分为若干个Warp（线程束）为单位进行调度，一个warp包含32个线程（目前所有架构上都是32），每个Warp Sheduler每个时钟周期（cycle）选择一个Warp将其指令通过Dispatch Unit发射到执行单元。也就是说一个thread block中的线程只是在逻辑上是同步执行，但是在硬件层面则不一定。可以从资源分配和调度的角度对此与主机上的调度做一个类比，thread block类似于主机上的进程，是资源分配单位，warp类似于主机上的线程，是调度执行单位。&lt;/p>
+&lt;p>Warp有如下几种状态：&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>Active&lt;/strong>：一个Acitve的thread block中的Warp都是Active的，也即已经分配到SM的Warp都是Active Warp。&lt;/li>
+&lt;li>&lt;strong>Stalled&lt;/strong>：当前Cycle暂时不能执行下一条指令的Warp，有多种情况可能导致Warp处于Stalled状态，常见的有：
+&lt;ul>
+&lt;li>thread block内的线程同步，部分先执行的Warp必须等待同一个block内的后执行的Warp到达同一个同步点。&lt;/li>
+&lt;li>线程需要的数据还没有传输完成，需要等待数据。&lt;/li>
+&lt;li>下一条指令依赖于上一条指令的输出，但是上一条指令还没有执行完成。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;strong>Eligible&lt;/strong>：当前Cycle已经准备好可以执行下一条指令的Warp。Warp Scheduler在选择Warp时只会从Eligible Warp中进行选取。&lt;/li>
+&lt;li>&lt;strong>Selected&lt;/strong>：被Warp Scheduler选中准备执行其中线程下一条指令的Warp。&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img loading="lazy" src='https://cdn.ipfsscan.io/weibo/large/005wRZF3gy1i4mmyhwmk8j30bp0klgm9.jpg' alt="image">&lt;/p>
+&lt;p>注意一个Warp中线程的同步性仅仅体现在调度上，即一个Warp中的所有线程是同时被Scheduler选中的，但是在指令发射和执行上则不一定了，至少可以从几个方面去看：&lt;/p>
+&lt;p>Instruction replay：同一条指令发射多次称为instruction replay。CUDA指令可以分为不同类型，不同类型指令使用不同类型的执行单元执行，例如memory的读写指令是通过LD/ST units执行，特殊函数如sin，cos是通过SFU执行，即并非所有指令都是通过CUDA core执行。而对于某种类型执行单元来说，一个SM上可能都没有32个，例如Fermi中一个SM上只有4个SFU，那么一个Warp执行cos指令时，就需要发射和执行8次。&lt;/p>
+&lt;h3 id="延迟隐藏" class="heading-element">&lt;span>延迟隐藏&lt;/span>
+ &lt;a href="#%e5%bb%b6%e8%bf%9f%e9%9a%90%e8%97%8f" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h3>&lt;p>延迟隐藏就是指通过并行执行，充分利用硬件执行单元，使得不同操作能够在时间上重叠，最大化某一种或几种操作的吞吐量（延迟隐藏的主要优化目标是吞吐量，而不是单个操作的时长）。比如这里的&lt;strong>当Warp等待内存时，SM立即切换其他就绪Warp&lt;/strong>。&lt;/p>
+&lt;p>了解详情可以进一步学习：&lt;strong>利特尔法则（little&amp;rsquo;s law）&lt;/strong>&lt;/p>
+&lt;div class="details admonition note open disabled">
+ &lt;div class="details-summary admonition-title">&lt;i class="icon fa-fw fa-solid fa-pencil-alt" aria-hidden="true">&lt;/i>以上三个步骤：&lt;strong>SM资源分配、线程调度执行、延迟隐藏&lt;/strong> 构成了 block 调度执行的完整流程。&lt;/div>
+ &lt;div class="details-content">
+ &lt;div class="admonition-content">&lt;/div>
+ &lt;/div>
+&lt;/div>&lt;h3 id="warp的划分" class="heading-element">&lt;span>warp的划分&lt;/span>
+ &lt;a href="#warp%e7%9a%84%e5%88%92%e5%88%86" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h3>&lt;p>CUDA线程与数组在内存中的排布类似，也分为逻辑视图和硬件视图，在逻辑视图上，一个thread block可能是1到3维的，但是在硬件视图上，这些线程上仍然是1维排布的，即按row-major方式将连续的32个线程组成一个Warp，用公式表达就是：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// thread_id是按row major方式将线程在block中的3维坐标转为1维线性坐标，
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// 维度从内到外为x, y, z（下面这个转换方式对于1,2,3维thread block都是通用的）
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="n">thread_id&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">threadIdx&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">z&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="n">blockDim&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">y&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="n">blockDim&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">x&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">threadIdx&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">y&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="n">blockDim&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">x&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">threadIdx&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">x&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// warp_id相同的线程就属于同一个Warp
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// warpSize也是一个内置变量，可以在kernel函数中直接引用，表示warp大小，目前来说是32
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="n">warp_id&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">thread_id&lt;/span> &lt;span class="o">/&lt;/span> &lt;span class="n">warpSize&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="alert alert-tip">&lt;p class="alert-title">&lt;svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">&lt;path d="M8 1.5c-2.363.0-4 1.69-4 3.75.0.984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75.0 01-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456.0 00-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863.0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751.0 01-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304.0-2.06-1.637-3.75-4-3.75zM5.75 12h4.5a.75.75.0 010 1.5h-4.5a.75.75.0 010-1.5zM6 15.25a.75.75.0 01.75-.75h2.5a.75.75.0 010 1.5h-2.5A.75.75.0 016 15.25z"/>&lt;/svg>提示&lt;/p>&lt;p>当一个thread block中的线程总数不是32的整数倍时，从编程视角看，最后一个Warp是不满32个线程的，但是在GPU硬件上仍然会占用32个线程的资源，只是其中部分线程会被标识为不活跃线程，这种情况下就会造成一些资源的浪费，所以在实际使用时，要尽量保证thread block中的线程数为32的整数倍。&lt;/p>&lt;/div>&lt;h3 id="warp-divergence" class="heading-element">&lt;span>warp divergence&lt;/span>
+ &lt;a href="#warp-divergence" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h3>&lt;p>Warp Divergence是指同一个Warp中的不同线程由于分支条件（例如if else）不同而进入不同的代码分支的情况。这个在CPU上的多线程不是太大问题，但是在CUDA中则会导致性能下降，因为在发生Warp Divergence时，Warp中走不同分支的线程会串行化执行，以一个2路分支为例，如下伪代码：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">condition&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="p">...&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span> &lt;span class="k">else&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">	&lt;span class="p">...&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>假设Warp内前一半线程condition 为true ，后一半线程condition为false，那么执行时两部分线程就分开串行执行了，每一部分线程执行时，另一部分线程标识为不活跃线程，但是任然占用执行单元。这种情况下一方面因为串行化增加了整体执行时间，另一方面不活跃线程降低了资源利用率。如下图所示（coherent部分表示没有分支的代码）：&lt;/p>
+&lt;p>&lt;img loading="lazy" src='https://cdn.ipfsscan.io/weibo/large/005wRZF3gy1i4mle9i5pqj30ru0flgmu.jpg' alt="image">&lt;/p>
+&lt;p>一个Warp一次执行一条公共指令。如果Warp中的线程由于数据依赖而发生条件分支发散，则warp会执行每个需要的分支路径，同时禁用不在该路径执行的线程。&lt;strong>因此当一个 Warp中的32个线程都执行相同的执行路径时，Warp的效率是最高的。&lt;/strong>&lt;/p>
+&lt;p>编译器可能会进行循环展开，或者会通过&lt;strong>分支预测&lt;/strong>来优化短的if或switch块。在这些情况下，所有Warp都不会发散。程序员还可以使用#pragma unroll指令控制循环展开。如下图所示，每个线程执行不同数量的循环迭代，循环迭代的数量在四和八之间变化。在前四次迭代中，所有线程都是活动的并执行A。在剩余的迭代中，一些线程执行A，而其他线程因为已经完成它们的迭代而不活动。&lt;/p>
+&lt;p>&lt;img loading="lazy" src='https://cdn.ipfsscan.io/weibo/large/005wRZF3gy1i4mlbow3lsj30v80gwjs3.jpg' alt="image">&lt;/p>
+&lt;p>&lt;img loading="lazy" src='https://cdn.ipfsscan.io/weibo/large/005wRZF3gy1i4mlbvgqohj30vr0fkt9i.jpg' alt="image">&lt;/p>
+&lt;div class="details admonition warning open disabled">
+ &lt;div class="details-summary admonition-title">&lt;i class="icon fa-fw fa-solid fa-exclamation-triangle" aria-hidden="true">&lt;/i>Warp Divergence对性能有损害，所以在可能的前提下，应该尽量通过重新设计程序逻辑，算法等方式避免或减少这种情况的发生。&lt;/div>
+ &lt;div class="details-content">
+ &lt;div class="admonition-content">&lt;/div>
+ &lt;/div>
+&lt;/div>&lt;h3 id="sm占用率" class="heading-element">&lt;span>SM占用率&lt;/span>
+ &lt;a href="#sm%e5%8d%a0%e7%94%a8%e7%8e%87" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h3>&lt;h2 id="roofline-model" class="heading-element">&lt;span>Roofline Model&lt;/span>
+ &lt;a href="#roofline-model" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h2>&lt;blockquote>
+&lt;p>参考文献：&lt;a href="https://zhuanlan.zhihu.com/p/24066764550"target="_blank" rel="external nofollow noopener noreferrer">https://zhuanlan.zhihu.com/p/24066764550&lt;/a>&lt;/p>&lt;/blockquote>
+&lt;h3 id="概念" class="heading-element">&lt;span>概念&lt;/span>
+ &lt;a href="#%e6%a6%82%e5%bf%b5" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h3>&lt;p>Roofline Model能帮助我们判断cuda 程序是&lt;strong>显存瓶颈(memory bound)&lt;strong>还是&lt;/strong>计算瓶颈(compute bound)&lt;/strong>，以及判断当前资源利用率的情况。&lt;/p>
+&lt;p>Roofline Model的横坐标是计算强度(computational intensity)，单位是FLOP/B，即每读一个Byte所能产生的FLOP数。例如以下base matrix multiply代码:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="line">&lt;span class="cl">&lt;span class="n">__global__&lt;/span> &lt;span class="kt">void&lt;/span> &lt;span class="nf">cudaMatrixMultiplyBase&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">float&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="n">A&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">float&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="n">B&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">float&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="n">C&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">M&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">N&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">K&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">int&lt;/span> &lt;span class="n">row&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">blockIdx&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">x&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="n">blockDim&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">x&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">threadIdx&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">x&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">int&lt;/span> &lt;span class="n">col&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">blockIdx&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">y&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="n">blockDim&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">y&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">threadIdx&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">y&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">row&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="n">M&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="n">col&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="n">N&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">float&lt;/span> &lt;span class="n">sum&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mf">0.0f&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">k&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">k&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="n">K&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="o">++&lt;/span>&lt;span class="n">k&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">sum&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="n">A&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">row&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="n">K&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">k&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="n">B&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">k&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="n">N&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">col&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">C&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">row&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="n">N&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">col&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">sum&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>它的&lt;strong>computational intensity&lt;/strong>是0.25，因为每次2次计算（乘加）需要读8个Byte&lt;/p>
+&lt;p>Roofline Model是描述一个进程的性能与它所在的硬件的关系，横坐标是计算强度，纵坐标是FLOP/s，如下图所示：&lt;/p>
+&lt;p>&lt;img loading="lazy" src='https://cdn.ipfsscan.io/weibo/large/005wRZF3gy1i4monuvqgvj31400r475a.jpg' alt="image">&lt;/p>
+&lt;p>其中 &lt;strong>红线（屋檐）和绿线（屋顶）&lt;/strong> 与具体硬件有关，红线的斜率是内存带宽，不同的硬件斜率不同（带宽越大，斜率越高），越靠近红线说明对带宽资源利用率越高；&lt;strong>任何一个点到原点的斜率不可能超过硬件最大带宽&lt;/strong> $\beta$&lt;/p>
+&lt;p>绿线是硬件的计算峰值，高度越靠近绿线，说明对计算资源利用率越高；&lt;strong>任何一个点的P值(纵坐标)不可能超过&lt;/strong> $\pi$&lt;/p>
+&lt;p>&lt;strong>计算强度D是有可能超过 $I_{max}$ 的&lt;/strong>，假设某台机器A计算峰值10GFLOPS，内存带宽是10GB/s，那么 $I_{max}=1$ 。假设某个模型疯狂重复计算，对1GB的数据计算5次乘加，计算量 C=10GFLOPs，那么计算强度 $I=10$&lt;/p>
+&lt;hr>
+&lt;p>为了加深理解，分别举几个示例说明图中的7个点是如何产生的：&lt;/p>
+&lt;p>假设：机器A计算峰值10GFLOPS，内存带宽是10GB/s，那么 $I_{max}=1$，下面的示例都发生在机器A上：&lt;/p>
+&lt;p>有一个&lt;strong>计算强度高的模型&lt;/strong> $D_h$，读取10GB的数据产生100GFLOPs的计算， $I=10$；&lt;/p>
+&lt;p>另外有一个&lt;strong>计算强度低的模型&lt;/strong> $D_l$，读取10GB的数据只产生5GFLOPs的计算， $I=0.5$；&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>$x_2, x_3$ 不可能在现实中出现，正如上面所说，$x_2$ 超过了带宽限制，$x_3$ 超过了硬件计算限制，&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>举个例：还是对于机器A，计算峰值10GFLOPS，内存带宽是10GB/s，假设有一个计算强度很高的模型，读取1GB数据计算100GFLOPs，计算强度为100，但实际上由于受到计算峰值的限制，P=10GFLOPS，此时计算的斜率为 $\dfrac{10}{100}=0.1&lt;1=\beta$&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>$x_1, x_4$ 是在计算强度很低的模型中可能出现，以模型 $D_l$ 为例，$x_1$ 出现的原因是由于程序实现问题导致计算性能都很低：例如计算5GFLOPS用了2s（理想情况是0.5s）导致纵坐标P比较低：($I=0.5, P=2.5$)，&lt;strong>属于工程提升空间很大，不需要增加硬件性能就可大幅度提升性能。&lt;/strong>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>$x_1$ 优化后变为 $x_4$，计算5GFLOPS只用了1s（理想情况是0.5s，但是受限于带宽，1s只能传输10GB数据），已经十分接近屋檐这条线了，但计算强度太低了，优化方向是提升计算强度（只能改变模型，属于模型的计算强度透支）来增加性能，如果算法没办法改进的情况下，那提升性能的方式只能堆更高的带宽了。 $x_4$ 属于&lt;strong>内存带宽受限型（模型不动的情况下，无脑增加带宽）&lt;/strong>。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>$x_5$ 属于把硬件资源都用满了（计算和带宽全都吃满），且模型的计算强度也被挖掘得刚刚好。其性能即受限于硬件带宽又受限于计算资源，增加任何一项硬件资源（带宽和计算）都没法提升性能。“刚刚好”的意思是计算强度和硬件刚好匹配，其即使增加了硬件计算和带宽，不改变模型的情况下，也没办法提升性能。它即受限于硬件，又受限于模型。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>$x_6$ 也属于把硬件资源都用满了，但模型本身的计算强度还有很大潜力，属于硬件压制了模型。&lt;strong>只需要堆计算资源性能就可以提升，模型和带宽都不用动，属于计算受限型&lt;/strong>。典型示例就是计算强度高的模型 $D_h$ ，计算强度为10，某个实现使得带宽和计算都已经跑满了（每秒读取10GB，计算10GFLOPs，受限于硬件算力和带宽）&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>$x_7$ 和 $x_1$一样，硬件利用率太低了，需要改进实现，则能成长为 $x_6$ 一样的潜力型选手。例如计算强度高的模型 $D_h$，计算强度为10，但某个实现使得计算没有打满（例如带宽没有打满，10GB数据花了2s，即便计算打满也导致GFLOPS为5GFLOPS，或者计算资源没有吃满，例如10GB数据用了1s传输，2s计算&amp;mdash;重复计算、bankconflict之类的导致）&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;p>总结：&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>Roofline model中，&lt;strong>越靠近屋檐（红色）或者屋顶（蓝色）的线，说明已经将硬件资源吃得很满&lt;/strong>，除非修改模型改变计算强度，或者修改硬件，否则很难提升。远离这些线的点，在实现是有提升空间的，离得远，说明实现对硬件的利用率越差。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Roofline model中，在 $I_{max}$ 左边的点，都是&lt;strong>内存带宽限制性&lt;/strong>；在 $I_{max}$ 右边的点，属于&lt;strong>计算限制型&lt;/strong>。如果模型在 $I_{max}$ 的左边且靠近屋檐（红色）线，那么不改模型算法的情况下提升带宽资源能增加性能，如果在 $I_{max}$右边且靠近屋顶（蓝色）的线，那么不改模型算法的情况下提升计算资源能增加性能&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>不可能有点会处于超过屋檐（红色）或者屋顶（蓝色）的区域&lt;/strong>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;h2 id="bank-conflict-与-避免方法" class="heading-element">&lt;span>Bank Conflict 与 避免方法&lt;/span>
+ &lt;a href="#bank-conflict-%e4%b8%8e-%e9%81%bf%e5%85%8d%e6%96%b9%e6%b3%95" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h2>&lt;blockquote>
+&lt;p>&lt;a href="https://www.bilibili.com/video/BV1Xz4y157p7/?vd_source=d436f8a78656c9132eae4a84f939d219"target="_blank" rel="external nofollow noopener noreferrer">参考视频&lt;/a>&lt;/p>&lt;/blockquote>
+&lt;h3 id="bank概念" class="heading-element">&lt;span>Bank概念&lt;/span>
+ &lt;a href="#bank%e6%a6%82%e5%bf%b5" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h3>&lt;p>cuda内核在执行的时候往往是以warp为单位去调度和执行，一个warp 32 个线程。所以，为了能够高效访存，shared memory中也对应了分成了32个存储体，这个存储体称之为 &lt;em>bank&lt;/em> 。&lt;/p>
+&lt;p>bank 是CUDA中一个重要概念，是内存的访问时一种划分方式，&lt;mark class="mark-default">在GPU中，访问某个地址的内存时，为了减少读写次数，访问地址并不是随机的，而是一次性访问bank内的内存地址，类似于内存对齐一样&lt;/mark>。一般GPU认为如果一个程序要访问某个内存地址时，其附近的数据也有很大概率会在接下来会被访问到。&lt;/p>
+&lt;p>&lt;strong>（目前N卡都是32个bank）&lt;/strong>，分别对应 warp 中32个线程。&lt;/p>
+&lt;p>&lt;img loading="lazy" src='https://cdn.ipfsscan.io/weibo/large/005wRZF3ly1i4mzx4rjhtj31ai0hogon.jpg' alt="image">&lt;/p>
+&lt;p>bank的宽度，代表的是一个bank所存储的数据的大小宽度。可以是：&lt;/p>
+&lt;ul>
+&lt;li>4 字节（32bit，单精度浮点数 float32）&lt;/li>
+&lt;li>8 字节（64bit，双精度浮点数 float64）&lt;/li>
+&lt;/ul>
+&lt;p>每 31 个bank，就会进行一次 stride。&lt;/p>
+&lt;p>比如说 bank 的宽度是4字节，我们在 share mem 中申请了 &lt;code>float A[256]&lt;/code> 大小的空间，那么：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-text" data-lang="text">&lt;span class="line">&lt;span class="cl">A[0], A[1], ..., A[31] 分别在 bank0, bank1, ..., bank31 中
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">A[32], A[33], ..., A[63] 也分别在 bank0, bank1, ..., bank31 中
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">所以 A[0] 和 A[32] 是共享一个bank的&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="bank-conflict" class="heading-element">&lt;span>Bank Conflict&lt;/span>
+ &lt;a href="#bank-conflict" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h3>&lt;p>一个很理想的情况是，32个thread，分别访问share mem中32个不同的bank，没有 &lt;strong>bank conflict&lt;/strong>，一个 memory 周期完成所有的 memory read/write（行优先访问）&lt;/p>
+&lt;p>&lt;img loading="lazy" src='https://cdn.ipfsscan.io/weibo/large/005wRZF3ly1i4n0km2yugj31bs0lmtc4.jpg' alt="image">&lt;/p>
+&lt;p>那最不理想的情况就是，32个thread，访问 share mem 中的同一个bank，导致最严重的 bank conflict，需要32个memory 周期才能完成所有的 memory read/write（列优先访问）。如果在block内多个线程访问的地址落入到同一个bank内，那么就会访问同一个bank就会产生bank conflict，这些访问将是变成串行。&lt;/p>
+&lt;p>&lt;img loading="lazy" src='https://cdn.ipfsscan.io/weibo/large/005wRZF3ly1i4n0kps5bsj31bu0hc41t.jpg' alt="image">&lt;/p>
+&lt;h3 id="使用-padding-缓解-bank-conflict" class="heading-element">&lt;span>使用 Padding 缓解 Bank Conflict&lt;/span>
+ &lt;a href="#%e4%bd%bf%e7%94%a8-padding-%e7%bc%93%e8%a7%a3-bank-conflict" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h3>&lt;p>为了方便解释，这里使用了8个bank一次stride进行举例。（实际CUDA设计中依然是32个bank一次stride）&lt;/p>
+&lt;p>&lt;img loading="lazy" src='https://cdn.ipfsscan.io/weibo/large/005wRZF3ly1i4n0kufl2zj31z00tuq89.jpg' alt="image">&lt;/p>
+&lt;p>可以在申请share mem时多申请一列（padding），这样就会更改share mem的布局，使得32个线程访问变成串行。&lt;/p>
+&lt;p>&lt;img loading="lazy" src='https://cdn.ipfsscan.io/weibo/large/005wRZF3ly1i4n0kz7u9jj31ok0u0jxc.jpg' alt="image">&lt;/p>
+&lt;div class="details admonition note open disabled">
+ &lt;div class="details-summary admonition-title">&lt;i class="icon fa-fw fa-solid fa-pencil-alt" aria-hidden="true">&lt;/i>但会产生未对齐的地址和引入无效数据，导致内存占用增加和干扰需要对齐地址的快速指令。&lt;/div>
+ &lt;div class="details-content">
+ &lt;div class="admonition-content">&lt;/div>
+ &lt;/div>
+&lt;/div>&lt;h3 id="使用-swizzle-缓解-bank-conflict" class="heading-element">&lt;span>使用 Swizzle 缓解 Bank Conflict&lt;/span>
+ &lt;a href="#%e4%bd%bf%e7%94%a8-swizzle-%e7%bc%93%e8%a7%a3-bank-conflict" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h3>&lt;blockquote>
+&lt;p>参考文献：&lt;a href="https://www.zhihu.com/question/667972067"target="_blank" rel="external nofollow noopener noreferrer">https://www.zhihu.com/question/667972067&lt;/a>&lt;/p>&lt;/blockquote>
+&lt;p>Swizzle通过重新映射内存地址，可以将原本访问相同Bank的线程分散到不同的Bank。Swizzle的核心思想是通过&lt;strong>物理地址映射&lt;/strong>避免Bank Conflict，同时保持逻辑地址不变。在CUTLASS中，Swizzle的实现通过一系列变换对内存布局进行重排。通过行列坐标的异或操作，Swizzle确保每个线程访问不同的Bank，从而实现了Bank Conflict Free的内存访问。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="line">&lt;span class="cl">&lt;span class="n">half&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="nf">naive_layout&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">half&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="n">data&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">r&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">c&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="o">&amp;amp;&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">data&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">r&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="n">columns&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">c&lt;/span>&lt;span class="p">]);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">half&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="nf">padding_layout&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">half&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="n">data&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">r&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">c&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="o">&amp;amp;&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">data&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">r&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">columns&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">c&lt;/span>&lt;span class="p">]);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// 一个可能的实现 Swizzle 的方式：
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="n">half&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="nf">row_swizzled_layout&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">half&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="n">data&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">r&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">c&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">auto&lt;/span> &lt;span class="n">address&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="kt">uint64_t&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">&amp;amp;&lt;/span>&lt;span class="n">data&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">r&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="n">columns&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">c&lt;/span>&lt;span class="p">];&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="k">reinterpret_cast&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">half&lt;/span> &lt;span class="o">*&amp;gt;&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">address&lt;/span> &lt;span class="o">^&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">r&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span> &lt;span class="mi">2&lt;/span>&lt;span class="p">));&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>可以用padding和swizzle的示意图来解释下这种物理地址映射的概念：&lt;/p>
+&lt;p>&lt;img loading="lazy" src='https://cdn.ipfsscan.io/weibo/large/005wRZF3ly1i4n1ktpuitj316o0li1ky.jpg' alt="image">
+⬆️bank conflict free
+&lt;img loading="lazy" src='https://cdn.ipfsscan.io/weibo/large/005wRZF3ly1i4n1grv22wj316o0li1ky.jpg' alt="image">
+⬆️bank conflict solved by padding
+&lt;img loading="lazy" src='https://cdn.ipfsscan.io/weibo/large/005wRZF3ly1i4n1guc2g0j316o0lg1ky.jpg' alt="image">
+⬆️bank conflict solved by swizzle&lt;/p>
+&lt;div class="details admonition note open disabled">
+ &lt;div class="details-summary admonition-title">&lt;i class="icon fa-fw fa-solid fa-pencil-alt" aria-hidden="true">&lt;/i>如果warp中的线程经过最多两次冲突就能得到所要的数据则成为2-way bank conflict，如果同一个warp中的所有线程访问一个bank中的32个不同的地址，则需要分32此，则称为32-way bank conflict。&lt;/div>
+ &lt;div class="details-content">
+ &lt;div class="admonition-content">&lt;/div>
+ &lt;/div>
+&lt;/div>&lt;div class="details admonition tip open disabled">
+ &lt;div class="details-summary admonition-title">&lt;i class="icon fa-fw fa-regular fa-lightbulb" aria-hidden="true">&lt;/i>bank conflict只发生在同一个warp的线程之间&lt;/div>
+ &lt;div class="details-content">
+ &lt;div class="admonition-content">&lt;/div>
+ &lt;/div>
+&lt;/div>&lt;blockquote>
+&lt;p>参考文献：&lt;/p>&lt;/blockquote>
+&lt;ol>
+&lt;li>&lt;a href="https://zhuanlan.zhihu.com/p/4746910252"target="_blank" rel="external nofollow noopener noreferrer">https://zhuanlan.zhihu.com/p/4746910252&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;h2 id="cuda-stream--cuda-graph" class="heading-element">&lt;span>CUDA Stream &amp;amp; CUDA Graph&lt;/span>
+ &lt;a href="#cuda-stream--cuda-graph" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h2>&lt;blockquote>
+&lt;p>参考文献：&lt;a href="https://zhuanlan.zhihu.com/p/699754357"target="_blank" rel="external nofollow noopener noreferrer">https://zhuanlan.zhihu.com/p/699754357&lt;/a>&lt;/p>&lt;/blockquote>
+&lt;h3 id="cuda-stream" class="heading-element">&lt;span>CUDA Stream&lt;/span>
+ &lt;a href="#cuda-stream" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h3>&lt;p>cuda编程里最重要的特性就是异步：CPU提交任务到GPU中异步执行。为了控制异步之间的并发顺序，cuda引入了stream和event的概念。本文尝试分析理解stream和event的含义，充分理解并使用stream、event，是正确、高效利用GPU的必要条件。&lt;/p>
+&lt;p>&lt;strong>只有一个CPU thread的情况&lt;/strong>&lt;/p>
+&lt;p>当不考虑GPU的时候，CPU线程就在不断地执行指令。从时间维度上看，就是这样的一条线：&lt;/p>
+&lt;p>&lt;img loading="lazy" src='https://cdn.ipfsscan.io/weibo/large/005wRZF3ly1i4n263lmc5j30u603e74r.jpg' alt="image">&lt;/p>
+&lt;p>&lt;strong>一个CPU thread与一个GPU执行单元&lt;/strong>&lt;/p>
+&lt;p>GPU相当于CPU的附属硬件，当我们增加了一个GPU执行单元的时候，由CPU下发任务给GPU，于是从时间维度上看，就出现了两条线：&lt;/p>
+&lt;p>&lt;img loading="lazy" src='https://cdn.ipfsscan.io/weibo/large/005wRZF3ly1i4n267qgnaj30u6090wge.jpg' alt="image">&lt;/p>
+&lt;p>这里在GPU和CPU之间还增加了一个GPU队列。当我们在CPU上调用launch kernel的时候，本质上就是把这个kernel放入到GPU的执行队列里。然后，驱动负责维护这个队列，每当执行引擎（硬件资源）空闲的时候，就执行队列里的kernel。&lt;/p>
+&lt;p>上图描述了这些关键时间点：&lt;/p>
+&lt;ul>
+&lt;li>CPU launch kernel 1，kernel 1入队，此时GPU空闲，于是kernel 1马上开始执行&lt;/li>
+&lt;li>CPU调用host function，与GPU无关&lt;/li>
+&lt;li>CPU launch kernel 2，kernel 2入队，此时GPU还在执行kernel 1，于是kernel 2继续待在队列里&lt;/li>
+&lt;li>GPU执行完kernel 1后，驱动程序发现队列里还有kernel 2，于是开始执行kernel 2（这一步不需要CPU参与）&lt;/li>
+&lt;/ul>
+&lt;p>早期的GPU硬件上只有一个execution engine，因此，不论是哪个进程、哪个线程发起的kernel launch，都在同一个队列里排队。随着GPU的发展，GPU上面开始出现了多个execution engine。&lt;/p>
+&lt;p>&lt;strong>一个CPU thread与2个GPU执行单元&lt;/strong>&lt;/p>
+&lt;p>当我们有两个或多个GPU执行单元的时候，我们就可以让GPU kernel之间也并行起来：&lt;/p>
+&lt;p>&lt;img loading="lazy" src='https://cdn.ipfsscan.io/weibo/large/005wRZF3ly1i4n28c1ynrj30uo0fs0v2.jpg' alt="image">&lt;/p>
+&lt;p>图中蓝色阴影区域就是两个GPU kernel并发执行的时间段。&lt;/p>
+&lt;p>这里要注意，kernel 1和kernel 2能不能并发执行，需要由用户来决定，硬件不能擅作主张，否则万一kernel 2要读取kernel 1算出来的数据，那并发执行的结果就是错的。&lt;/p>
+&lt;p>为了给用户提供这种控制权，于是我们就有了stream的概念。一个stream就对应于一个执行队列（加一个执行单元），用户可以自行决定是否把两个kernel分开放在两个队列里。&lt;/p>
+&lt;blockquote>
+&lt;p>stream是cuda为上层应用提供的抽象，应用可以创建任意多个stream，下发任意多个kernel。但如果正在执行的kernel数目超过了硬件的execution engine的数量，那么即使当前stream里没有kernel正在执行，下发的kernel也必须在队列里继续等待，直到有硬件资源可以执行。（注意：此时kernel 执行与CPU下发kernel之间依然是异步的）&lt;/p>&lt;/blockquote>
+&lt;p>由此，我们可以总结得到：一个GPU kernel可以执行的必要条件是它在stream的队列首位且存在执行kernel的空闲硬件资源。&lt;/p>
+&lt;p>创建stream的时候，我们也可以用 &lt;code>cudaStreamCreateWithPriority&lt;/code> 为它指定优先级。当多个GPU kernel都可以执行的时候，cuda driver负责调度，优先执行high priority的stream里的kernel。&lt;/p>
+&lt;h4 id="stream之间的操作cuda-event" class="heading-element">&lt;span>stream之间的操作：cuda event&lt;/span>
+ &lt;a href="#stream%e4%b9%8b%e9%97%b4%e7%9a%84%e6%93%8d%e4%bd%9ccuda-event" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h4>&lt;p>我们不仅可以从CPU thread操作stream，也可以在一个stream上面操作另一个stream。当然，stream只是一层抽象，我们依然要借用CPU thread的辅助，来指导“一个stream上面操作另一个stream”。具体的操作也很简单，就是一个stream上面的kernel想等待另一个stream上面的kernel执行结束之后再执行。&lt;/p>
+&lt;p>为了实现这个目标，我们需要记录另一个stream上面的队列状态，这就是cuda event。让我们来看一个具体的例子：&lt;/p>
+&lt;p>&lt;img loading="lazy" src='https://cdn.ipfsscan.io/weibo/large/005wRZF3ly1i4n2a78z2hj31400ehtcv.jpg' alt="image">&lt;/p>
+&lt;p>它实现的功能是：&lt;/p>
+&lt;ul>
+&lt;li>在stream 1上面执行kernel 1 和 kernel 3&lt;/li>
+&lt;li>在stream 2上面执行kernel 2，但是必须等到stream 1上面的kernel 1执行结束之后才能开始&lt;/li>
+&lt;/ul>
+&lt;p>为此，我们在stream 1上面launch kernel 1之后，创建一个event来记录当前stream 1的状态（具体来说就是队列里有哪些kernel还没执行），然后把这个event放进stream 2的队列里，让stream 2执行一个想象中的“wait for event 1”的kernel，这个kernel直到kernel 1执行结束之后才离开队列。于是，在这个event之后加入队列的kernel 2，就必须等到kernel 1执行结束之后才能开始了。&lt;/p>
+&lt;p>这样的好处在于，我们不仅控制了kernel 1和 kernel 2的执行顺序，而且把kernel 2和kernel 3并发执行了，节省了时间（蓝色区域为两个kernel同时执行的时间段）。&lt;/p>
+&lt;h3 id="cuda-graph" class="heading-element">&lt;span>CUDA Graph&lt;/span>
+ &lt;a href="#cuda-graph" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h3>&lt;p>对GPU进行性能优化时，cudagraph是绕不开的话题。不仅是GPU，大部分的xpu都会提供类似graph mode的优化，相比于每次分别由CPU进行kernel launch的eager mode，graph mode通常都会有较大性能提升，然而也经常容易出现各种各样的奇怪问题。&lt;/p>
+&lt;div class="details admonition note open disabled">
+ &lt;div class="details-summary admonition-title">&lt;i class="icon fa-fw fa-solid fa-pencil-alt" aria-hidden="true">&lt;/i>由于实习期间对CUDA Graph接触的比较多，实际上 CUDA Graph主要是为了减少 kernel launch 造成的开销，于是乎将多个琐碎的小kernel改为一次launch，具体的操作方式分为：一次Capture-&amp;gt;多次Replay&lt;/div>
+ &lt;div class="details-content">
+ &lt;div class="admonition-content">&lt;/div>
+ &lt;/div>
+&lt;/div>&lt;p>&lt;strong>graph capture期间禁止执行的函数&lt;/strong>&lt;/p>
+&lt;p>当一个stream处在graph capture状态时，实际上CPU下发的kernel都没有执行，只是被记录下来了。因此，与GPU kernel执行状态相关的函数都不能使用，例如：&lt;/p>
+&lt;ul>
+&lt;li>对stream进行同步（cudaStreamSynchronize）&lt;/li>
+&lt;li>隐含stream同步的操作（对context进行同步、对device进行同步，都会强制内部包含的全部stream进行同步，如果其中有stream处在graph capture状态，就会报错）&lt;/li>
+&lt;li>隐含stream同步的操作,如当前graph capture的stream是blocking stream，则涉及null stream的操作都不可用，例如cudaMalloc&lt;/li>
+&lt;li>对stream上面record的event进行的状态查询、同步操作&lt;/li>
+&lt;li>&lt;mark class="mark-default">另外断点调试在这期间也是用不了的&lt;/mark>&lt;/li>
+&lt;/ul>
+&lt;p>更详细的限制可以看官方文档：&lt;a href="https://docs.pytorch.org/docs/stable/notes/cuda.html"target="_blank" rel="external nofollow noopener noreferrer">https://docs.pytorch.org/docs/stable/notes/cuda.html&lt;/a>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;span class="lnt">44
+&lt;/span>&lt;span class="lnt">45
+&lt;/span>&lt;span class="lnt">46
+&lt;/span>&lt;span class="lnt">47
+&lt;/span>&lt;span class="lnt">48
+&lt;/span>&lt;span class="lnt">49
+&lt;/span>&lt;span class="lnt">50
+&lt;/span>&lt;span class="lnt">51
+&lt;/span>&lt;span class="lnt">52
+&lt;/span>&lt;span class="lnt">53
+&lt;/span>&lt;span class="lnt">54
+&lt;/span>&lt;span class="lnt">55
+&lt;/span>&lt;span class="lnt">56
+&lt;/span>&lt;span class="lnt">57
+&lt;/span>&lt;span class="lnt">58
+&lt;/span>&lt;span class="lnt">59
+&lt;/span>&lt;span class="lnt">60
+&lt;/span>&lt;span class="lnt">61
+&lt;/span>&lt;span class="lnt">62
+&lt;/span>&lt;span class="lnt">63
+&lt;/span>&lt;span class="lnt">64
+&lt;/span>&lt;span class="lnt">65
+&lt;/span>&lt;span class="lnt">66
+&lt;/span>&lt;span class="lnt">67
+&lt;/span>&lt;span class="lnt">68
+&lt;/span>&lt;span class="lnt">69
+&lt;/span>&lt;span class="lnt">70
+&lt;/span>&lt;span class="lnt">71
+&lt;/span>&lt;span class="lnt">72
+&lt;/span>&lt;span class="lnt">73
+&lt;/span>&lt;span class="lnt">74
+&lt;/span>&lt;span class="lnt">75
+&lt;/span>&lt;span class="lnt">76
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="nn">torch&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">contextlib&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">contextmanager&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nd">@contextmanager&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">graph_capture&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">pool&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="kc">None&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">stream&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="kc">None&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">capture_error_mode&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="nb">str&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;global&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">dump_path&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="kc">None&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">g&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">torch&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">cuda&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">CUDAGraph&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="n">dump_path&lt;/span> &lt;span class="ow">is&lt;/span> &lt;span class="ow">not&lt;/span> &lt;span class="kc">None&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">g&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">enable_debug_mode&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">with&lt;/span> &lt;span class="n">torch&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">cuda&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">graph&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">cuda_graph&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">g&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">pool&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">pool&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">stream&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">stream&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">capture_error_mode&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">capture_error_mode&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">yield&lt;/span> &lt;span class="n">g&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="n">dump_path&lt;/span> &lt;span class="ow">is&lt;/span> &lt;span class="ow">not&lt;/span> &lt;span class="kc">None&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">g&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">debug_dump&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">dump_path&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="nn">ctypes&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Load the CUDA runtime library&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">cudart&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">ctypes&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">CDLL&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;libcudart.so&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Define cudaMemcpyKind enumeration as in the CUDA API&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">cudaMemcpyHostToHost&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">cudaMemcpyHostToDevice&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">cudaMemcpyDeviceToHost&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">cudaMemcpyDeviceToDevice&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">3&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">cudaMemcpyDefault&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">4&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Setup the prototype of the cudaMemcpyAsync function&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">cudaMemcpyAsync&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">cudart&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">cudaMemcpyAsync&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">cudaMemcpyAsync&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">argtypes&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">ctypes&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">c_void_p&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="c1"># void* dst&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">ctypes&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">c_void_p&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="c1"># const void* src&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">ctypes&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">c_size_t&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="c1"># size_t count&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">ctypes&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">c_int&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="c1"># enum cudaMemcpyKind&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">ctypes&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">c_void_p&lt;/span> &lt;span class="c1"># cudaStream_t stream&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">cudaMemcpyAsync&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">restype&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">ctypes&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">c_int&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Placeholder input used for capture&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">static_a&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">torch&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">zeros&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="mi">5&lt;/span>&lt;span class="p">,),&lt;/span> &lt;span class="n">device&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;cpu&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">static_a&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">static_a&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">pin_memory&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">static_b&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">torch&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">zeros&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="mi">5&lt;/span>&lt;span class="p">,),&lt;/span> &lt;span class="n">device&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;cpu&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">static_b&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">static_b&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">pin_memory&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">static_output&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">torch&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">zeros&lt;/span>&lt;span class="p">((&lt;/span>&lt;span class="mi">5&lt;/span>&lt;span class="p">,),&lt;/span> &lt;span class="n">device&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;cpu&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">static_output&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">static_output&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">pin_memory&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">compute&lt;/span>&lt;span class="p">():&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">a&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">static_a&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">to&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;cuda&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">non_blocking&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="kc">True&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">b&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">static_b&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">to&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;cuda&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">non_blocking&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="kc">True&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">output&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">a&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">result&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">cudaMemcpyAsync&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">static_output&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">data_ptr&lt;/span>&lt;span class="p">(),&lt;/span> &lt;span class="n">output&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">data_ptr&lt;/span>&lt;span class="p">(),&lt;/span> &lt;span class="n">output&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">numel&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="n">output&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">element_size&lt;/span>&lt;span class="p">(),&lt;/span> &lt;span class="n">cudaMemcpyDeviceToHost&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">torch&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">cuda&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">current_stream&lt;/span>&lt;span class="p">()&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">cuda_stream&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">assert&lt;/span> &lt;span class="n">result&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="mi">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">static_output&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Warmup before capture&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">s&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">torch&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">cuda&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">Stream&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">s&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">wait_stream&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">torch&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">cuda&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">current_stream&lt;/span>&lt;span class="p">())&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">with&lt;/span> &lt;span class="n">torch&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">cuda&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">stream&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">s&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="n">_&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="nb">range&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">compute&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">torch&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">cuda&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">current_stream&lt;/span>&lt;span class="p">()&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">wait_stream&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">s&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Captures the graph&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># To allow capture, automatically sets a side stream as the current stream in the context&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">with&lt;/span> &lt;span class="n">torch&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">cuda&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">nvtx&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">range&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;capture&amp;#34;&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">with&lt;/span> &lt;span class="n">graph_capture&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">dump_path&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;graph.dot&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="k">as&lt;/span> &lt;span class="n">g&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">compute&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Run the graph&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">g&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">replay&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">torch&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">cuda&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">current_stream&lt;/span>&lt;span class="p">()&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">synchronize&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">static_output&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">static_a&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="mi">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">static_b&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="mi">2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">g&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">replay&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">torch&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">cuda&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">current_stream&lt;/span>&lt;span class="p">()&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">synchronize&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">static_output&lt;/span>&lt;span class="p">)&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>其中，因为PyTorch的功能的一些限制，我们的代码发生了变化：PyTorch里的 &lt;code>a.to(&amp;quot;cpu&amp;quot;)&lt;/code>，会强制同步使得host to device完成同步，即使加上 &lt;code>non_blocking=True&lt;/code> 也无法改变。这与cudagraph不兼容。为了解决这个问题，我们手动调用了 &lt;code>cudaMemcpyAsync&lt;/code> 函数，实现了异步拷贝到CPU的功能。（如果要PyTorch里直接实现这一功能，需要async CPU的支持。）&lt;/p>
+&lt;p>执行以上代码，捕获的计算图为：&lt;/p>
+&lt;p>&lt;img loading="lazy" src='https://cdn.ipfsscan.io/weibo/large/005wRZF3ly1i4n2qraosuj31401r1gyi.jpg' alt="image">&lt;/p>
+&lt;h2 id="ptx--sass--libdevice" class="heading-element">&lt;span>PTX &amp;amp; SASS &amp;amp; libdevice&lt;/span>
+ &lt;a href="#ptx--sass--libdevice" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h2>&lt;blockquote>
+&lt;p>参考文献：&lt;a href="https://zhuanlan.zhihu.com/p/21358921473"target="_blank" rel="external nofollow noopener noreferrer">https://zhuanlan.zhihu.com/p/21358921473&lt;/a>&lt;/p>&lt;/blockquote>
+&lt;h3 id="ptxparallel-thread-execution" class="heading-element">&lt;span>PTX(Parallel Thread Execution)&lt;/span>
+ &lt;a href="#ptxparallel-thread-execution" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h3>&lt;ul>
+&lt;li>PTX 是NVIDIA设计的中间表示（IR），类似于GPU的汇编语言，但独立于具体硬件架构。&lt;/li>
+&lt;li>PTX代码由NVCC生成，可以被NVIDIA的驱动程序进一步编译为特定GPU架构的机器代码（SASS）。&lt;/li>
+&lt;li>PTX代码是文本格式，便于阅读和调试。&lt;/li>
+&lt;/ul>
+&lt;p>示例：&lt;/p>
+&lt;p>&lt;img loading="lazy" src='https://cdn.ipfsscan.io/weibo/large/005wRZF3ly1i4n2w08wp2j30wf0j83zl.jpg' alt="image">&lt;/p>
+&lt;h3 id="sass-streaming-assembly" class="heading-element">&lt;span>SASS (Streaming ASSembly)&lt;/span>
+ &lt;a href="#sass-streaming-assembly" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h3>&lt;ul>
+&lt;li>SASS 是NVIDIA GPU的机器代码，直接由GPU硬件执行。&lt;/li>
+&lt;li>SASS是二进制格式，特定于具体的GPU架构（如Ampere、Turing）。&lt;/li>
+&lt;li>SASS代码通常通过反汇编工具（如cuobjdump）查看。&lt;/li>
+&lt;/ul>
+&lt;p>示例：&lt;/p>
+&lt;p>&lt;img loading="lazy" src='https://cdn.ipfsscan.io/weibo/large/005wRZF3ly1i4n2wezp5aj30w006fweo.jpg' alt="image">&lt;/p>
+&lt;h3 id="libdevice" class="heading-element">&lt;span>libdevice&lt;/span>
+ &lt;a href="#libdevice" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h3>&lt;ul>
+&lt;li>libdevice 是NVIDIA提供的一个数学函数库，包含高度优化的设备端数学函数（如sin、exp、log等）&lt;/li>
+&lt;li>这些函数以PTX或SASS形式提供，可以直接链接到CUDA程序中。&lt;/li>
+&lt;li>libdevice库的文件通常命名为libdevice.*.bc（LLVM bitcode格式）。&lt;/li>
+&lt;/ul>
+&lt;p>在CUDA程序中，调用标准数学函数（如sin、cos）时，NVCC会自动链接libdevice库。开发者也可以通过 &lt;code>-lcudadevrt&lt;/code>显式链接libdevice。&lt;/p>
+&lt;h3 id="转换流程" class="heading-element">&lt;span>转换流程&lt;/span>
+ &lt;a href="#%e8%bd%ac%e6%8d%a2%e6%b5%81%e7%a8%8b" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h3>&lt;p>以下是CUDA代码从高级语言到最终机器代码的转换流程：&lt;/p>
+&lt;ol>
+&lt;li>CUDA C/C++ → PTX&lt;/li>
+&lt;/ol>
+&lt;ul>
+&lt;li>NVCC将CUDA设备代码编译为PTX。&lt;/li>
+&lt;li>示例命令：&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">nvcc -ptx vector_add.cu -o vector_add.ptx&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="2">
+&lt;li>PTX → SASS&lt;/li>
+&lt;/ol>
+&lt;ul>
+&lt;li>NVIDIA的驱动程序将PTX代码编译为特定GPU架构的SASS代码。&lt;/li>
+&lt;li>这一步在运行时或安装时完成。&lt;/li>
+&lt;/ul>
+&lt;h2 id="cutlass--cute" class="heading-element">&lt;span>CUTLASS &amp;amp; CUTE&lt;/span>
+ &lt;a href="#cutlass--cute" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h2>&lt;h3 id="cutlass" class="heading-element">&lt;span>CUTLASS&lt;/span>
+ &lt;a href="#cutlass" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h3>&lt;p>CUTLASS（CUDA Template for Linear Algebra Subroutines）是指NVIDIA开源的一个高性能CUDA模板库，用于实现高效的线性代数计算，里面提供了包括访存，计算，流水线编排等多个level的模板。用户通过CUTLASS模板组装以及特化，可以搭建出自己需要的高性能CUDA Kernel。&lt;/p>
+&lt;p>核心思想是模块化和通用化。它不像传统的库（如 cuBLAS）那样提供预编译好的函数，而是提供了一套模板，让你能够根据自己的需求组合出最优化的计算内核。这使得开发者可以针对特定的矩阵尺寸、数据类型（如 FP16、FP32、INT8 等）和计算模式，生成定制化的、性能极高的内核，而无需从头手写汇编代码。&lt;/p>
+&lt;h3 id="cute" class="heading-element">&lt;span>CUTE&lt;/span>
+ &lt;a href="#cute" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h3>&lt;p>CUTE 是一个更底层的、用于描述和操作 GPU 上多维数据布局 (tensor layout) 的 C++ 库。 它不是一个完整的应用库，而是一套强大的、用于构建其他高级库（如 CUTLASS）的工具集。&lt;/p>
+&lt;p>CUTE 的核心思想是提供一套数学化的、声明式的张量抽象，让开发者可以精确地描述数据在内存中的排布方式。它解决了以下核心问题：&lt;/p>
+&lt;p>张量布局 (Tensor Layout)： 如何描述一个多维数组（张量）在内存中的存储方式，例如行主序、列主序，或者更复杂的分块和交错布局。&lt;/p>
+&lt;p>张量视图 (Tensor View)： 如何在不移动数据的情况下，创建张量的子视图，并对子视图进行操作。&lt;/p>
+&lt;p>跨步操作 (Striding)： 如何高效地计算多维数组中元素的地址。&lt;/p>
+&lt;p>你可以把 CUTE 理解为一个“张量布局的 DSL (Domain-Specific Language)”。 它提供了一种简洁的方式来表达复杂的数据访问模式，这对于编写 GPU 上的高性能通用代码至关重要。CUTLASS 内部就广泛使用了 CUTE 来管理和操作其张量数据，从而实现了其灵活性和性能。&lt;/p>
+&lt;h2 id="global-memory的访存合并" class="heading-element">&lt;span>Global Memory的访存合并&lt;/span>
+ &lt;a href="#global-memory%e7%9a%84%e8%ae%bf%e5%ad%98%e5%90%88%e5%b9%b6" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h2>&lt;blockquote>
+&lt;p>参考文献：&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://zhuanlan.zhihu.com/p/675186810"target="_blank" rel="external nofollow noopener noreferrer">https://zhuanlan.zhihu.com/p/675186810&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://zhuanlan.zhihu.com/p/641639133"target="_blank" rel="external nofollow noopener noreferrer">https://zhuanlan.zhihu.com/p/641639133&lt;/a>&lt;/li>
+&lt;/ul>&lt;/blockquote>
+&lt;p>当前的GPU架构允许通过编译选项来控制是否启用一级缓存。当一级缓存被禁用时，对全局内存的加载请求将直接进入二级缓存；如果二级缓存未命中，将由DRAM完成请求。核函数从全局内存DRAM中读取数据有两种粒度， 使用一级缓存时，每次按照128字节进行缓存；不使用一级缓存时，每次按照32字节进行缓存。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 禁用一级缓存&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-Xptxas -dlcm&lt;span class="o">=&lt;/span>cg
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 启用一级缓存&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-Xptxas -dlcm&lt;span class="o">=&lt;/span>ca&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="传输延迟" class="heading-element">&lt;span>传输延迟&lt;/span>
+ &lt;a href="#%e4%bc%a0%e8%be%93%e5%bb%b6%e8%bf%9f" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h3>&lt;p>在host端和device端之间存在latency，数据通过PCI-E总线从CPU传输给GPU，我们必须避免频繁的host、device间数据传输，即使是最新的PCIE 3.0 x16接口，其双向带宽也只有32GB/s&lt;/p>
+&lt;p>在device内部也存在latency，即数据从gpu的存储器到multi-processor（SM）的传输。&lt;/p>
+&lt;p>访问一次全局内存，将耗费400~600个cycle，成本是非常高的，所以必须谨慎对待全局内存的访问&lt;/p>
+&lt;p>我们把一次内存请求——也就是从内核函数发起请求，到硬件响应返回数据这个过程称为一个内存事务（加载和存储都行）。&lt;/p>
+&lt;h3 id="合并访存" class="heading-element">&lt;span>合并访存&lt;/span>
+ &lt;a href="#%e5%90%88%e5%b9%b6%e8%ae%bf%e5%ad%98" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h3>&lt;p>数据从全局内存到SM（stream-multiprocessor）的传输，会进行cache，如果cache命中了，下一次的访问的耗时将大大减少。&lt;/p>
+&lt;blockquote>
+&lt;p>基本逻辑是： 首先判断这个 Kernel 的数据流路径，是否使用了 L1 cache，由此得出当前内存访问的最小粒度： 32 Bytes / 128 Bytes. 分析原始数据存储的结构，结合访存粒度，分析数据访问是否内存对齐，数据是否能合并访问。&lt;/p>&lt;/blockquote>
+&lt;p>对于L1 cache，每次按照128字节进行缓存；对于L2 cache，每次按照32字节进行缓存。&lt;/p>
+&lt;p>意思是表示线程束中每个线程以一个字节（&lt;code>1*32=32&lt;/code>）、16位（&lt;code>2*32=64&lt;/code>）、32位（&lt;code>4*32=128&lt;/code>）为单位读取数据。前提是，访问必须连续，并且访问的地址是以32字节对齐。&lt;/p>
+&lt;p>例子，假设每个thread读取一个float变量，那么一个warp（32个thread）将会执行32*4=128字节的合并访存指令，通过一次访存操作完成所有thread的读取请求。&lt;/p>
+&lt;p>&lt;img loading="lazy" src='https://cdn.ipfsscan.io/weibo/large/005wRZF3ly1i4n6sp6qf1j30ri081t96.jpg' alt="image">&lt;/p>
+&lt;p>对于L2 cache，合并访存的字节减少为32字节，那么L2 cache相对L1 cache的好处就是：&lt;/p>
+&lt;p>&lt;mark class="mark-default">在非对齐访问、分散访问（非连续访问）的情况下，提高吞吐量（cache的带宽利用率）&lt;/mark>&lt;/p>
+&lt;p>&lt;strong>对齐/非对齐访问&lt;/strong>&lt;/p>
+&lt;p>当一个内存事务的首个访问地址是缓存粒度（32或128字节）的偶数倍的时候：比如二级缓存32字节的偶数倍64，128字节的偶数倍256的时候，这个时候被称为对齐内存访问，非对齐访问就是除上述的其他情况，非对齐的内存访问会造成带宽浪费。&lt;/p>
+&lt;p>&lt;strong>合并/非合并访问&lt;/strong>&lt;/p>
+&lt;p>当一个线程束内的线程访问的内存都在一个内存块（缓存粒度）里的时候，就会出现合并访问。&lt;/p>
+&lt;p>对齐合并访问的状态是理想化的，也是最高速的访问方式，当线程束内的所有线程访问的数据在一个内存块，并且数据是从内存块的首地址开始被需要的，那么对齐合并访问出现了。为了最大化全局内存访问的理想状态，尽量将线程束访问内存组织成对齐合并的方式，这样的效率是最高的。&lt;/p>
+&lt;p>一个线程束加载数据，使用一级缓存，并且这个事务所请求的所有数据在一个128字节的对齐的地址段上（对齐的地址段是我自己发明的名字，就是首地址是粒度的偶数倍，那么上面这句话的意思是，所有请求的数据在某个首地址是粒度偶数倍的后128个字节里），具体形式如下图，这里请求的数据是连续的，其实可以不连续，但是不要越界就好。&lt;/p>
+&lt;p>&lt;img loading="lazy" src='https://cdn.ipfsscan.io/weibo/large/005wRZF3ly1i4n5sr9oc7j30mm069glx.jpg' alt="image">&lt;/p>
+&lt;p>如果一个事务加载的数据分布在不一个对齐的地址段上，就会有以下两种情况：&lt;/p>
+&lt;ol>
+&lt;li>连续的，但是不在一个对齐的段上，比如，请求访问的数据分布在内存地址 1-128，那么0-127和128-255这两段数据要传递两次到SM&lt;/li>
+&lt;li>不连续的，也不在一个对齐的段上，比如，请求访问的数据分布在内存地址0-63和128-191上，明显这也需要两次加载。&lt;/li>
+&lt;/ol>
+&lt;p>&lt;img loading="lazy" src='https://cdn.ipfsscan.io/weibo/large/005wRZF3ly1i4n5t0v2sij30x209874z.jpg' alt="image">&lt;/p>
+&lt;p>数据分散开了，thread0的请求在128之前，后面还有请求在256之后，所以需要三个内存事务，而利用率，也就是从主存取回来的数据被使用到的比例，只有 128/(3*128) 的比例。这个比例低会造成带宽的浪费，最极端的表现，就是如果每个线程的请求都在不同的段，也就是一个128字节的事务只有1个字节是有用的，那么利用率只有 1/128.&lt;/p>
+&lt;p>&lt;strong>实例——写一个 内存访问非对齐的kernel&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="line">&lt;span class="cl">&lt;span class="n">__global__&lt;/span> &lt;span class="kt">void&lt;/span> &lt;span class="nf">sumArraysGPU&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">float&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="n">A&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">float&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="n">B&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">float&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="n">C&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">offset&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">N&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">int&lt;/span> &lt;span class="n">tid&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">blockIdx&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">x&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="n">blockDim&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">x&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">threadIdx&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">x&lt;/span>&lt;span class="p">;&lt;/span> 
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">int&lt;/span> &lt;span class="n">index&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">tid&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">offset&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="c1">//添加偏移量 从 gld memory 读取数据带地址偏移 这样可以控制内存是否对齐
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="k">if&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">index&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="n">N&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">C&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">tid&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">A&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">index&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">B&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">index&lt;/span>&lt;span class="p">];&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>这里用一个 sum kernel 进行举例，&lt;code>float*A, float*, float*C&lt;/code> 都是从 glb mem 读取数据，每个 thread 会去load 一个数据进行处理。通过 offset 可以改变 thead load 数据的偏移地址，从而来试验不同 cache 粒度的 合并访问现象。&lt;/p>
+&lt;p>可以发现禁用 L1 cache 前后，另外 offset = 0 和 offset = 32 得到上述理论结果。&lt;/p>
+&lt;div class="details admonition tip open disabled">
+ &lt;div class="details-summary admonition-title">&lt;i class="icon fa-fw fa-regular fa-lightbulb" aria-hidden="true">&lt;/i>另外，面临非对齐访问，使用 L2 cache能够相对获得较高的 cache 利用率，这也很好理解，因为 L2 cache 的内存块大小更小，即使非对齐，有效地址偏移位数少&lt;/div>
+ &lt;div class="details-content">
+ &lt;div class="admonition-content">&lt;/div>
+ &lt;/div>
+&lt;/div>&lt;h2 id="常用的profile工具和方法" class="heading-element">&lt;span>常用的profile工具和方法&lt;/span>
+ &lt;a href="#%e5%b8%b8%e7%94%a8%e7%9a%84profile%e5%b7%a5%e5%85%b7%e5%92%8c%e6%96%b9%e6%b3%95" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h2>&lt;ol>
+&lt;li>Nsight System&lt;/li>
+&lt;li>Nsight Compute&lt;/li>
+&lt;li>compute-sanitizer&lt;/li>
+&lt;li>&lt;a href="https://blog.vllm.ai/2025/08/11/cuda-debugging.html"target="_blank" rel="external nofollow noopener noreferrer">vllm core dump&lt;/a>&lt;/li>
+&lt;li>perfetto 分析 torch profile 文件&lt;/li>
+&lt;/ol></description></item><item><title>秋招timeline</title><link>https://yitaonote.com/2025/adc4087/</link><pubDate>Thu, 21 Aug 2025 21:44:59 +0800</pubDate><guid>https://yitaonote.com/2025/adc4087/</guid><category domain="https://yitaonote.com/categories/%E6%89%BE%E5%B7%A5%E4%BD%9C/">找工作</category><description>&lt;p>记录秋招找工作的投递 timeline&lt;/p>
 &lt;h3 id="-腾讯青云-pcg" class="heading-element">&lt;span>❌ 腾讯青云-PCG&lt;/span>
  &lt;a href="#-%e8%85%be%e8%ae%af%e9%9d%92%e4%ba%91-pcg" class="heading-mark">
  &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
@@ -1744,102 +2516,6 @@ $$ ax + py = 1 = \gcd(a, p)$$&lt;p>符合&lt;strong>裴蜀定理&lt;/strong>的�
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">int&lt;/span> &lt;span class="n">d&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">exgcd&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">a&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">p&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">x&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">y&lt;/span>&lt;span class="p">);&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">d&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="n">printf&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;%d&lt;/span>&lt;span class="se">\n&lt;/span>&lt;span class="s">&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">((&lt;/span>&lt;span class="n">LL&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="n">x&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">p&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">%&lt;/span> &lt;span class="n">p&lt;/span>&lt;span class="p">);&lt;/span> &lt;span class="c1">// 保证 x 是正数
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="k">else&lt;/span> &lt;span class="n">puts&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;impossible&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div></description></item><item><title>快速幂</title><link>https://yitaonote.com/2025/302d3a9/</link><pubDate>Sat, 16 Aug 2025 17:27:04 +0800</pubDate><guid>https://yitaonote.com/2025/302d3a9/</guid><category domain="https://yitaonote.com/categories/%E7%AE%97%E6%B3%95/">算法</category><description>&lt;h2 id="快速幂" class="heading-element">&lt;span>快速幂&lt;/span>
- &lt;a href="#%e5%bf%ab%e9%80%9f%e5%b9%82" class="heading-mark">
- &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
- &lt;/a>
-&lt;/h2>&lt;h3 id="适用场景" class="heading-element">&lt;span>适用场景&lt;/span>
- &lt;a href="#%e9%80%82%e7%94%a8%e5%9c%ba%e6%99%af" class="heading-mark">
- &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
- &lt;/a>
-&lt;/h3>&lt;p>快速求出 $a^k \bmod p$ 的值。&lt;/p>
-&lt;h3 id="算法原理--步骤分析" class="heading-element">&lt;span>算法原理 &amp;amp; 步骤分析&lt;/span>
- &lt;a href="#%e7%ae%97%e6%b3%95%e5%8e%9f%e7%90%86--%e6%ad%a5%e9%aa%a4%e5%88%86%e6%9e%90" class="heading-mark">
- &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
- &lt;/a>
-&lt;/h3>&lt;p>快速幂原理是基于二进制枚举的思想。&lt;/p>
-&lt;p>对于整数 $a$ 的任意幂数 $k$，$k$ 都可以用二进制进行拆分，并且只会由 $\left [2^0, 2^{\lfloor \log k \rfloor} \right]$ 中的部分数组合而成。&lt;/p>
-&lt;p>例如 $k_1 = 4 = (100)_2, k_2 = 7 = (111)_2$，均为三位二进制数，只由 $2^0、2^1、2^2$ 中的部分数构成。这样原式就可转化为：&lt;/p>
-$$a^{k_1} = a^{4} = a^{0\times 2^{0} + 0\times 2^{1} + 1\times 2^{2}}$$$$a^{k_2} = a^{7} = a^{1\times 2^{0} + 1\times 2^{1} + 1\times 2^{2}} = a^{2^{0}}\cdot a^{2^{1}}\cdot a^{2^{2}}$$&lt;p>因此，对于给定的幂数 $k$，我们可以先预处理出 $\left[ a^{2^{0}},\ a^{2^{\lfloor \log k \rfloor}} \right]$ 中的所有数。时间复杂度为 $O(\log k)$&lt;/p>
-&lt;p>然后依次枚举 $k$ 的二进制表示的每一位，每次枚举时 $a$ 都需要自我累乘一次：&lt;/p>
-&lt;p>&lt;code>a = (LL)a * a % p&lt;/code>；如果该位为 $1$，就将当前累乘的 $a$ 计入答案：&lt;code>res = (LL)res * a % p&lt;/code>，如果该位为 $0$，就不予计入，枚举下一位。&lt;/p>
-&lt;p>注：这里 $a, k, p$ 满足 $1\leq a, k, p\leq 2\times 10^9$，所以在自我累乘和答案计入时可能会溢出整数范围，需要开 &lt;code>long long&lt;/code>。&lt;/p>
-&lt;p>枚举完 $k$ 的二进制表示数的所有位后，累乘的 &lt;code>res&lt;/code> 就是答案。&lt;/p>
-&lt;h4 id="完整代码" class="heading-element">&lt;span>完整代码&lt;/span>
- &lt;a href="#%e5%ae%8c%e6%95%b4%e4%bb%a3%e7%a0%81" class="heading-mark">
- &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
- &lt;/a>
-&lt;/h4>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;span class="lnt">12
-&lt;/span>&lt;span class="lnt">13
-&lt;/span>&lt;span class="lnt">14
-&lt;/span>&lt;span class="lnt">15
-&lt;/span>&lt;span class="lnt">16
-&lt;/span>&lt;span class="lnt">17
-&lt;/span>&lt;span class="lnt">18
-&lt;/span>&lt;span class="lnt">19
-&lt;/span>&lt;span class="lnt">20
-&lt;/span>&lt;span class="lnt">21
-&lt;/span>&lt;span class="lnt">22
-&lt;/span>&lt;span class="lnt">23
-&lt;/span>&lt;span class="lnt">24
-&lt;/span>&lt;span class="lnt">25
-&lt;/span>&lt;span class="lnt">26
-&lt;/span>&lt;span class="lnt">27
-&lt;/span>&lt;span class="lnt">28
-&lt;/span>&lt;span class="lnt">29
-&lt;/span>&lt;span class="lnt">30
-&lt;/span>&lt;span class="lnt">31
-&lt;/span>&lt;span class="lnt">32
-&lt;/span>&lt;span class="lnt">33
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-cpp" data-lang="cpp">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;iostream&amp;gt;&lt;/span>&lt;span class="cp">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">using&lt;/span> &lt;span class="k">namespace&lt;/span> &lt;span class="n">std&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">const&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">N&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mf">1e5&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="mi">10&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">typedef&lt;/span> &lt;span class="kt">long&lt;/span> &lt;span class="kt">long&lt;/span> &lt;span class="n">LL&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span> &lt;span class="nf">quick_mi&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">a&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">k&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">p&lt;/span>&lt;span class="p">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">int&lt;/span> &lt;span class="n">res&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">while&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">k&lt;/span>&lt;span class="p">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">k&lt;/span> &lt;span class="o">&amp;amp;&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="n">res&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">LL&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="n">res&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="n">a&lt;/span> &lt;span class="o">%&lt;/span> &lt;span class="n">p&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">k&lt;/span> &lt;span class="o">&amp;gt;&amp;gt;=&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">a&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">LL&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="n">a&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="n">a&lt;/span> &lt;span class="o">%&lt;/span> &lt;span class="n">p&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">res&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">()&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">int&lt;/span> &lt;span class="n">n&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">cin&lt;/span> &lt;span class="o">&amp;gt;&amp;gt;&lt;/span> &lt;span class="n">n&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">while&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">n&lt;/span> &lt;span class="o">--&lt;/span> &lt;span class="p">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kt">int&lt;/span> &lt;span class="n">a&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">k&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">p&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">scanf&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;%d%d%d&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="o">&amp;amp;&lt;/span>&lt;span class="n">a&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="o">&amp;amp;&lt;/span>&lt;span class="n">k&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="o">&amp;amp;&lt;/span>&lt;span class="n">p&lt;/span>&lt;span class="p">);&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">printf&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;%d&lt;/span>&lt;span class="se">\n&lt;/span>&lt;span class="s">&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">quick_mi&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">a&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">k&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">p&lt;/span>&lt;span class="p">));&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
