@@ -41,6 +41,7 @@ repost:
 记录秋招找工作的投递 timeline
 <!--more-->
 
+## 人才计划
 
 ### ❌ 腾讯青云-PCG
 
@@ -80,18 +81,46 @@ repost:
 }
 ```
 
-### ⏰ 美团
+### ❌ 百度AIDU
 
 ```timeline
 {
   "events": [
     {
-      "timestamp": "2025-08-13",
+      "timestamp": "2025-07-08",
+      "content": "投递"
+    }
+  ]
+}
+```
+
+### ⏰ 科大讯飞-飞星计划
+
+```timeline
+{
+  "events": [
+    {
+      "timestamp": "2025-08-20",
+      "content": "投递"
+    }
+  ]
+}
+```
+
+## 提前批
+
+### ❌ 滴滴提前批
+
+```timeline
+{
+  "events": [
+    {
+      "timestamp": "2025-07-16",
       "content": "投递"
     },
     {
-      "timestamp": "2025-08-16",
-      "content": "笔试"
+      "timestamp": "2025-07-31",
+      "content": "一面（当时人在国外参会，没收到邮件，打电话来调整时间直接推到一周后，过段时间挂）"
     }
   ]
 }
@@ -118,7 +147,7 @@ repost:
 }
 ```
 
-### ⏰ MiniMax
+### ⏰ MiniMax提前批
 
 ```timeline
 {
@@ -134,6 +163,57 @@ repost:
   ]
 }
 ```
+
+## 正式批
+
+### ❌ 商汤
+
+```timeline
+{
+  "events": [
+    {
+      "timestamp": "2025-08-09",
+      "content": "投递"
+    }
+  ]
+}
+```
+
+### ❌ 米哈游
+
+```timeline
+{
+  "events": [
+    {
+      "timestamp": "2025-08-09",
+      "content": "投递"
+    }
+  ]
+}
+```
+
+### ⏰ 美团
+
+```timeline
+{
+  "events": [
+    {
+      "timestamp": "2025-08-13",
+      "content": "投递"
+    },
+    {
+      "timestamp": "2025-08-16",
+      "content": "笔试"
+    },
+    {
+      "timestamp": "2025-08-25",
+      "content": "一面"
+    }
+  ]
+}
+```
+
+
 
 ### ⏰ 得物
 
@@ -187,18 +267,7 @@ repost:
 }
 ```
 
-### ⏰ 科大讯飞-飞星计划
 
-```timeline
-{
-  "events": [
-    {
-      "timestamp": "2025-08-20",
-      "content": "投递"
-    }
-  ]
-}
-```
 
 
 
@@ -209,6 +278,32 @@ repost:
   "events": [
     {
       "timestamp": "2025-08-21",
+      "content": "投递"
+    }
+  ]
+}
+```
+
+### ⏰ 快手
+
+```timeline
+{
+  "events": [
+    {
+      "timestamp": "2025-08-23",
+      "content": "投递"
+    }
+  ]
+}
+```
+
+### ⏰ B站
+
+```timeline
+{
+  "events": [
+    {
+      "timestamp": "2025-08-23",
       "content": "投递"
     }
   ]
