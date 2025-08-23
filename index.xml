@@ -778,7 +778,11 @@
 &lt;li>&lt;a href="https://blog.vllm.ai/2025/08/11/cuda-debugging.html"target="_blank" rel="external nofollow noopener noreferrer">vllm core dump&lt;/a>&lt;/li>
 &lt;li>perfetto 分析 torch profile 文件&lt;/li>
 &lt;/ol></description></item><item><title>秋招timeline</title><link>https://yitaonote.com/2025/adc4087/</link><pubDate>Thu, 21 Aug 2025 21:44:59 +0800</pubDate><guid>https://yitaonote.com/2025/adc4087/</guid><category domain="https://yitaonote.com/categories/%E6%89%BE%E5%B7%A5%E4%BD%9C/">找工作</category><description>&lt;p>记录秋招找工作的投递 timeline&lt;/p>
-&lt;h3 id="-腾讯青云-pcg" class="heading-element">&lt;span>❌ 腾讯青云-PCG&lt;/span>
+&lt;h2 id="人才计划" class="heading-element">&lt;span>人才计划&lt;/span>
+ &lt;a href="#%e4%ba%ba%e6%89%8d%e8%ae%a1%e5%88%92" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h2>&lt;h3 id="-腾讯青云-pcg" class="heading-element">&lt;span>❌ 腾讯青云-PCG&lt;/span>
  &lt;a href="#-%e8%85%be%e8%ae%af%e9%9d%92%e4%ba%91-pcg" class="heading-mark">
  &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
  &lt;/a>
@@ -815,8 +819,8 @@
  data-size="medium"
  data-node="circle"
  style="--timeline-index: 2;">&lt;div class="fi-timeline-item__content">一面&lt;/div>
- &lt;div class="fi-timeline-item__timestamp is-bottom">2025-08-07&lt;/div>&lt;/li>&lt;/ul>&lt;h3 id="-美团" class="heading-element">&lt;span>⏰ 美团&lt;/span>
- &lt;a href="#-%e7%be%8e%e5%9b%a2" class="heading-mark">
+ &lt;div class="fi-timeline-item__timestamp is-bottom">2025-08-07&lt;/div>&lt;/li>&lt;/ul>&lt;h3 id="-百度aidu" class="heading-element">&lt;span>❌ 百度AIDU&lt;/span>
+ &lt;a href="#-%e7%99%be%e5%ba%a6aidu" class="heading-mark">
  &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
  &lt;/a>
 &lt;/h3>&lt;ul
@@ -826,12 +830,38 @@
  data-size="medium"
  data-node="circle"
  style="--timeline-index: 1;">&lt;div class="fi-timeline-item__content">投递&lt;/div>
- &lt;div class="fi-timeline-item__timestamp is-bottom">2025-08-13&lt;/div>&lt;/li>&lt;li
+ &lt;div class="fi-timeline-item__timestamp is-bottom">2025-07-08&lt;/div>&lt;/li>&lt;/ul>&lt;h3 id="-科大讯飞-飞星计划" class="heading-element">&lt;span>⏰ 科大讯飞-飞星计划&lt;/span>
+ &lt;a href="#-%e7%a7%91%e5%a4%a7%e8%ae%af%e9%a3%9e-%e9%a3%9e%e6%98%9f%e8%ae%a1%e5%88%92" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h3>&lt;ul
+ class="fi-timeline"
+ >&lt;li
  class="fi-timeline-item"
  data-size="medium"
  data-node="circle"
- style="--timeline-index: 2;">&lt;div class="fi-timeline-item__content">笔试&lt;/div>
- &lt;div class="fi-timeline-item__timestamp is-bottom">2025-08-16&lt;/div>&lt;/li>&lt;/ul>&lt;h3 id="-拼多多提前批" class="heading-element">&lt;span>⏰ 拼多多提前批&lt;/span>
+ style="--timeline-index: 1;">&lt;div class="fi-timeline-item__content">投递&lt;/div>
+ &lt;div class="fi-timeline-item__timestamp is-bottom">2025-08-20&lt;/div>&lt;/li>&lt;/ul>&lt;h2 id="提前批" class="heading-element">&lt;span>提前批&lt;/span>
+ &lt;a href="#%e6%8f%90%e5%89%8d%e6%89%b9" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h2>&lt;h3 id="-滴滴提前批" class="heading-element">&lt;span>❌ 滴滴提前批&lt;/span>
+ &lt;a href="#-%e6%bb%b4%e6%bb%b4%e6%8f%90%e5%89%8d%e6%89%b9" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h3>&lt;ul
+ class="fi-timeline"
+ >&lt;li
+ class="fi-timeline-item"
+ data-size="medium"
+ data-node="circle"
+ style="--timeline-index: 1;">&lt;div class="fi-timeline-item__content">投递&lt;/div>
+ &lt;div class="fi-timeline-item__timestamp is-bottom">2025-07-16&lt;/div>&lt;/li>&lt;li
+ class="fi-timeline-item"
+ data-size="medium"
+ data-node="circle"
+ style="--timeline-index: 2;">&lt;div class="fi-timeline-item__content">一面（当时人在国外参会，没收到邮件，打电话来调整时间直接推到一周后，过段时间挂）&lt;/div>
+ &lt;div class="fi-timeline-item__timestamp is-bottom">2025-07-31&lt;/div>&lt;/li>&lt;/ul>&lt;h3 id="-拼多多提前批" class="heading-element">&lt;span>⏰ 拼多多提前批&lt;/span>
  &lt;a href="#-%e6%8b%bc%e5%a4%9a%e5%a4%9a%e6%8f%90%e5%89%8d%e6%89%b9" class="heading-mark">
  &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
  &lt;/a>
@@ -852,8 +882,8 @@
  data-size="medium"
  data-node="circle"
  style="--timeline-index: 3;">&lt;div class="fi-timeline-item__content">笔试&lt;/div>
- &lt;div class="fi-timeline-item__timestamp is-bottom">2025-08-17&lt;/div>&lt;/li>&lt;/ul>&lt;h3 id="-minimax" class="heading-element">&lt;span>⏰ MiniMax&lt;/span>
- &lt;a href="#-minimax" class="heading-mark">
+ &lt;div class="fi-timeline-item__timestamp is-bottom">2025-08-17&lt;/div>&lt;/li>&lt;/ul>&lt;h3 id="-minimax提前批" class="heading-element">&lt;span>⏰ MiniMax提前批&lt;/span>
+ &lt;a href="#-minimax%e6%8f%90%e5%89%8d%e6%89%b9" class="heading-mark">
  &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
  &lt;/a>
 &lt;/h3>&lt;ul
@@ -868,7 +898,54 @@
  data-size="medium"
  data-node="circle"
  style="--timeline-index: 2;">&lt;div class="fi-timeline-item__content">一面&lt;/div>
- &lt;div class="fi-timeline-item__timestamp is-bottom">2025-08-28&lt;/div>&lt;/li>&lt;/ul>&lt;h3 id="-得物" class="heading-element">&lt;span>⏰ 得物&lt;/span>
+ &lt;div class="fi-timeline-item__timestamp is-bottom">2025-08-28&lt;/div>&lt;/li>&lt;/ul>&lt;h2 id="正式批" class="heading-element">&lt;span>正式批&lt;/span>
+ &lt;a href="#%e6%ad%a3%e5%bc%8f%e6%89%b9" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h2>&lt;h3 id="-商汤" class="heading-element">&lt;span>❌ 商汤&lt;/span>
+ &lt;a href="#-%e5%95%86%e6%b1%a4" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h3>&lt;ul
+ class="fi-timeline"
+ >&lt;li
+ class="fi-timeline-item"
+ data-size="medium"
+ data-node="circle"
+ style="--timeline-index: 1;">&lt;div class="fi-timeline-item__content">投递&lt;/div>
+ &lt;div class="fi-timeline-item__timestamp is-bottom">2025-08-09&lt;/div>&lt;/li>&lt;/ul>&lt;h3 id="-米哈游" class="heading-element">&lt;span>❌ 米哈游&lt;/span>
+ &lt;a href="#-%e7%b1%b3%e5%93%88%e6%b8%b8" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h3>&lt;ul
+ class="fi-timeline"
+ >&lt;li
+ class="fi-timeline-item"
+ data-size="medium"
+ data-node="circle"
+ style="--timeline-index: 1;">&lt;div class="fi-timeline-item__content">投递&lt;/div>
+ &lt;div class="fi-timeline-item__timestamp is-bottom">2025-08-09&lt;/div>&lt;/li>&lt;/ul>&lt;h3 id="-美团" class="heading-element">&lt;span>⏰ 美团&lt;/span>
+ &lt;a href="#-%e7%be%8e%e5%9b%a2" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h3>&lt;ul
+ class="fi-timeline"
+ >&lt;li
+ class="fi-timeline-item"
+ data-size="medium"
+ data-node="circle"
+ style="--timeline-index: 1;">&lt;div class="fi-timeline-item__content">投递&lt;/div>
+ &lt;div class="fi-timeline-item__timestamp is-bottom">2025-08-13&lt;/div>&lt;/li>&lt;li
+ class="fi-timeline-item"
+ data-size="medium"
+ data-node="circle"
+ style="--timeline-index: 2;">&lt;div class="fi-timeline-item__content">笔试&lt;/div>
+ &lt;div class="fi-timeline-item__timestamp is-bottom">2025-08-16&lt;/div>&lt;/li>&lt;li
+ class="fi-timeline-item"
+ data-size="medium"
+ data-node="circle"
+ style="--timeline-index: 3;">&lt;div class="fi-timeline-item__content">一面&lt;/div>
+ &lt;div class="fi-timeline-item__timestamp is-bottom">2025-08-25&lt;/div>&lt;/li>&lt;/ul>&lt;h3 id="-得物" class="heading-element">&lt;span>⏰ 得物&lt;/span>
  &lt;a href="#-%e5%be%97%e7%89%a9" class="heading-mark">
  &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
  &lt;/a>
@@ -912,17 +989,6 @@
  data-size="medium"
  data-node="circle"
  style="--timeline-index: 1;">&lt;div class="fi-timeline-item__content">投递&lt;/div>
- &lt;div class="fi-timeline-item__timestamp is-bottom">2025-08-20&lt;/div>&lt;/li>&lt;/ul>&lt;h3 id="-科大讯飞-飞星计划" class="heading-element">&lt;span>⏰ 科大讯飞-飞星计划&lt;/span>
- &lt;a href="#-%e7%a7%91%e5%a4%a7%e8%ae%af%e9%a3%9e-%e9%a3%9e%e6%98%9f%e8%ae%a1%e5%88%92" class="heading-mark">
- &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
- &lt;/a>
-&lt;/h3>&lt;ul
- class="fi-timeline"
- >&lt;li
- class="fi-timeline-item"
- data-size="medium"
- data-node="circle"
- style="--timeline-index: 1;">&lt;div class="fi-timeline-item__content">投递&lt;/div>
  &lt;div class="fi-timeline-item__timestamp is-bottom">2025-08-20&lt;/div>&lt;/li>&lt;/ul>&lt;h3 id="-虾皮" class="heading-element">&lt;span>⏰ 虾皮&lt;/span>
  &lt;a href="#-%e8%99%be%e7%9a%ae" class="heading-mark">
  &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
@@ -934,7 +1000,29 @@
  data-size="medium"
  data-node="circle"
  style="--timeline-index: 1;">&lt;div class="fi-timeline-item__content">投递&lt;/div>
- &lt;div class="fi-timeline-item__timestamp is-bottom">2025-08-21&lt;/div>&lt;/li>&lt;/ul></description></item><item><title>分布式推理优化技术</title><link>https://yitaonote.com/2025/7ae2a3f/</link><pubDate>Tue, 19 Aug 2025 23:07:32 +0800</pubDate><guid>https://yitaonote.com/2025/7ae2a3f/</guid><category domain="https://yitaonote.com/categories/%E6%8E%A8%E7%90%86%E4%BC%98%E5%8C%96/">推理优化</category><description>&lt;h2 id="分布式通信原语" class="heading-element">&lt;span>分布式通信原语&lt;/span>
+ &lt;div class="fi-timeline-item__timestamp is-bottom">2025-08-21&lt;/div>&lt;/li>&lt;/ul>&lt;h3 id="-快手" class="heading-element">&lt;span>⏰ 快手&lt;/span>
+ &lt;a href="#-%e5%bf%ab%e6%89%8b" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h3>&lt;ul
+ class="fi-timeline"
+ >&lt;li
+ class="fi-timeline-item"
+ data-size="medium"
+ data-node="circle"
+ style="--timeline-index: 1;">&lt;div class="fi-timeline-item__content">投递&lt;/div>
+ &lt;div class="fi-timeline-item__timestamp is-bottom">2025-08-23&lt;/div>&lt;/li>&lt;/ul>&lt;h3 id="-b站" class="heading-element">&lt;span>⏰ B站&lt;/span>
+ &lt;a href="#-b%e7%ab%99" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h3>&lt;ul
+ class="fi-timeline"
+ >&lt;li
+ class="fi-timeline-item"
+ data-size="medium"
+ data-node="circle"
+ style="--timeline-index: 1;">&lt;div class="fi-timeline-item__content">投递&lt;/div>
+ &lt;div class="fi-timeline-item__timestamp is-bottom">2025-08-23&lt;/div>&lt;/li>&lt;/ul></description></item><item><title>分布式推理优化技术</title><link>https://yitaonote.com/2025/7ae2a3f/</link><pubDate>Tue, 19 Aug 2025 23:07:32 +0800</pubDate><guid>https://yitaonote.com/2025/7ae2a3f/</guid><category domain="https://yitaonote.com/categories/%E6%8E%A8%E7%90%86%E4%BC%98%E5%8C%96/">推理优化</category><description>&lt;h2 id="分布式通信原语" class="heading-element">&lt;span>分布式通信原语&lt;/span>
  &lt;a href="#%e5%88%86%e5%b8%83%e5%bc%8f%e9%80%9a%e4%bf%a1%e5%8e%9f%e8%af%ad" class="heading-mark">
  &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
  &lt;/a>
