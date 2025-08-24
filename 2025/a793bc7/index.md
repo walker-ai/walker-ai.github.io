@@ -2,14 +2,19 @@
 
 
 &lt;!--more--&gt;
+---
+
+&lt;!--more--&gt;
 
 ## 基本概念
 
 &gt; 参考链接：[https://zhuanlan.zhihu.com/p/1912965417447686461](https://zhuanlan.zhihu.com/p/1912965417447686461)
 
-- 缩放系数：$s=\dfrac{\text{max}(|\text{min}_ {val}|, |\text{max}_{val}|)}{2^{N-1}}$
+- 缩放系数：$s= \dfrac{r_{max} - r_{min}}{q_{max} - q_{min}} = \dfrac{\max(|r_{min}|, |r_{max}|)}{2^{N-1}}$
 
 - 零点：$z=round(q_{min}-\dfrac{r_{min}}{s})=round(-2^{N-1}-\dfrac{r_{min}}{s})$
+
+这里 $r_{min}$ 指的是输入值的最大和最小值。$q_{min}, q_{max}$ 是指量化后的整数范围。
 
 ```python
 quantized:
@@ -64,11 +69,11 @@ x_int8 = round(x_float/scale) &#43; zero_point
 | 表现力            | ❌ 表达负偏移有限          | ✅ 支持偏移，精度更高      |
 | 效果稳定性          | ✅ 稳定               | ✅ 更灵活，适应动态变化     |
 
-## 量化对象 - Linear (Dense) / Attention
+## 量化对象
 
 &gt; 参考链接：[https://zhuanlan.zhihu.com/p/1895945361824122028](https://zhuanlan.zhihu.com/p/1895945361824122028)
 
-### Linear 量化
+### Linear(Dense) 量化
 
 指对模型的 Linear 层进行量化，Linear 层主要分布于：
 
@@ -78,6 +83,55 @@ x_int8 = round(x_float/scale) &#43; zero_point
 4. MoE 中的 expert
 
 ### Attention量化，以 SageAttention 为例
+
+&gt; 参考文献：[https://zhuanlan.zhihu.com/p/28866643551](https://zhuanlan.zhihu.com/p/28866643551)
+
+首先 SageAttention 是基于 FlashAttention2并采用动态量化。
+
+SageAttention 基于 FlashAttention 的分块方法，对分块应用per-block的方式进行量化。具体来说，在Q，K，P，V的分块上进行 INT8 量化，然后对乘积进行反量化，主要是为了加速 QK^T 和 PV 的矩阵乘法计算。online softmax 保持全精度。
+
+#### per-block 量化
+
+&#34;块&#34;（block）是指将输入张量按序列维度划分的连续数据段。每个块包含固定数量的 token，对整个块使用同一个量化缩放因子。用一个具体的例子说明：
+
+假设我们有一个 Query 张量，形状为 `[1, 8, 512, 128]`（`batch=1, heads=8, seq_len=512, head_dim=128`），使用 `BLKQ=128` 的块大小：
+
+- 序列长度 512 被划分为 512 ÷ 128 = 4 个块
+- 第1块：token 0-127
+- 第2块：token 128-255
+- 第3块：token 256-383
+- 第4块：token 384-511
+
+对于上述例子，Q 的缩放因子张量形状为 `[1, 8, 4]`，即每个 head 的每个块都有一个缩放因子。
+
+#### Smooth-K
+
+K表现出明显的 Channel 方向异常值，但是由于矩阵乘法 $QK^T$ 中，量化只能在token维度上进行，因此无法对K应用per-channel量化。
+&gt; [!TIP] 某个Channel方向异常值，应用per-channel量化，可以把异常值影响范围缩小到该方向上的S和Z
+
+但是K的通道异常值表现出一个规律，即每个token的key实际上是所有tokens共享的一个大bias，再加上一个小的token-wise的信号。
+
+![image](https://cdn.ipfsscan.io/weibo/large/005wRZF3ly1i4pc88urbuj31ak0d6jv4.jpg)
+
+即在最终量化之前，先从全精度 K 中减去平均值。
+
+#### Quantization for Q, K, P, V
+
+- Q, K 的量化粒度：Q和K的量化粒度可以设置为 per-token，per-block或per-tensor粒度。但是不可以设置为 per-channel，原因上面说了，内轴在相乘时会约掉，没办法进行反量化
+- Q, K的数据类型：之所以对Q和K进行 INT8 量化，原因有两个：其一是因为测试了很多模型，对Q，K，P，V使用INT8 量化比 FP8量化具有更高的准确率；其二是因为在许多常用的GPU上进行INT8矩阵乘法比使用FP8快两倍
+- P, V的量化粒度：对P进行per-block量化，对V进行per-channel量化，原因有三个：其一是因为对P进行per-channel量化和对V进行per-token量化不可行，因为反量化需要外部轴的scale factor；其二是P的每一行最大值为1，因此可以为一个块分配一个固定的scale factor $s=\frac{1}{127}$；其三是per-channel量化可以解决V的通道方向异常值问题
+
+#### FP16 累加
+
+对 P和V进行量化时，在某些模型层使用INT8的准确率会非常低。
+
+![image](https://cdn.ipfsscan.io/weibo/large/005wRZF3ly1i4pcztd6z0j30mq0addhj.jpg)
+
+论文中建议在矩阵乘法PV中使用FP16作为数据类型，并且使用FP16累加器
+
+使用 FP16 累加器的 FP16 矩阵乘法速度比使用 FP32 累加器快 2 倍。此外，使用 FP16 累加器比使用 FP32 累加器可以节省更多的寄存器资源，从而加快计算速度。其次，表 3 表明，对 P, V 使用 FP16 比使用所有其他 8 位数据类型要精确得多。而且，使用 FP16 累加器与使用 FP32 累加器相比不会导致精度损失。
+
+#### 关于内部轴不可进行反量化的分析
 
 矩阵乘法中，对于每个矩阵你只能沿着公共维度进行量化（下图右边）。根据这个简单的原则，Attention 中四个矩阵可以量化的组合如下。注意能做 per-token，就能做 per-block 量化。其中 P 代表 $softmax(QK^T/\sqrt{d})$
 
@@ -91,7 +145,7 @@ x_int8 = round(x_float/scale) &#43; zero_point
 | per-token | ✅ | ✅ | ✅ | ❌ |
 | per-block | ✅ | ✅ | ✅ | ❌ |
 
-## 量化类型 - weight-only / weight-activation / KV cache
+## 量化类型
 
 
 ![image](https://cdn.ipfsscan.io/weibo/large/005wRZF3ly1i4bjajqt85j30yt0kvad4.jpg)
@@ -213,16 +267,31 @@ $$ Y=(X*\text{diag}(s)^{-1})*(\text{diag}(s)*W) $$
 也就是对activate (也就是X)进行缩放，并把相反的缩放系数应用到对应的weight(也就是W)上，得到数学上等价的结果。它的核心观察在于：
 - 由于activation outlier的存在，activation的分布非常不规则；
 - weight分布均匀
-这样，通过上面的操作，试图把 activation 变得更均匀，而把 weightde 均匀分布变得没有那么均匀，也就是把activation 量化de 难度部分平摊到weight 上
+这样，通过上面的操作，试图把 activation 变得更均匀，而把 weight 的均匀分布变得没有那么均匀，也就是把activation 量化de 难度部分平摊到weight 上
 
-并且该论文主要实现了三种量化方法：per-tensor、per-token、per-channel。同时也进行了static 和 dynamic量化的区分：
+并且该论文主要实现了三种量化方法：per-tensor、per-token、per-channel。同时也进行了static 和 dynamic量化的区分
 
-1. static：离线使用标定数据计算好缩放系数
-2. dynamic：在线运行的时候统计缩放系数
 
 ### weight-activation
 
 - LLM.int8() 发现激活中的异常值集中在一小部分通道中。基于这一点，LLM.int8() 根据输入通道内的离群值分布将激活和权重分成两个不同的部分。包含激活值和权重的异常数据的通道以FP16格式存储，其他通道则以INT8格式存储。
+
+### KV cache
+
+待补充
+
+## 动态量化与静态量化
+
+1. dynamic：在线运行的时候统计缩放系数
+
+动态离线量化仅将模型中特定算子的权重从FP32类型映射成 INT8/16 类型，bias和激活函数 在推理过程中动态量化。但是对于不同的输入值来说，其缩放因子是动态计算的（“动态”的由来）。动态量化是几种量化方法中性能最差的。
+
+2. static：离线使用标定数据计算好缩放系数
+
+静态离线量化使用少量无标签校准数据，采用 KL 散度等方法计算量化比例因子。静态量化（Static quantization）与动态量化的区别在于其输入的缩放因子计算方法不同，静态量化的模型在使用前有“calibrate”的过程（校准缩放因子）：准备部分输入（对于图像分类模型就是准备一些图片，其他任务类似），使用静态量化后的模型进行预测，在此过程中量化模型的缩放因子会根据输入数据的分布进行调整。一旦校准完成后，权重和输入的缩放因子都固定（“静态”的由来）。静态量化的性能一般比动态量化好，常用于中等模型和大模型。因此实际中基本都是在用静态量化。 网址静态离线量化的目标是求取量化比例因子，主要通过对称量化、非对称量化方式来求，而找最大值或者阈值的方法又有MinMax、KLD、ADMM、EQ等方法
+
+
+
 
 ## 支撑量化的一些算子和库
 
@@ -231,6 +300,16 @@ $$ Y=(X*\text{diag}(s)^{-1})*(\text{diag}(s)*W) $$
 支持混合精度运算，例如 FP16 * INT4 运算，FP8 * INT4运算
 
 一种支持 W4A16的 GEMM kernel（一定程度上kernel 实现和量化算法是独立的），因此 marlin kernel 也支持 AWQ 量化模型执行。原始的Marlin Kernel只支持W4A16计算模式，而 QQQ 在 Marlin kernel 的基础上，支持了 W4A8 的计算模式。
+
+## MoE量化
+
+以实习期间做过的 MoE wna16marlin kernel 为例（sgl PR 7683）
+
+- MoE 专用路由: 支持动态专家选择和 token 路由
+- 多量化格式: 支持 INT4/INT8/FP8 等多种量化类型
+- Tensor Core 优化: 使用 CUDA tensor core 指令加速矩阵运算
+- 内存布局优化: 针对 MoE 访问模式优化的内存布局
+- 原子操作: 支持原子加法减少全局归约开销
 
 
 ---
