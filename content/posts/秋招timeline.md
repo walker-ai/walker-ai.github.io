@@ -192,6 +192,19 @@ repost:
 }
 ```
 
+### ❌ 虾皮
+
+```timeline
+{
+  "events": [
+    {
+      "timestamp": "2025-08-21",
+      "content": "投递"
+    }
+  ]
+}
+```
+
 ### ⏰ 美团
 
 ```timeline
@@ -204,6 +217,7 @@ repost:
     {
       "timestamp": "2025-08-16",
       "content": "笔试"
+
     },
     {
       "timestamp": "2025-08-25",
@@ -267,23 +281,6 @@ repost:
 }
 ```
 
-
-
-
-
-### ⏰ 虾皮
-
-```timeline
-{
-  "events": [
-    {
-      "timestamp": "2025-08-21",
-      "content": "投递"
-    }
-  ]
-}
-```
-
 ### ⏰ 快手
 
 ```timeline
@@ -304,6 +301,19 @@ repost:
   "events": [
     {
       "timestamp": "2025-08-23",
+      "content": "投递"
+    }
+  ]
+}
+```
+
+### ⏰ 小红书
+
+```timeline
+{
+  "events": [
+    {
+      "timestamp": "2025-08-24",
       "content": "投递"
     }
   ]
