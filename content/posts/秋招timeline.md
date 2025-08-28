@@ -107,6 +107,19 @@ repost:
 }
 ```
 
+### ❌ 小米人才计划
+
+```timeline
+{
+  "events": [
+    {
+      "timestamp": "2025-08-26",
+      "content": "投递"
+    }
+  ]
+}
+```
+
 ## 提前批
 
 ### ❌ 滴滴提前批
@@ -314,6 +327,72 @@ repost:
   "events": [
     {
       "timestamp": "2025-08-24",
+      "content": "投递"
+    }
+  ]
+}
+```
+
+### ⏰ 阿里国际
+
+```timeline
+{
+  "events": [
+    {
+      "timestamp": "2025-08-26",
+      "content": "投递"
+    }
+  ]
+}
+```
+
+### ⏰ 阿里淘天
+
+```timeline
+{
+  "events": [
+    {
+      "timestamp": "2025-08-27",
+      "content": "投递"
+    }
+  ]
+}
+```
+
+### ❌ 阿里控股
+
+```timeline
+{
+  "events": [
+    {
+      "timestamp": "2025-08-27",
+      "content": "投递"
+    }
+  ]
+}
+```
+
+### ⏰ 滴滴
+
+```timeline
+{
+  "events": [
+    {
+      "timestamp": "2025-08-29",
+      "content": "投递"
+    }
+  ]
+}
+```
+
+
+### ⏰ 网易有道
+
+```timeline
+{
+  "events": [
+    {
+      "timestamp": "2025-08-29",
       "content": "投递"
     }
   ]
