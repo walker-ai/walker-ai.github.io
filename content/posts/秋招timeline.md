@@ -415,3 +415,20 @@ repost:
   ]
 }
 ```
+
+### ⏰ 小米
+
+```timeline
+{
+  "events": [
+    {
+      "timestamp": "2025-09-01",
+      "content": "投递"
+    },
+    {
+      "timestamp": "2025-09-01",
+      "content": "测评"
+    }
+  ]
+}
+```
