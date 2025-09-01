@@ -155,6 +155,10 @@ repost:
     {
       "timestamp": "2025-08-17",
       "content": "笔试"
+    },
+    {
+      "timestamp": "2025-08-31",
+      "content": "一面"
     }
   ]
 }
