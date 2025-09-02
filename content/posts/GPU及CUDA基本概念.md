@@ -70,6 +70,8 @@ repost:
 
 - **Shared Memory/L1 Cache**：shared memory可以用于同一个thread block中的线程间互相通信，是可以通过编程读写的。L1 Cache则不能被编程，由GPU决定存放和淘汰内容。这里把Shared Memory和L1 Cache放在一起是因为它们在物理存储上是共用的，**可以通过API控制两者的配比。**
 
+- **L2 Cache**：SM 到全局内存中间的缓存，latency 会比访问全局内存小，缓存全局内存以及local memory所有SM共享一个L2 Cache
+
 - **常量、纹理缓存与全局内存缓存**：有的gpu架构这三类内存结构也同样存在于一个SM中：
 
 > [!TIP] 以上以 Fermi 架构举例，后续的新架构都是在其基础上的进一步发展，例如更多的CUDA core数量，更大的内存容量，更高的IO带宽，以及增加一些新的组件如Tensor Core，RT Core等
@@ -81,6 +83,11 @@ repost:
 由于实习期间使用的都是 H20 集群，因此学习一下 Hopper 架构的特点
 
 ![image](https://cdn.ipfsscan.io/weibo/large/005wRZF3gy1i4mng9yb41j31400lvn2c.jpg)
+
+1. 新增了 Block Cluster 这一线程层次，提供跨 Block 的 shared memory 的访问。Hopper 架构在 Cluster 内部，位于 L1 和 L2 Cache 之间新增了一层SM-to-SM Network。Thread Block Cluster 内部的 SM 可以通过该层网络访问其他 SM 的 Shared Memory
+2. 访存计算异步执行：Hopper 在硬件层提供了 TMA 单元，在软件层可以通过 cuda::memcpy_async 使用 TMA 单元实现异步的 Global Memory 和 Shared Memory 之间的拷贝。
+
+![image](https://cdn.ipfsscan.io/weibo/large/005wRZF3ly1i4z973y3bdj30vy0oxqbf.jpg)
 
 ## GPU线程调度
 
