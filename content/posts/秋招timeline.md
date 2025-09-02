@@ -323,6 +323,10 @@ repost:
     {
       "timestamp": "2025-08-23",
       "content": "投递"
+    },
+    {
+      "timestamp": "2025-09-05",
+      "content": "一面"
     }
   ]
 }
@@ -471,6 +475,23 @@ repost:
     {
       "timestamp": "2025-09-01",
       "content": "投递"
+    }
+  ]
+}
+```
+
+### ⏰ 字节跳动
+
+```timeline
+{
+  "events": [
+    {
+      "timestamp": "2025-09-01",
+      "content": "投递"
+    },
+    {
+      "timestamp": "2025-09-08",
+      "content": "一面"
     }
   ]
 }
