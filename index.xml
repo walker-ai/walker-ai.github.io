@@ -451,6 +451,9 @@ $$ Y=(X*\text{diag}(s)^{-1})*(\text{diag}(s)*W) $$&lt;p>也就是对activate (�
 &lt;p>&lt;strong>Shared Memory/L1 Cache&lt;/strong>：shared memory可以用于同一个thread block中的线程间互相通信，是可以通过编程读写的。L1 Cache则不能被编程，由GPU决定存放和淘汰内容。这里把Shared Memory和L1 Cache放在一起是因为它们在物理存储上是共用的，&lt;strong>可以通过API控制两者的配比。&lt;/strong>&lt;/p>
 &lt;/li>
 &lt;li>
+&lt;p>&lt;strong>L2 Cache&lt;/strong>：SM 到全局内存中间的缓存，latency 会比访问全局内存小，缓存全局内存以及local memory所有SM共享一个L2 Cache&lt;/p>
+&lt;/li>
+&lt;li>
 &lt;p>&lt;strong>常量、纹理缓存与全局内存缓存&lt;/strong>：有的gpu架构这三类内存结构也同样存在于一个SM中：&lt;/p>
 &lt;/li>
 &lt;/ul>
@@ -467,6 +470,11 @@ $$ Y=(X*\text{diag}(s)^{-1})*(\text{diag}(s)*W) $$&lt;p>也就是对activate (�
 &lt;p>参考文献：&lt;a href="https://zhuanlan.zhihu.com/p/1900569635532800833"target="_blank" rel="external nofollow noopener noreferrer">https://zhuanlan.zhihu.com/p/1900569635532800833&lt;/a>&lt;/p>&lt;/blockquote>
 &lt;p>由于实习期间使用的都是 H20 集群，因此学习一下 Hopper 架构的特点&lt;/p>
 &lt;p>&lt;img loading="lazy" src='https://cdn.ipfsscan.io/weibo/large/005wRZF3gy1i4mng9yb41j31400lvn2c.jpg' alt="image">&lt;/p>
+&lt;ol>
+&lt;li>新增了 Block Cluster 这一线程层次，提供跨 Block 的 shared memory 的访问。Hopper 架构在 Cluster 内部，位于 L1 和 L2 Cache 之间新增了一层SM-to-SM Network。Thread Block Cluster 内部的 SM 可以通过该层网络访问其他 SM 的 Shared Memory&lt;/li>
+&lt;li>访存计算异步执行：Hopper 在硬件层提供了 TMA 单元，在软件层可以通过 cuda::memcpy_async 使用 TMA 单元实现异步的 Global Memory 和 Shared Memory 之间的拷贝。&lt;/li>
+&lt;/ol>
+&lt;p>&lt;img loading="lazy" src='https://cdn.ipfsscan.io/weibo/large/005wRZF3ly1i4z973y3bdj30vy0oxqbf.jpg' alt="image">&lt;/p>
 &lt;h2 id="gpu线程调度" class="heading-element">&lt;span>GPU线程调度&lt;/span>
  &lt;a href="#gpu%e7%ba%bf%e7%a8%8b%e8%b0%83%e5%ba%a6" class="heading-mark">
  &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
@@ -1443,7 +1451,12 @@ $$ Y=(X*\text{diag}(s)^{-1})*(\text{diag}(s)*W) $$&lt;p>也就是对activate (�
  data-size="medium"
  data-node="circle"
  style="--timeline-index: 1;">&lt;div class="fi-timeline-item__content">投递&lt;/div>
- &lt;div class="fi-timeline-item__timestamp is-bottom">2025-08-23&lt;/div>&lt;/li>&lt;/ul>&lt;h3 id="-b站" class="heading-element">&lt;span>⏰ B站&lt;/span>
+ &lt;div class="fi-timeline-item__timestamp is-bottom">2025-08-23&lt;/div>&lt;/li>&lt;li
+ class="fi-timeline-item"
+ data-size="medium"
+ data-node="circle"
+ style="--timeline-index: 2;">&lt;div class="fi-timeline-item__content">一面&lt;/div>
+ &lt;div class="fi-timeline-item__timestamp is-bottom">2025-09-04&lt;/div>&lt;/li>&lt;/ul>&lt;h3 id="-b站" class="heading-element">&lt;span>⏰ B站&lt;/span>
  &lt;a href="#-b%e7%ab%99" class="heading-mark">
  &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
  &lt;/a>
