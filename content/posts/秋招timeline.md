@@ -251,7 +251,11 @@ repost:
     },
     {
       "timestamp": "2025-08-25",
-      "content": "一面"
+      "content": "一面（在线推理团队）"
+    },
+    {
+      "timestamp": "2025-09-04",
+      "content": "一面（强化学习框架团队）"
     }
   ]
 }
@@ -366,6 +370,10 @@ repost:
     {
       "timestamp": "2025-08-27",
       "content": "投递"
+    },
+    {
+      "timestamp": "2025-09-05",
+      "content": "一面"
     }
   ]
 }
@@ -492,6 +500,19 @@ repost:
     {
       "timestamp": "2025-09-08",
       "content": "一面"
+    }
+  ]
+}
+```
+
+### ⏰ 上海AI Lab
+
+```timeline
+{
+  "events": [
+    {
+      "timestamp": "2025-09-02",
+      "content": "投递"
     }
   ]
 }
