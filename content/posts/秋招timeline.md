@@ -159,6 +159,10 @@ repost:
     {
       "timestamp": "2025-08-31",
       "content": "一面"
+    },
+    {
+      "timestamp": "2025-09-08",
+      "content": "二面"
     }
   ]
 }
@@ -186,6 +190,23 @@ repost:
 ```
 
 ## 正式批
+
+### ✅蚂蚁
+
+```timeline
+{
+  "events": [
+    {
+      "timestamp": "2025-08-26",
+      "content": "转正答辩"
+    },
+    {
+      "timestamp": "2025-09-06",
+      "content": "意向"
+    }
+  ]
+}
+```
 
 ### ❌ 商汤
 
@@ -412,6 +433,10 @@ repost:
     {
       "timestamp": "2025-08-29",
       "content": "投递"
+    },
+    {
+      "timestamp": "2025-09-07",
+      "content": "笔试"
     }
   ]
 }
@@ -456,6 +481,10 @@ repost:
     {
       "timestamp": "2025-09-01",
       "content": "测评"
+    },
+    {
+      "timestamp": "2025-09-06",
+      "content": "笔试"
     }
   ]
 }
@@ -566,8 +595,21 @@ repost:
       "content": "投递"
     },
     {
-      "timestamp": "2025-09-05",
+      "timestamp": "2025-09-06",
       "content": "测评"
+    }
+  ]
+}
+```
+
+### ⏰ 京东
+
+```timeline
+{
+  "events": [
+    {
+      "timestamp": "2025-09-05",
+      "content": "投递"
     }
   ]
 }
