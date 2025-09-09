@@ -360,6 +360,10 @@ repost:
     {
       "timestamp": "2025-09-05",
       "content": "一面"
+    },
+    {
+      "timestamp": "2025-09-12",
+      "content": "二面"
     }
   ]
 }
@@ -541,6 +545,10 @@ repost:
     {
       "timestamp": "2025-09-08",
       "content": "一面"
+    },
+    {
+      "timestamp": "2025-09-11",
+      "content": "二面"
     }
   ]
 }
