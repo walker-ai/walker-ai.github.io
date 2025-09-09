@@ -494,7 +494,7 @@ repost:
 }
 ```
 
-### ⏰ 饿了么
+### ❌ 饿了么
 
 ```timeline
 {
@@ -630,6 +630,32 @@ repost:
   "events": [
     {
       "timestamp": "2025-09-09",
+      "content": "投递"
+    }
+  ]
+}
+```
+
+### ⏰ 阿里云
+
+```timeline
+{
+  "events": [
+    {
+      "timestamp": "2025-09-10",
+      "content": "投递"
+    }
+  ]
+}
+```
+
+### ⏰ 蔚来
+
+```timeline
+{
+  "events": [
+    {
+      "timestamp": "2025-09-10",
       "content": "投递"
     }
   ]
