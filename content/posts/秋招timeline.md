@@ -343,6 +343,10 @@ repost:
     {
       "timestamp": "2025-09-09",
       "content": "一面"
+    },
+    {
+      "timestamp": "2025-09-16",
+      "content": "二面"
     }
   ]
 }
@@ -494,7 +498,7 @@ repost:
 }
 ```
 
-### ❌ 饿了么
+### ⏰ 饿了么
 
 ```timeline
 {
@@ -502,6 +506,10 @@ repost:
     {
       "timestamp": "2025-09-01",
       "content": "投递"
+    },
+    {
+      "timestamp": "2025-09-12",
+      "content": "笔试"
     }
   ]
 }
@@ -618,6 +626,10 @@ repost:
     {
       "timestamp": "2025-09-05",
       "content": "投递"
+    },
+    {
+      "timestamp": "2025-09-13",
+      "content": "笔试"
     }
   ]
 }
