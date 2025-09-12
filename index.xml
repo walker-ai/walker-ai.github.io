@@ -1778,7 +1778,12 @@ $$ Y=(X*\text{diag}(s)^{-1})*(\text{diag}(s)*W) $$&lt;p>也就是对activate (�
  data-size="medium"
  data-node="circle"
  style="--timeline-index: 2;">&lt;div class="fi-timeline-item__content">一面&lt;/div>
- &lt;div class="fi-timeline-item__timestamp is-bottom">2025-09-09&lt;/div>&lt;/li>&lt;/ul>&lt;h3 id="-b站" class="heading-element">&lt;span>⏰ B站&lt;/span>
+ &lt;div class="fi-timeline-item__timestamp is-bottom">2025-09-09&lt;/div>&lt;/li>&lt;li
+ class="fi-timeline-item"
+ data-size="medium"
+ data-node="circle"
+ style="--timeline-index: 3;">&lt;div class="fi-timeline-item__content">二面&lt;/div>
+ &lt;div class="fi-timeline-item__timestamp is-bottom">2025-09-16&lt;/div>&lt;/li>&lt;/ul>&lt;h3 id="-b站" class="heading-element">&lt;span>⏰ B站&lt;/span>
  &lt;a href="#-b%e7%ab%99" class="heading-mark">
  &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
  &lt;/a>
@@ -1794,7 +1799,12 @@ $$ Y=(X*\text{diag}(s)^{-1})*(\text{diag}(s)*W) $$&lt;p>也就是对activate (�
  data-size="medium"
  data-node="circle"
  style="--timeline-index: 2;">&lt;div class="fi-timeline-item__content">一面&lt;/div>
- &lt;div class="fi-timeline-item__timestamp is-bottom">2025-09-05&lt;/div>&lt;/li>&lt;/ul>&lt;h3 id="-小红书" class="heading-element">&lt;span>⏰ 小红书&lt;/span>
+ &lt;div class="fi-timeline-item__timestamp is-bottom">2025-09-05&lt;/div>&lt;/li>&lt;li
+ class="fi-timeline-item"
+ data-size="medium"
+ data-node="circle"
+ style="--timeline-index: 3;">&lt;div class="fi-timeline-item__content">二面&lt;/div>
+ &lt;div class="fi-timeline-item__timestamp is-bottom">2025-09-12&lt;/div>&lt;/li>&lt;/ul>&lt;h3 id="-小红书" class="heading-element">&lt;span>⏰ 小红书&lt;/span>
  &lt;a href="#-%e5%b0%8f%e7%ba%a2%e4%b9%a6" class="heading-mark">
  &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
  &lt;/a>
@@ -1918,7 +1928,12 @@ $$ Y=(X*\text{diag}(s)^{-1})*(\text{diag}(s)*W) $$&lt;p>也就是对activate (�
  data-size="medium"
  data-node="circle"
  style="--timeline-index: 1;">&lt;div class="fi-timeline-item__content">投递&lt;/div>
- &lt;div class="fi-timeline-item__timestamp is-bottom">2025-09-01&lt;/div>&lt;/li>&lt;/ul>&lt;h3 id="-平头哥" class="heading-element">&lt;span>⏰ 平头哥&lt;/span>
+ &lt;div class="fi-timeline-item__timestamp is-bottom">2025-09-01&lt;/div>&lt;/li>&lt;li
+ class="fi-timeline-item"
+ data-size="medium"
+ data-node="circle"
+ style="--timeline-index: 2;">&lt;div class="fi-timeline-item__content">笔试&lt;/div>
+ &lt;div class="fi-timeline-item__timestamp is-bottom">2025-09-12&lt;/div>&lt;/li>&lt;/ul>&lt;h3 id="-平头哥" class="heading-element">&lt;span>⏰ 平头哥&lt;/span>
  &lt;a href="#-%e5%b9%b3%e5%a4%b4%e5%93%a5" class="heading-mark">
  &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
  &lt;/a>
@@ -1956,7 +1971,12 @@ $$ Y=(X*\text{diag}(s)^{-1})*(\text{diag}(s)*W) $$&lt;p>也就是对activate (�
  data-size="medium"
  data-node="circle"
  style="--timeline-index: 2;">&lt;div class="fi-timeline-item__content">一面&lt;/div>
- &lt;div class="fi-timeline-item__timestamp is-bottom">2025-09-08&lt;/div>&lt;/li>&lt;/ul>&lt;h3 id="-上海ai-lab" class="heading-element">&lt;span>⏰ 上海AI Lab&lt;/span>
+ &lt;div class="fi-timeline-item__timestamp is-bottom">2025-09-08&lt;/div>&lt;/li>&lt;li
+ class="fi-timeline-item"
+ data-size="medium"
+ data-node="circle"
+ style="--timeline-index: 3;">&lt;div class="fi-timeline-item__content">二面&lt;/div>
+ &lt;div class="fi-timeline-item__timestamp is-bottom">2025-09-11&lt;/div>&lt;/li>&lt;/ul>&lt;h3 id="-上海ai-lab" class="heading-element">&lt;span>⏰ 上海AI Lab&lt;/span>
  &lt;a href="#-%e4%b8%8a%e6%b5%b7ai-lab" class="heading-mark">
  &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
  &lt;/a>
@@ -2016,7 +2036,45 @@ $$ Y=(X*\text{diag}(s)^{-1})*(\text{diag}(s)*W) $$&lt;p>也就是对activate (�
  data-size="medium"
  data-node="circle"
  style="--timeline-index: 1;">&lt;div class="fi-timeline-item__content">投递&lt;/div>
- &lt;div class="fi-timeline-item__timestamp is-bottom">2025-09-05&lt;/div>&lt;/li>&lt;/ul></description></item><item><title>分布式推理优化技术</title><link>https://yitaonote.com/2025/7ae2a3f/</link><pubDate>Tue, 19 Aug 2025 23:07:32 +0800</pubDate><guid>https://yitaonote.com/2025/7ae2a3f/</guid><category domain="https://yitaonote.com/categories/%E6%8E%A8%E7%90%86%E4%BC%98%E5%8C%96/">推理优化</category><description>&lt;h2 id="分布式通信原语" class="heading-element">&lt;span>分布式通信原语&lt;/span>
+ &lt;div class="fi-timeline-item__timestamp is-bottom">2025-09-05&lt;/div>&lt;/li>&lt;li
+ class="fi-timeline-item"
+ data-size="medium"
+ data-node="circle"
+ style="--timeline-index: 2;">&lt;div class="fi-timeline-item__content">笔试&lt;/div>
+ &lt;div class="fi-timeline-item__timestamp is-bottom">2025-09-13&lt;/div>&lt;/li>&lt;/ul>&lt;h3 id="-高德地图" class="heading-element">&lt;span>⏰ 高德地图&lt;/span>
+ &lt;a href="#-%e9%ab%98%e5%be%b7%e5%9c%b0%e5%9b%be" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h3>&lt;ul
+ class="fi-timeline"
+ >&lt;li
+ class="fi-timeline-item"
+ data-size="medium"
+ data-node="circle"
+ style="--timeline-index: 1;">&lt;div class="fi-timeline-item__content">投递&lt;/div>
+ &lt;div class="fi-timeline-item__timestamp is-bottom">2025-09-09&lt;/div>&lt;/li>&lt;/ul>&lt;h3 id="-阿里云" class="heading-element">&lt;span>⏰ 阿里云&lt;/span>
+ &lt;a href="#-%e9%98%bf%e9%87%8c%e4%ba%91" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h3>&lt;ul
+ class="fi-timeline"
+ >&lt;li
+ class="fi-timeline-item"
+ data-size="medium"
+ data-node="circle"
+ style="--timeline-index: 1;">&lt;div class="fi-timeline-item__content">投递&lt;/div>
+ &lt;div class="fi-timeline-item__timestamp is-bottom">2025-09-10&lt;/div>&lt;/li>&lt;/ul>&lt;h3 id="-蔚来" class="heading-element">&lt;span>⏰ 蔚来&lt;/span>
+ &lt;a href="#-%e8%94%9a%e6%9d%a5" class="heading-mark">
+ &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
+ &lt;/a>
+&lt;/h3>&lt;ul
+ class="fi-timeline"
+ >&lt;li
+ class="fi-timeline-item"
+ data-size="medium"
+ data-node="circle"
+ style="--timeline-index: 1;">&lt;div class="fi-timeline-item__content">投递&lt;/div>
+ &lt;div class="fi-timeline-item__timestamp is-bottom">2025-09-10&lt;/div>&lt;/li>&lt;/ul></description></item><item><title>分布式推理优化技术</title><link>https://yitaonote.com/2025/7ae2a3f/</link><pubDate>Tue, 19 Aug 2025 23:07:32 +0800</pubDate><guid>https://yitaonote.com/2025/7ae2a3f/</guid><category domain="https://yitaonote.com/categories/%E6%8E%A8%E7%90%86%E4%BC%98%E5%8C%96/">推理优化</category><description>&lt;h2 id="分布式通信原语" class="heading-element">&lt;span>分布式通信原语&lt;/span>
  &lt;a href="#%e5%88%86%e5%b8%83%e5%bc%8f%e9%80%9a%e4%bf%a1%e5%8e%9f%e8%af%ad" class="heading-mark">
  &lt;svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">&lt;path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z">&lt;/path>&lt;/svg>
  &lt;/a>
