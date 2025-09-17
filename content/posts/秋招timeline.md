@@ -621,6 +621,10 @@ repost:
     {
       "timestamp": "2025-09-06",
       "content": "测评"
+    },
+    {
+      "timestamp": "2025-09-18",
+      "content": "笔试"
     }
   ]
 }
@@ -680,6 +684,19 @@ repost:
   "events": [
     {
       "timestamp": "2025-09-10",
+      "content": "投递"
+    }
+  ]
+}
+```
+
+### ⏰ 华为
+
+```timeline
+{
+  "events": [
+    {
+      "timestamp": "2025-09-16",
       "content": "投递"
     }
   ]
