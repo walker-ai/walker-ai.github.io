@@ -423,6 +423,10 @@ repost:
     {
       "timestamp": "2025-09-15",
       "content": "三面"
+    },
+    {
+      "timestamp": "2025-09-19",
+      "content": "HR面"
     }
   ]
 }
@@ -480,6 +484,10 @@ repost:
     {
       "timestamp": "2025-08-29",
       "content": "投递"
+    },
+    {
+      "timestamp": "2025-09-22",
+      "content": "一面"
     }
   ]
 }
