@@ -385,6 +385,10 @@ repost:
     {
       "timestamp": "2025-08-24",
       "content": "投递"
+    },
+    {
+      "timestamp": "2025-09-21",
+      "content": "笔试"
     }
   ]
 }
@@ -654,6 +658,10 @@ repost:
     {
       "timestamp": "2025-09-15",
       "content": "一面"
+    },
+    {
+      "timestamp": "2025-09-23",
+      "content": "二面"
     }
   ]
 }
