@@ -722,6 +722,10 @@ repost:
     {
       "timestamp": "2025-09-16",
       "content": "投递"
+    },
+    {
+      "timestamp": "2025-09-24",
+      "content": "笔试"
     }
   ]
 }
