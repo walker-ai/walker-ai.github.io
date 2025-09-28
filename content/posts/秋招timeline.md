@@ -356,7 +356,7 @@ repost:
 }
 ```
 
-### ⏰ B站
+### ⏰ ·
 
 ```timeline
 {
@@ -376,7 +376,11 @@ repost:
     {
       "timestamp": "2025-09-19",
       "content": "HR面"
-    }
+    },
+    {
+      "timestamp": "2025-09-28",
+      "content": "意向"
+    },
   ]
 }
 ```
