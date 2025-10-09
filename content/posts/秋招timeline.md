@@ -283,7 +283,7 @@ repost:
       "content": "一面（强化学习框架团队）"
     },
     {
-      "timestamp": "2025-09-29",
+      "timestamp": "2025-10-13",
       "content": "二面（强化学习框架团队）"
     }
   ]
@@ -508,7 +508,11 @@ repost:
     {
       "timestamp": "2025-09-25",
       "content": "二面"
-    }
+    },
+    {
+      "timestamp": "2025-10-14",
+      "content": "三面"
+    },
   ]
 }
 ```
@@ -738,7 +742,11 @@ repost:
     {
       "timestamp": "2025-09-24",
       "content": "笔试"
-    }
+    },
+    {
+      "timestamp": "2025-10-13",
+      "content": "集中面试"
+    },
   ]
 }
 ```
