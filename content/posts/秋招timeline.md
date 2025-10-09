@@ -483,7 +483,11 @@ repost:
     {
       "timestamp": "2025-08-29",
       "content": "投递"
-    }
+    },
+    {
+      "timestamp": "2025-10-09",
+      "content": "笔试"
+    },
   ]
 }
 ```
