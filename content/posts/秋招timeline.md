@@ -686,6 +686,10 @@ repost:
     {
       "timestamp": "2025-09-23",
       "content": "二面"
+    },
+    {
+      "timestamp": "2025-10-17",
+      "content": "HR面"
     }
   ]
 }
@@ -730,7 +734,7 @@ repost:
 }
 ```
 
-### ⏰ 华为
+### ❌ 华为
 
 ```timeline
 {
