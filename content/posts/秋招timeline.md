@@ -163,6 +163,10 @@ repost:
     {
       "timestamp": "2025-09-08",
       "content": "二面"
+    },
+    {
+      "timestamp": "2025-10-20",
+      "content": "三面"
     }
   ]
 }
@@ -415,7 +419,7 @@ repost:
 }
 ```
 
-### ⏰ 阿里淘天
+### ❌ 阿里淘天
 
 ```timeline
 {
@@ -576,6 +580,10 @@ repost:
     {
       "timestamp": "2025-09-01",
       "content": "投递"
+    },
+    {
+      "timestamp": "2025-10-19",
+      "content": "笔试"
     }
   ]
 }
