@@ -461,7 +461,7 @@ repost:
 }
 ```
 
-### ⏰ 滴滴
+### ❌ 滴滴
 
 ```timeline
 {
@@ -490,7 +490,7 @@ repost:
     },
     {
       "timestamp": "2025-10-09",
-      "content": "笔试"
+      "content": "笔试（放弃）"
     }
   ]
 }
