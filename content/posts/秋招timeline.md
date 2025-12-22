@@ -43,7 +43,7 @@ repost:
 
 ## 人才计划
 
-### ❌ 腾讯青云-PCG
+### ❌ 腾讯青云-PCG（应该是一念LLM团队）
 
 ```timeline
 {
@@ -64,7 +64,7 @@ repost:
 }
 ```
 
-### ❌ 快STAR
+### ❌ 快STAR（中台，SGLang/vLLM）
 
 ```timeline
 {
@@ -139,7 +139,7 @@ repost:
 }
 ```
 
-### ⏰ 拼多多提前批
+### ❌ 拼多多提前批（在线推理）
 
 ```timeline
 {
@@ -171,6 +171,14 @@ repost:
     {
       "timestamp": "2025-10-31",
       "content": "HR面"
+    },
+    {
+      "timestamp": "2025-11-20",
+      "content": "电话确认"
+    },
+    {
+      "timestamp": "2025-12-21",
+      "content": "offer谈薪，放弃"
     }
   ]
 }
@@ -192,14 +200,13 @@ repost:
     {
       "timestamp": "2025-09-17",
       "content": "二面"
-    }
   ]
 }
 ```
 
 ## 正式批
 
-### ✅蚂蚁
+### ✅蚂蚁（中台，SGLang）
 
 ```timeline
 {
@@ -326,7 +333,7 @@ repost:
 
 
 
-### ❌ 元戎启行
+### ❌ 元戎启行（主要做自研，类TensorRT）
 
 ```timeline
 {
@@ -364,7 +371,7 @@ repost:
 }
 ```
 
-### ✅ B站
+### ✅ B站（搜推在线推理）
 
 ```timeline
 {
@@ -423,7 +430,7 @@ repost:
 }
 ```
 
-### ❌ 阿里淘天
+### ❌ 阿里淘天（MNN团队）
 
 ```timeline
 {
@@ -500,7 +507,7 @@ repost:
 }
 ```
 
-### ❌ 阶跃星辰
+### ❌ 阶跃星辰（训推）
 
 ```timeline
 {
@@ -682,7 +689,7 @@ repost:
 }
 ```
 
-### ✅ 京东
+### ✅ 京东（京东科技-京东云）
 
 ```timeline
 {
@@ -754,7 +761,7 @@ repost:
 }
 ```
 
-### ❌ 华为
+### ❌ 华为（ICT昇腾）
 
 ```timeline
 {
