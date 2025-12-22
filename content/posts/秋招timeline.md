@@ -520,7 +520,7 @@ repost:
     {
       "timestamp": "2025-10-14",
       "content": "三面"
-    }，
+    },
     {
       "timestamp": "2025-12-03",
       "content": "CEO面（放弃）"
